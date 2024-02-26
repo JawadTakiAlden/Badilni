@@ -128,7 +128,7 @@ class AuthController extends Controller
             if (Hash::check($request->current_password , $user->password) || $user->password === null){
                 $user->password = bcrypt($request->new_password);
                 $user->update();
-                $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid)->get();
+                $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid);
                 foreach ($devices as $device){
                     $token = Token::where('id' , $devices->auth_token);
                     if ($token){
