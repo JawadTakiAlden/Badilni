@@ -9,6 +9,7 @@ use App\Http\Requests\API\V1\Slider\UpdateSlideRequest;
 use App\Http\Resources\API\V1\SliderResource;
 use App\HttpResponse\HTTPResponse;
 use App\Models\Slider;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
@@ -50,7 +51,13 @@ class SliderController extends Controller
             if (!$slide){
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.slider.slide_not_found'));
             }
+
+            $currentImagePath = $slide->image;
+
             $slide->update($request->only(['is_active' , 'image' , 'title' , 'sort' , 'type']));
+            if ($request->image){
+                File::delete(public_path($currentImagePath));
+            }
             return $this->success(SliderResource::make($slide) , __('messages.v1.slider.create_slide'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
