@@ -97,14 +97,13 @@ class AuthController extends Controller
                 return $this->error(__('messages.v1.auth.account_not_verified') , 403);
             }
           $token = $user->createToken("UserToken");
-            return $token;
             $currentDevice = $user->userDevices->where('device_uuid' , $request->device_uuid)->first();
             if ($currentDevice){
                 $currentDevice->update([
                     "device_type" => $request->device_type,
                     "device_model" => $request->device_model,
                     "notification_token" => $request->notification_token,
-                    "auth_token" => $token
+                    "auth_token" => $token->token->id
                 ]);
             }else{
                 UserDevice::create([
@@ -113,12 +112,12 @@ class AuthController extends Controller
                     "device_uuid" => $request->device_uuid,
                     "device_model" => $request->device_model,
                     "notification_token" => $request->notification_token,
-                    "auth_token" => $token
+                    "auth_token" =>  $token->token->id
                 ]);
             }
             return $this->success([
                 'user' => UserResource::make($user),
-                "access_token" => $token
+                "access_token" => $token->accessToken
             ] , __('messages.v1.auth.login_successfully' , ["user_name" => $user->name]));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
