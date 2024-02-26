@@ -131,8 +131,8 @@ class AuthController extends Controller
                 $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid);
                 foreach ($devices as $device){
                     $token = Token::where('id' , $device->auth_token)->first();
+                    return $token;
                     if ($token){
-                        return $token;
                         $token->revoke();
                     }
                     $device->delete();
