@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\API\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,8 +19,8 @@ class SliderResource extends JsonResource
             'type' => $this->type,
             'image' => asset($this->image),
             'title' => $this->title,
-            'sort' => $this->sort,
-            'is_active' => $this->is_active
+            'sort' => intval($this->sort),
+            'is_active' => boolval($this->is_active)
         ];
     }
 }

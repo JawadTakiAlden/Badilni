@@ -6,7 +6,7 @@ use App\HelperMethods\HelperMethod;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Slider\CreateSlideRequest;
 use App\Http\Requests\API\V1\Slider\UpdateSlideRequest;
-use App\Http\Resources\SliderResource;
+use App\Http\Resources\API\V1\SliderResource;
 use App\HttpResponse\HTTPResponse;
 use App\Models\Slider;
 use Illuminate\Http\Request;

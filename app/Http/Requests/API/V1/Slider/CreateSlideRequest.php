@@ -26,7 +26,7 @@ class CreateSlideRequest extends FormRequest
             'title' => 'required|string|max:255',
             'image' => "required|image|mimes:jpg,pnj,jpeg,max:6144",
             'type' => 'required|in:home,splash',
-            'sort' => 'required|numeric|min:0'
+            'sort' => 'numeric|min:0'
         ];
     }
 }
