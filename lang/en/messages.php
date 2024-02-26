@@ -16,6 +16,7 @@ return [
             "reset_password" => "we have sent verify code to your email",
             "password_changed" => "your password changed successfully",
             "logout_successfully" => "your logout successfully",
+            "wrong_current_password" => "you are provide us with wrong current password check it and try again"
         ],
         "account" => [
             "account_not_found" => "sorry we can't find you email address in our system",
