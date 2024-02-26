@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\HomeController;
+use App\Http\Controllers\API\V1\SliderController;
 use Illuminate\Support\Facades\Route;
 Route::prefix("/v1")->group(function (){
     Route::prefix('/auth')->group(function (){
@@ -18,6 +20,22 @@ Route::prefix("/v1")->group(function (){
             Route::post('/logout', [AuthController::class , 'logout']);
             Route::post('/changePassword', [AuthController::class , 'changePassword']);
         });
+
+        Route::get('/home' , [HomeController::class , 'getHome']);
+
+        Route::prefix('/slider')->group(function (){
+            Route::get('/get' , [SliderController::class , 'getAllSlider']);
+            Route::post('/create' , [SliderController::class , 'createSlider']);
+            Route::post('/update/{slide_id}' , [SliderController::class , 'updateSlider']);
+            Route::delete('/delete/{slide_id}' , [SliderController::class , 'deleteSlider']);
+        });
+
+//        Route::prefix('/categories')->group(function (){
+//            Route::get('/get' , [SliderController::class , 'getAllSlider']);
+//            Route::post('/create' , [SliderController::class , 'createSlider']);
+//            Route::post('/update/{category_id}' , [SliderController::class , 'updateSlider']);
+//            Route::delete('/delete/{category_id}' , [SliderController::class , 'deleteSlider']);
+//        });
     });
 });
 

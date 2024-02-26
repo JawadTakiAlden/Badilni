@@ -27,9 +27,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Passport\Passport;
 use Laravel\Passport\Token;
-use Laravel\Passport\TokenRepository;
 
 class AuthController extends Controller
 {
@@ -127,7 +125,6 @@ class AuthController extends Controller
     public function changePassword(ChangePasswordRequest $request){
         try {
             $user = $request->user();
-            $tokenRepository = app(TokenRepository::class);
             if (Hash::check($request->current_password , $user->password) || $user->password === null){
                 $user->password = bcrypt($request->new_password);
                 $user->update();

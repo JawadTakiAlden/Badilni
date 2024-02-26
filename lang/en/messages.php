@@ -21,6 +21,12 @@ return [
         "account" => [
             "account_not_found" => "sorry we can't find you email address in our system",
             "account_disabled" => "this account disabled you're cant log in our system , call support to more information",
+        ],
+        "slider" => [
+            'create_new_slide' => 'slide created successfully',
+            "slide_not_found" => "slide you are access not found",
+            "create_slide" => "slide created successfully",
+            "delete_slide" => "slide deleted successfully"
         ]
     ]
 ];
