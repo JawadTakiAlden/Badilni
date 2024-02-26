@@ -16,6 +16,7 @@ Route::prefix("/v1")->group(function (){
     Route::middleware('auth:api')->group(function(){
         Route::prefix('/auth')->group(function (){
             Route::post('/logout', [AuthController::class , 'logout']);
+            Route::post('/changePassword', [AuthController::class , 'changePassword']);
         });
     });
 });

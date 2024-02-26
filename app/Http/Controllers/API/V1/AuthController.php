@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API\V1;
 
 use App\HelperMethods\HelperMethod;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Auth\ChangePasswordRequest;
 use App\Http\Requests\API\V1\Auth\ForgetPasswordChangeRequest;
 use App\Http\Requests\API\V1\Auth\ForgetPasswordRequest;
 use App\Http\Requests\API\V1\Auth\ForgetPasswordVerifyCodeRequest;
 use App\Http\Requests\API\V1\Auth\LoginRequest;
+use App\Http\Requests\API\V1\Auth\LogoutRequest;
 use App\Http\Requests\API\V1\Auth\ResendForgetPasswordVerificationCodeRequest;
 use App\Http\Requests\API\V1\Auth\ResendVerifyCodeRequest;
 use App\Http\Requests\API\V1\Auth\SingUpRequest;
@@ -24,6 +26,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\Token;
 
 class AuthController extends Controller
 {
@@ -118,18 +122,35 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request){
+    public function changePassword(ChangePasswordRequest $request){
         try {
-            $request->user()->token()->revoke();
-            return $this->success(null , __("messages.v1.auth.logout_successfully"));
+            $user = $request->user();
+            if (Hash::check($request->current_password , $user->password) || $user->password === null){
+                $user->password = bcrypt($request->new_password);
+                $user->update();
+                $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid)->get();
+                foreach ($devices as $device){
+                    $token = Token::where('id' , $devices->auth_token);
+                    if ($token){
+                        $token->revoke();
+                    }
+                    $device->delete();
+                }
+            }
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
     }
 
-    public function LogoutFromAllDevices(Request $request){
+    public function logout(LogoutRequest $request){
         try {
-            $request->user()->tokens()->delete();
+            $userDevice = UserDevice::where('device_uuid' , $request->deivce_uuid)
+                ->orWhere('auth_token' , $request->bearerToken())
+                ->first();
+            if ($userDevice){
+                $userDevice->delete();
+            }
+            $request->user()->token()->revoke();
             return $this->success(null , __("messages.v1.auth.logout_successfully"));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
