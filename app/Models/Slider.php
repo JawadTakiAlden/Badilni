@@ -12,7 +12,7 @@ class Slider extends Model
 
     public function setImageAttribute ($image){
         $newImageName = uniqid() . '_' . 'image' . '.' . $image->extension();
-        $image->move(public_path('news_images') , $newImageName);
+        $image->move(public_path('slider_images') , $newImageName);
         return $this->attributes['image'] =  '/'.'slider_images'.'/' . $newImageName;
     }
 }
