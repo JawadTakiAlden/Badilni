@@ -132,6 +132,7 @@ class AuthController extends Controller
                 foreach ($devices as $device){
                     $token = Token::where('id' , $device->auth_token)->first();
                     if ($token){
+                        return $token;
                         $token->revoke();
                     }
                     $device->delete();
