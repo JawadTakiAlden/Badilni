@@ -130,7 +130,7 @@ class AuthController extends Controller
                 $user->update();
                 $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid);
                 foreach ($devices as $device){
-                    $token = Token::where('id' , $devices->auth_token);
+                    $token = Token::where('id' , $device->auth_token);
                     if ($token){
                         $token->revoke();
                     }
