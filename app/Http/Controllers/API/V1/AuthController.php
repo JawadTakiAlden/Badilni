@@ -132,6 +132,13 @@ class AuthController extends Controller
                 $user->password = bcrypt($request->new_password);
                 $user->update();
                 $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid);
+                foreach ($devices  as $device){
+                    $token = Token::where('id' , $device->auth_token);
+                    if ($token){
+                        $token->revoke();
+                    }
+                    $device->delete();
+                }
                 return $this->success(UserResource::make($user) , __('messages.v1.auth.password_changed'));
             }else{
                 return $this->error(__('messages.v1.auth.wrong_current_password'),401);
