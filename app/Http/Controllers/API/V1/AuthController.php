@@ -27,6 +27,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\Passport;
 use Laravel\Passport\Token;
 use Laravel\Passport\TokenRepository;
 
@@ -95,7 +96,8 @@ class AuthController extends Controller
             if ($user->email_verified_at == null) {
                 return $this->error(__('messages.v1.auth.account_not_verified') , 403);
             }
-          $token = $user->createToken("UserToken")->accessToken;
+          $token = $user->createToken("UserToken");
+            return $token;
             $currentDevice = $user->userDevices->where('device_uuid' , $request->device_uuid)->first();
             if ($currentDevice){
                 $currentDevice->update([
@@ -131,13 +133,6 @@ class AuthController extends Controller
                 $user->password = bcrypt($request->new_password);
                 $user->update();
                 $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid);
-                foreach ($devices as $device){
-                    return $tokenRepository->find($device->auth_token);
-                    if ($token){
-                        $token->revoke();
-                    }
-                    $device->delete();
-                }
                 return $this->success(UserResource::make($user) , __('messages.v1.auth.password_changed'));
             }else{
                 return $this->error(__('messages.v1.auth.wrong_current_password'),401);
