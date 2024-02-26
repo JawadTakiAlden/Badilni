@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\Token;
+use Laravel\Passport\TokenRepository;
 
 class AuthController extends Controller
 {
@@ -125,13 +126,13 @@ class AuthController extends Controller
     public function changePassword(ChangePasswordRequest $request){
         try {
             $user = $request->user();
+            $tokenRepository = app(TokenRepository::class);
             if (Hash::check($request->current_password , $user->password) || $user->password === null){
                 $user->password = bcrypt($request->new_password);
                 $user->update();
                 $devices = $user->userDevices->where('device_uuid' , "!=" , $request->device_uuid);
                 foreach ($devices as $device){
-                    $token = Token::first()->plainTextToken;
-                    return $token;
+                    return $tokenRepository->find($device->auth_token);
                     if ($token){
                         $token->revoke();
                     }
