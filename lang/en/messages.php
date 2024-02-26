@@ -15,7 +15,7 @@ return [
             "account_not_verified" => "this account not verified yet , verify your account and try again",
             "reset_password" => "we have sent verify code to your email",
             "password_changed" => "your password changed successfully",
-            "logout_successfully" => "your logout successfully"
+            "logout_successfully" => "your logout successfully",
         ],
         "account" => [
             "account_not_found" => "sorry we can't find you email address in our system",

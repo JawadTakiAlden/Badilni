@@ -136,6 +136,7 @@ class AuthController extends Controller
                     }
                     $device->delete();
                 }
+                return $this->success(UserResource::make($user) , __('messages.v1.auth.password_changed'));
             }
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
