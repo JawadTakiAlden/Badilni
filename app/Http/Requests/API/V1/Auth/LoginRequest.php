@@ -23,7 +23,10 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'device_type'        => 'required|in:ios,android,web',
+            'device_uuid'        => 'required',
+            'notification_token' => 'required'
         ];
     }
 }

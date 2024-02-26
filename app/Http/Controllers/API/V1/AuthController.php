@@ -16,6 +16,7 @@ use App\Http\Resources\API\V1\UserResource;
 use App\HttpResponse\HTTPResponse;
 use App\Mail\EmailVerification;
 use App\Models\User;
+use App\Models\UserDevice;
 use App\Models\VerificationCode;
 use App\Notifications\ResetPasswordNotification;
 use App\Types\VerificationCodeType;
@@ -75,6 +76,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request){
         try {
+
             $user = User::where('email' , $request->email)->first();
             if (!$user){
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.auth.account_not_found'));
@@ -89,6 +91,24 @@ class AuthController extends Controller
                 return $this->error(__('messages.v1.auth.account_not_verified') , 403);
             }
           $token = $user->createToken("UserToken")->accessToken;
+            $currentDevice = $user->userDevices->where('device_uuid' , $request->device_uuid)->first();
+            if ($currentDevice){
+                $currentDevice->update([
+                    "device_type" => $request->device_type,
+                    "device_model" => $request->device_model,
+                    "notification_token" => $request->notification_token,
+                    "auth_token" => $token
+                ]);
+            }else{
+                UserDevice::create([
+                   'user_id' => $user->id,
+                    "device_type" => $request->device_type,
+                    "device_uuid" => $request->device_uuid,
+                    "device_model" => $request->device_model,
+                    "notification_token" => $request->notification_token,
+                    "auth_token" => $token
+                ]);
+            }
             return $this->success([
                 'user' => UserResource::make($user),
                 "access_token" => $token

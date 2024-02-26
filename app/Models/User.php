@@ -47,4 +47,8 @@ class User extends Authenticatable
     public function verificationCodes() {
         return $this->hasMany(VerificationCode::class);
     }
+
+    public function userDevices(){
+        return $this->hasMany(UserDevice::class);
+    }
 }
