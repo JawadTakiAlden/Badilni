@@ -70,6 +70,8 @@ class SliderController extends Controller
             if (!$slide){
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.slider.slide_not_found'));
             }
+            $currentImagePath = $slide->image;
+            File::delete(public_path($currentImagePath));
             $slide->delete();
             return $this->success(SliderResource::make($slide) , __('messages.v1.slider.delete_slide'));
         }catch (\Throwable $th){
