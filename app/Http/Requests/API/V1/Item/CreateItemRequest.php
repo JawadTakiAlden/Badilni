@@ -43,8 +43,11 @@ class CreateItemRequest extends FormRequest
                     $defaultCount = count(array_filter($this->input('images'), function ($image) {
                         return $image['is_default'] === true;
                     }));
-                    if ($defaultCount !== 1) {
+                    if ($defaultCount > 1 ) {
                         $fail('Exactly one image must be marked as default.');
+                    }
+                    if ($defaultCount === 0 ) {
+                        $fail('at least one image must be marked as default.');
                     }
                 },
             ],
