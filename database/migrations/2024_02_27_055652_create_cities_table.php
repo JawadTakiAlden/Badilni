@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->json("title");
-            $table->integer("country_id");
+            $table->foreignId("country_id")->references('id')->on('countries')->onDelete('cascade');
             $table->tinyInteger("is_active")->default(1);
             $table->timestamps();
         });

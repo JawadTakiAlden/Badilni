@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('city_id')->nullable()->references('id')->on('cities')->onDelete('set null');
+            $table->foreignId('city_id')->nullable()->references('id')->on('cities')->onDelete('cascade');
             $table->json('title');
             $table->timestamps();
         });
