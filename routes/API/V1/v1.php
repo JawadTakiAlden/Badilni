@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\HomeController;
 use App\Http\Controllers\API\V1\SliderController;
 use Illuminate\Support\Facades\Route;
@@ -30,12 +31,14 @@ Route::prefix("/v1")->group(function (){
             Route::delete('/delete/{slide_id}' , [SliderController::class , 'deleteSlider']);
         });
 
-//        Route::prefix('/categories')->group(function (){
-//            Route::get('/get' , [SliderController::class , 'getAllSlider']);
-//            Route::post('/create' , [SliderController::class , 'createSlider']);
-//            Route::post('/update/{category_id}' , [SliderController::class , 'updateSlider']);
-//            Route::delete('/delete/{category_id}' , [SliderController::class , 'deleteSlider']);
-//        });
+        Route::prefix('/categories')->group(function (){
+            Route::get('/getAll' , [CategoryController::class , 'getAllCategories']);
+            Route::get('/getActive' , [CategoryController::class , 'getActiveCategories']);
+            Route::post('/createCategory' , [CategoryController::class , 'createCategory']);
+            Route::post('/createSubCategory' , [CategoryController::class , 'createSubCategory']);
+            Route::post('/update/{category_id}' , [CategoryController::class , 'updateCategory']);
+            Route::delete('/delete/{category_id}' , [CategoryController::class , 'deleteCategory']);
+        });
     });
 });
 
