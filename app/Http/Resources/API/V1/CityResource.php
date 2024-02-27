@@ -16,7 +16,7 @@ class CityResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => json_encode($this->title)[$request->user()->language],
             'is_active' => boolval($this->is_active),
             'country_name' => $this->country->name,
             'areas' => $this->areas
