@@ -42,9 +42,9 @@ Route::prefix("/v1")->group(function (){
         Route::prefix('/cities')->group(function (){
             Route::get('/getAll' , [CityController::class , 'getAll']);
             Route::get('/getActive' , [CityController::class , 'getActive']);
-            Route::get('/create' , [CityController::class , 'createCity']);
-            Route::get('/update/{cityID}' , [CityController::class , 'updateCity']);
-            Route::get('/delete/{cityID}' , [CityController::class , 'delete']);
+            Route::post('/create' , [CityController::class , 'createCity']);
+            Route::patch('/update/{cityID}' , [CityController::class , 'updateCity']);
+            Route::delete('/delete/{cityID}' , [CityController::class , 'delete']);
         });
 
         Route::prefix('/areas')->group(function (){
