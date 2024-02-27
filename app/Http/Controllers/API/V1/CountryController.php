@@ -95,7 +95,7 @@ class CountryController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__("messages.v1.country.country_not_found"));
             }
             $country->delete();
-            return $this->success($country , __("messages.v1.country.delete_country"));
+            return $this->success(CountryResource::make($country) , __("messages.v1.country.delete_country"));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
