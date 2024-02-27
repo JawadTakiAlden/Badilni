@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'is_active' => $this->is_active,
+            'is_active' => boolval($this->is_active),
             'sort' => $this->sort,
             "image" => $this->image ? asset($this->image) : null,
             'created_at' => $this->created_at,
