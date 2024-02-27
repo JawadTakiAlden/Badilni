@@ -49,6 +49,10 @@ Route::prefix("/v1")->group(function (){
 
         Route::prefix('/areas')->group(function (){
             Route::get('/getAll' , [AreaController::class , 'getAll']);
+            Route::get('/getActive' , [AreaController::class , 'getActive']);
+            Route::post('/create' , [AreaController::class , 'createArea']);
+            Route::patch('/update/{areaID}' , [AreaController::class , 'updateArea']);
+            Route::delete('/delete/{areaID}' , [AreaController::class , 'delete']);
         });
 
         Route::prefix('/users')->group(function (){
