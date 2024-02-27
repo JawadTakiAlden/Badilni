@@ -17,4 +17,11 @@ class HelperMethod
         }
         return $this->error($message , 404);
     }
+
+    public static function extractValueDependOnLanguageOfRequestUser($jsonValue){
+        $languageKey = auth()->user()->language ?? 'en';
+        $title = json_decode($jsonValue, true);
+        $titleValue = $title[$languageKey] ?? null;
+        return $titleValue;
+    }
 }
