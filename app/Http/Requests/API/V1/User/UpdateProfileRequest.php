@@ -25,7 +25,9 @@ class UpdateProfileRequest extends FormRequest
             'name' => 'required|string|max:30',
             'phone' => 'string',
             'image' => 'image|mimes:jpg,png,jpeg|max:4096',
-            'country_id' => 'numeric|exists:countries,id'
+            'country_id' => 'numeric|exists:countries,id',
+            'gender' => 'string|in:male,female',
+            'birthdate' => 'date'
         ];
     }
 }
