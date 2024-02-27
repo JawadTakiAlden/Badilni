@@ -71,7 +71,7 @@ class CityController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__("messages.v1.city.city_not_found"));
             }
             $city->update($request->only(['title','is_active', 'country_id']));
-            return $this->success($city , __("messages.v1.city.update_city"));
+            return $this->success(CityResource::make($city) , __("messages.v1.city.update_city"));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
@@ -84,7 +84,7 @@ class CityController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__("messages.v1.city.city_not_found"));
             }
             $city->delete();
-            return $this->success($city , __("messages.v1.country.delete_city"));
+            return $this->success(CityResource::make($city) , __("messages.v1.country.delete_city"));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
