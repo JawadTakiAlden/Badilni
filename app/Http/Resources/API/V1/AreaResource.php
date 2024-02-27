@@ -18,7 +18,8 @@ class AreaResource extends JsonResource
         return [
             'id' =>$this->id,
             'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
-            'is_active' => $this->is_active
+            'is_active' => $this->is_active,
+            'city' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->city->title),
         ];
     }
 }
