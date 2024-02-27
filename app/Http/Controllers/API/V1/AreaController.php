@@ -57,7 +57,7 @@ class AreaController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.area.not_found_area'));
             }
             $area->update($request->only(['title' , 'city_id' , 'is_active']));
-            return $this->success(AreaResource::make($area) , __('messages.v1.area.update_area'));
+            return $this->success(null, __('messages.v1.area.update_area'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
