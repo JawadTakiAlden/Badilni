@@ -35,7 +35,7 @@ class CreateItemRequest extends FormRequest
                 })
             ],
             'images' => 'required|array|min:1',
-            'images.*.image' => 'required|image|mimes:jpg,png,jpeg|max:3072',
+            'images.*.imageFile' => 'required|image|mimes:jpg,png,jpeg|max:3072',
             'images.*.is_default' => [
                 'required',
                 'boolean',
