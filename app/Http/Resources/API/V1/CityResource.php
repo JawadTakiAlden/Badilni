@@ -17,7 +17,7 @@ class CityResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'is_active' => $this->iis_active,
+            'is_active' => boolval($this->is_active),
             'country_name' => $this->country->name
         ];
     }
