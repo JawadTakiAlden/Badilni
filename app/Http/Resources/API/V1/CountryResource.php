@@ -18,8 +18,8 @@ class CountryResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'name' => $this->name,
-            'is_active' => $this->is_active,
-            'is_default' => $this->is_default,
+            'is_active' => boolval($this->is_active),
+            'is_default' => boolval($this->is_default),
             'flag' => $this->flag,
             'state_ket' => $this->state_key
         ];

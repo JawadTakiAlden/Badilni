@@ -75,7 +75,7 @@ class CountryController extends Controller
             if (boolval($request->is_default) && !boolval($country->is_default)){
                 Country::where('id' , '!=' , $countryID)->where('is_default' , true)->update([
                         'is_default' => false
-                    ]) ;
+                    ]);
             }
             $country->update($request->only(['name', 'title', 'flag', 'state_key', 'is_active', 'is_default']));
             return $this->success(CountryResource::make($country) , __("messages.v1.country.update_country"));
