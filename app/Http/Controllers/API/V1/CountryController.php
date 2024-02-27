@@ -55,7 +55,7 @@ class CountryController extends Controller
             if ($count > 0 && $is_default){
                 Country::where('is_active' , true)->get()->map(function ($country) {
                    $country->update([
-                       'is_active' => false
+                       'is_default' => false
                    ]) ;
                 });
             }
@@ -73,6 +73,13 @@ class CountryController extends Controller
             $country = $this->getCountryByID($countryID);
             if (!$country){
                 return $this->helpers->getNotFoundResourceRespone(__("messages.v1.country.country_not_found"));
+            }
+            if ($request->is_defautl && !$country->is_default){
+                Country::where('id' , $countryID)->where('is_active' , true)->get()->map(function ($country) {
+                    $country->update([
+                        'is_default' => false
+                    ]) ;
+                });
             }
             $country->update($request->only(['name', 'title', 'flag', 'state_key', 'is_active', 'is_default']));
             return $this->success($country , __("messages.v1.country.update_country"));
