@@ -59,7 +59,7 @@ class CountryController extends Controller
                    ]) ;
                 });
             }
-            $country = Country::create($request->only(array_merge(['name', 'title', 'flag', 'state_key', 'is_active']) ,['is_default' => $is_default]));
+            $country = Country::create(array_merge($request->only(['name', 'title', 'flag', 'state_key', 'is_active']) ,['is_default' => $is_default]));
             DB::commit();
             return $this->success(CountryResource::make($country),__('messages.v1.country.crete_country'));
         }catch (\Throwable $th){
