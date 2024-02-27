@@ -27,7 +27,7 @@ class CountryController extends Controller
 
     public function getAll(){
         try {
-            $countries = Country::orderBy('sort')->get();
+            $countries = Country::all();
             return  $this->success(CountryResource::collection($countries));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
@@ -36,7 +36,7 @@ class CountryController extends Controller
 
     public function getActive(){
         try {
-            $countries = Country::where('is_active' , true)->orderBy('sort')->get();
+            $countries = Country::where('is_active' , true)->get();
             return  $this->success(CountryResource::collection($countries));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
