@@ -23,7 +23,7 @@ class CreateSubCategoryRequest extends FormRequest
     {
         return [
             'title' => 'required|json',
-            'description' => 'required|json',
+            'description' => 'json',
             'is_active' => 'boolean',
             'parent_id' => 'required|exists:categories,id',
             'sort' => 'required|numeric',
