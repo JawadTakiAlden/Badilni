@@ -53,11 +53,9 @@ class CountryController extends Controller
             }
             DB::beginTransaction();
             if ($count > 0 && $is_default){
-                Country::where('is_active' , true)->get()->map(function ($country) {
-                   $country->update([
-                       'is_default' => false
-                   ]) ;
-                });
+                Country::where('is_default' , true)->update([
+                    'is_default' => false
+                ]);
             }
             $country = Country::create(array_merge($request->only(['name', 'title', 'flag', 'state_key', 'is_active']) ,['is_default' => $is_default]));
             DB::commit();
