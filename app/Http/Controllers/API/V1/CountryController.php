@@ -82,7 +82,7 @@ class CountryController extends Controller
                 });
             }
             $country->update($request->only(['name', 'title', 'flag', 'state_key', 'is_active', 'is_default']));
-            return $this->success($country , __("messages.v1.country.update_country"));
+            return $this->success(CountryResource::make($country) , __("messages.v1.country.update_country"));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
