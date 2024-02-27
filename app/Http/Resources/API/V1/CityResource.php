@@ -18,7 +18,8 @@ class CityResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'is_active' => boolval($this->is_active),
-            'country_name' => $this->country->name
+            'country_name' => $this->country->name,
+            'areas' => $this->areas
         ];
     }
 }
