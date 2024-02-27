@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\AreaController;
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\CityController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Support\Facades\Route;
 Route::prefix("/v1")->group(function (){
     Route::prefix('/auth')->group(function (){
-        Route::post('/signup',                   [AuthController::class, "signup"])->middleware('extractCountryFromIP');
+        Route::post('/signup',                   [AuthController::class, "signup"]);
         Route::post('/sendVerifyCode',           [AuthController::class, "sendVerifyCode"]);
         Route::post('/verifyEmail',              [AuthController::class, "verifyEmail"]);
         Route::post('/login',                    [AuthController::class, "login"]);
@@ -47,7 +48,7 @@ Route::prefix("/v1")->group(function (){
         });
 
         Route::prefix('/areas')->group(function (){
-
+            Route::get('/getAll' , [AreaController::class , 'getAll']);
         });
 
         Route::prefix('/users')->group(function (){
