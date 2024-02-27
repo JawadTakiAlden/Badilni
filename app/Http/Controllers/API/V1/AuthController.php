@@ -67,13 +67,6 @@ class AuthController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->only(['name' , 'email' , 'password']);
-            if ($request->country_code){
-                return $request->country_code;
-//                $country = Country::where('state_key' , $request->country_code)->first();
-//                if ($country){
-//                    $data = array_merge($data , ['country_id' , $country->id]);
-//                }
-            }
             $user = User::create($data);
             $this->GenerateCodeAndSendEmail($user);
             DB::commit();

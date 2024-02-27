@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('item_images', function (Blueprint $table) {
             $table->id();
-            $table->json('title');
+            $table->string('image');
+            $table->foreignId('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->boolean('is_default');
             $table->timestamps();
         });
     }

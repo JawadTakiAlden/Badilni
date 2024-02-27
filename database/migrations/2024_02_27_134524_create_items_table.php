@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->double('price')->nullable();
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
+            $table->foreignId('area_id')->nullable()->references('id')->on('cities')->onDelete('set null');
             $table->timestamps();
         });
     }
