@@ -75,7 +75,7 @@ class CountryController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__("messages.v1.country.country_not_found"));
             }
             if (boolval($request->is_default) && !boolval($country->is_default)){
-                Country::where('id' , $countryID)->where('is_active' , true)->get()->map(function ($country) {
+                Country::where('id' , '!=' , $countryID)->where('is_active' , true)->get()->map(function ($country) {
                     $country->update([
                         'is_default' => false
                     ]) ;
