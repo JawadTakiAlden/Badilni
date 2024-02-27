@@ -33,9 +33,9 @@ Route::prefix("/v1")->group(function (){
         Route::prefix('/countries')->group(function (){
             Route::get('/getAll' , [CountryController::class , 'getAll']);
             Route::get('/getActive' , [CountryController::class , 'getActive']);
-            Route::get('/create' , [CountryController::class , 'createCountry']);
-            Route::get('/update/{countryID}' , [CountryController::class , 'updateCountry']);
-            Route::get('/delete/{countryID}' , [CountryController::class , 'delete']);
+            Route::post('/create' , [CountryController::class , 'createCountry']);
+            Route::patch('/update/{countryID}' , [CountryController::class , 'updateCountry']);
+            Route::delete('/delete/{countryID}' , [CountryController::class , 'delete']);
         });
 
 
