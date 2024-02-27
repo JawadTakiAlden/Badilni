@@ -32,8 +32,8 @@ class ItemController extends Controller
             if ($request->images){
                 foreach ($request->images as $image){
                     ItemImage::create([
-                       'image' =>  $image->imageFile,
-                       'is_default' => $image->is_default,
+                       'image' =>  $image['imageFile'],
+                       'is_default' => $image['is_default'],
                        'item_id' => $item->id
                     ]);
                 }
