@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\Category;
 
+use App\Rules\JsonContainsKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateSubCategoryRequest extends FormRequest
@@ -22,8 +23,8 @@ class CreateSubCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|json',
-            'description' => 'json',
+            'title' =>  ['required','json',new JsonContainsKey()],
+            'description' =>  ['json',new JsonContainsKey()],
             'is_active' => 'boolean',
             'parent_id' => 'required|exists:categories,id',
             'sort' => 'required|numeric',

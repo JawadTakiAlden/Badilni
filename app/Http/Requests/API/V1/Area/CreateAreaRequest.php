@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\Area;
 
+use App\Rules\JsonContainsKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateAreaRequest extends FormRequest
@@ -22,7 +23,7 @@ class CreateAreaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|json',
+            'title' =>  ['required','json',new JsonContainsKey()],
             'is_active' => 'boolean',
             'city_id' => 'required|numeric|exists:cities,id'
         ];

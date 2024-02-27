@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\Country;
 
+use App\Rules\JsonContainsKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateCounteyRequest extends FormRequest
@@ -23,7 +24,7 @@ class CreateCounteyRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:40',
-            'title' => 'required|json',
+            'title' =>  ['required','json',new JsonContainsKey()],
             'flag' => 'required|string',
             'state_key' => 'required|string',
             'is_active' => 'required|boolean',

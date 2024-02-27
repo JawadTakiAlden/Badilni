@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\Country;
 
+use App\Rules\JsonContainsKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCountryRequest extends FormRequest
@@ -22,12 +23,12 @@ class UpdateCountryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:40',
-            'title' => 'sometimes|json',
-            'flag' => 'sometimes|string',
-            'state_key' => 'sometimes|string',
-            'is_active' => 'sometimes|boolean',
-            'is_default' => 'sometimes|boolean',
+            'name' => 'string|max:40',
+            'title' =>  ['json',new JsonContainsKey()],
+            'flag' => 'string',
+            'state_key' => 'string',
+            'is_active' => 'boolean',
+            'is_default' => 'boolean',
         ];
     }
 }

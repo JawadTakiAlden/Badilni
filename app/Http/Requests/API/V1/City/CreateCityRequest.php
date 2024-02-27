@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\City;
 
+use App\Rules\JsonContainsKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateCityRequest extends FormRequest
@@ -25,12 +26,7 @@ class CreateCityRequest extends FormRequest
             'title' => [
                 'required',
                 'json',
-                function ($attribute, $value, $fail) {
-                    $titleArray = json_decode($value, true);
-                    if (!isset($titleArray['en'])) {
-                        $fail('The title must contain an "en" key.');
-                    }
-                },
+                new JsonContainsKey()
             ],
             'country_id' => 'required|exists:countries,id',
             'is_active' => 'required|boolean'

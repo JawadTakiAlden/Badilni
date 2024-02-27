@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\City;
 
+use App\Rules\JsonContainsKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCityRequest extends FormRequest
@@ -22,7 +23,7 @@ class UpdateCityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'json',
+            'title' => ['json' , new JsonContainsKey()],
             'country_id' => 'exists:countries,id',
             'is_active' => 'boolean'
         ];
