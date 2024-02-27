@@ -10,6 +10,7 @@ use App\Http\Resources\API\V1\CountryResource;
 use App\HttpResponse\HTTPResponse;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CountryController extends Controller
 {
@@ -50,9 +51,19 @@ class CountryController extends Controller
             if ($count === 0 || !$is_default){
                 $is_default = true;
             }
+            DB::beginTransaction();
+            if ($count > 0 && $is_default){
+                Country::where('is_active' , true)->get()->map(function ($country) {
+                   $country->update([
+                       'is_active' => false
+                   ]) ;
+                });
+            }
             $country = Country::create($request->only(array_merge(['name', 'title', 'flag', 'state_key', 'is_active']) ,['is_default' => $is_default]));
+            DB::commit();
             return $this->success(CountryResource::make($country),__('messages.v1.country.crete_country'));
         }catch (\Throwable $th){
+            DB::commit();
             return $this->helpers->getErrorResponse($th);
         }
     }
