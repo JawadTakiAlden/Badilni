@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('image');
             $table->foreignId('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->boolean('is_default');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

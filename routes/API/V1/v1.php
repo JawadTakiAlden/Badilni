@@ -6,6 +6,7 @@ use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\CityController;
 use App\Http\Controllers\API\V1\CountryController;
 use App\Http\Controllers\API\V1\HomeController;
+use App\Http\Controllers\API\V1\ItemController;
 use App\Http\Controllers\API\V1\SliderController;
 use App\Http\Controllers\API\V1\SplashController;
 use App\Http\Controllers\API\V1\UserController;
@@ -75,6 +76,19 @@ Route::prefix("/v1")->group(function (){
             Route::post('/createSubCategory' , [CategoryController::class , 'createSubCategory']);
             Route::post('/update/{category_id}' , [CategoryController::class , 'updateCategory']);
             Route::delete('/delete/{category_id}' , [CategoryController::class , 'deleteCategory']);
+        });
+
+        Route::prefix('/items')->group(function (){
+           Route::get('/getAll' , [ItemController::class , 'getAll']);
+           Route::get('/getActive' , [ItemController::class , 'getActive']);
+           Route::get('/getHome' , [ItemController::class , 'getHome']);
+           Route::get('/search' , [ItemController::class , 'search']);
+           Route::get('/show/{itemID}' , [ItemController::class , 'showItem']);
+           Route::get('/myItems' , [ItemController::class , 'myItems']);
+           Route::get('/addToFavorite/{itemID}' , [ItemController::class , 'addToFavorite']);
+           Route::get('/add' , [ItemController::class , 'addItem']);
+           Route::get('/edit/{itemID}' , [ItemController::class , 'editItem']);
+           Route::get('/delete/{itemID}' , [ItemController::class , 'deleteItem']);
         });
     });
 });

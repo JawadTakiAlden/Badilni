@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\V1\Item;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateItemRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CreateItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,31 @@ class CreateItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'nullable|numeric',
+            'is_active' => 'boolean',
+            'area_id' => 'required|exists:areas,id',
+            'sub_category_id' => [
+                'required',
+                Rule::exists('categories', 'id')->where(function ($query) {
+                    $query->whereNotNull('parent_id');
+                })
+            ],
+            'images' => 'required|array|min:1',
+            'images.*.image' => 'required|image|mimes:jpg,png,jpeg|max:3072',
+            'images.*.is_default' => [
+                'required',
+                'boolean',
+                function ($attribute, $value, $fail) {
+                    $defaultCount = count(array_filter($this->input('images'), function ($image) {
+                        return $image['is_default'] === true;
+                    }));
+                    if ($defaultCount !== 1) {
+                        $fail('Exactly one image must be marked as default.');
+                    }
+                },
+            ],
         ];
     }
 }

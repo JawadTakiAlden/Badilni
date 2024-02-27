@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->double('price')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->foreignId('area_id')->nullable()->references('id')->on('cities')->onDelete('set null');
             $table->foreignId('sub_category_id')->nullable()->references('id')->on('categories')->onDelete('set null');
