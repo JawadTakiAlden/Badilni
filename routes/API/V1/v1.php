@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\HomeController;
 use App\Http\Controllers\API\V1\SliderController;
+use App\Http\Controllers\API\V1\SplashController;
 use Illuminate\Support\Facades\Route;
 Route::prefix("/v1")->group(function (){
     Route::prefix('/auth')->group(function (){
@@ -16,6 +17,9 @@ Route::prefix("/v1")->group(function (){
         Route::post('/forgetPasswordVerifyCode', [AuthController::class, "forgetPasswordVerifyCode"]);
         Route::post('/forgetPasswordChange',              [AuthController::class, "forgetPasswordChange"]);
     });
+
+    Route::get('/splash' , [SplashController::class , 'getSplashSlides']);
+
     Route::middleware('auth:api')->group(function(){
         Route::prefix('/auth')->group(function (){
             Route::post('/logout', [AuthController::class , 'logout']);
