@@ -85,10 +85,10 @@ Route::prefix("/v1")->group(function (){
            Route::get('/search' , [ItemController::class , 'search']);
            Route::get('/show/{itemID}' , [ItemController::class , 'showItem']);
            Route::get('/myItems' , [ItemController::class , 'myItems']);
-           Route::get('/addToFavorite/{itemID}' , [ItemController::class , 'addToFavorite']);
-           Route::get('/add' , [ItemController::class , 'addItem']);
-           Route::get('/edit/{itemID}' , [ItemController::class , 'editItem']);
-           Route::get('/delete/{itemID}' , [ItemController::class , 'deleteItem']);
+           Route::post('/addToFavorite/{itemID}' , [ItemController::class , 'addToFavorite']);
+           Route::post('/add' , [ItemController::class , 'addItem']);
+           Route::post('/edit/{itemID}' , [ItemController::class , 'editItem']);
+           Route::delete('/delete/{itemID}' , [ItemController::class , 'deleteItem']);
         });
     });
 });
