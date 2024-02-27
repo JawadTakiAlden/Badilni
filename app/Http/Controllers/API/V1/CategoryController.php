@@ -27,7 +27,7 @@ class CategoryController extends Controller
     }
     public function getAllCategories(){
         try {
-            $categories = Category::orderBy('sort')->get();
+            $categories = Category::where('parent_id' , null)->orderBy('sort')->get();
             return $this->success(CategoryResource::collection($categories));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
@@ -36,7 +36,7 @@ class CategoryController extends Controller
 
     public function getActiveCategories(){
         try {
-            $categories = Category::where('is_active' , true)->orderBy('sort')->get();
+            $categories = Category::where('parent_id' , null)->where('is_active' , true)->orderBy('sort')->get();
             return $this->success(CategoryResource::collection($categories));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
