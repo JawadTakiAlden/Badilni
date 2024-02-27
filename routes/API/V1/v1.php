@@ -12,7 +12,7 @@ use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Support\Facades\Route;
 Route::prefix("/v1")->group(function (){
     Route::prefix('/auth')->group(function (){
-        Route::post('/signup',                   [AuthController::class, "signup"]);
+        Route::post('/signup',                   [AuthController::class, "signup"])->middleware('extractCountryFromIP');
         Route::post('/sendVerifyCode',           [AuthController::class, "sendVerifyCode"]);
         Route::post('/verifyEmail',              [AuthController::class, "verifyEmail"]);
         Route::post('/login',                    [AuthController::class, "login"]);
