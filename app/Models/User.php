@@ -43,6 +43,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function setImageAttribute ($image){
+        $newImageName = uniqid() . '_' . 'image' . '.' . $image->extension();
+        $image->move(public_path('user_images') , $newImageName);
+        return $this->attributes['image'] =  '/'.'user_images'.'/' . $newImageName;
+    }
 
     public function verificationCodes() {
         return $this->hasMany(VerificationCode::class);

@@ -36,6 +36,17 @@ class SliderController extends Controller
         }
     }
 
+    public function getHomeSlider(){
+        try {
+            $sliders = Slider::where('type' , 'home')
+                ->where('is_active' , true)
+                ->orderBy('sort')->get();
+            return $this->success(SliderResource::collection($sliders));
+        }catch (\Throwable $th){
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
     public function createSlider(CreateSlideRequest $request){
         try {
             $slide = Slider::create($request->only(['is_active' , 'image' , 'title' , 'sort' , 'type']));
