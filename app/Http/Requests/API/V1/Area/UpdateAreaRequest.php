@@ -24,7 +24,7 @@ class UpdateAreaRequest extends FormRequest
         return [
             'title' => 'json',
             'is_active' => 'boolean',
-            'city_id' => 'numeric|exists,cities,id'
+            'city_id' => 'numeric|exists:cities,id'
         ];
     }
 }

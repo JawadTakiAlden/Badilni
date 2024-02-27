@@ -24,7 +24,7 @@ class CreateAreaRequest extends FormRequest
         return [
             'title' => 'required|json',
             'is_active' => 'boolean',
-            'city_id' => 'required|numeric|exists,cities,id'
+            'city_id' => 'required|numeric|exists:cities,id'
         ];
     }
 }

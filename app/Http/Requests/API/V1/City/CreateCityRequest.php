@@ -22,7 +22,16 @@ class CreateCityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|json',
+            'title' => [
+                'required',
+                'json',
+                function ($attribute, $value, $fail) {
+                    $titleArray = json_decode($value, true);
+                    if (!isset($titleArray['en'])) {
+                        $fail('The title must contain an "en" key.');
+                    }
+                },
+            ],
             'country_id' => 'required|exists:countries,id',
             'is_active' => 'required|boolean'
         ];
