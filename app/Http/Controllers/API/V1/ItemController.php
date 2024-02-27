@@ -21,6 +21,11 @@ class ItemController extends Controller
     {
         $this->helpers = new HelperMethod();
     }
+
+    private function getItemByID($itemID , array $with = []){
+        return ItemImage::with($with)->where('id' , $itemID)->first();
+    }
+
     public function addItem(CreateItemRequest $request){
         try {
             DB::beginTransaction();
@@ -40,6 +45,20 @@ class ItemController extends Controller
             }
             DB::commit();
             return $this->success(ItemResource::make($item) , __('messages.v1.items.item_added_successfully'));
+        }catch (\Throwable $th){
+            DB::rollBack();
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
+    public function deleteItem($itemID){
+        try {
+            $item = $this->getItemByID($itemID);
+            if (!$item){
+                return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
+            }
+            $item->delete();
+            return $this->success(ItemResource::make($item) , __('messages.v1.items.item_deleted_successfully'));
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);

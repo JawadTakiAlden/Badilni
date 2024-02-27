@@ -18,11 +18,11 @@ class ItemResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'area' => $this->area,
-            'sub_category' => $this->subCategory,
+            'area' => AreaResource::make($this->area),
+            'sub_category' => CategoryResource::make($this->subCategory),
             'category' => $this->subCategory->category,
-            'is_active' => $this->is_active,
-            'images' => $this->images,
+            'is_active' => boolval($this->is_active),
+            'images' => ItemImageResource::collection($this->images),
         ];
     }
 }
