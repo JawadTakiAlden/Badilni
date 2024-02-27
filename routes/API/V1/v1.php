@@ -30,6 +30,12 @@ Route::prefix("/v1")->group(function (){
             Route::post('/changePassword', [AuthController::class , 'changePassword']);
         });
 
+        Route::prefix('/users')->group(function (){
+            Route::get('/profile' , [UserController::class , 'getMyProfile']);
+            Route::get('/profileOf/{userID}' , [UserController::class , 'getProfileOfUser']);
+            Route::post('/updateProfile/{userID}' , [UserController::class , 'updateProfile']);
+        });
+
         Route::prefix('/countries')->group(function (){
             Route::get('/getAll' , [CountryController::class , 'getAll']);
             Route::get('/getActive' , [CountryController::class , 'getActive']);
@@ -37,7 +43,6 @@ Route::prefix("/v1")->group(function (){
             Route::patch('/update/{countryID}' , [CountryController::class , 'updateCountry']);
             Route::delete('/delete/{countryID}' , [CountryController::class , 'delete']);
         });
-
 
         Route::prefix('/cities')->group(function (){
             Route::get('/getAll' , [CityController::class , 'getAll']);
@@ -54,14 +59,6 @@ Route::prefix("/v1")->group(function (){
             Route::patch('/update/{areaID}' , [AreaController::class , 'updateArea']);
             Route::delete('/delete/{areaID}' , [AreaController::class , 'delete']);
         });
-
-        Route::prefix('/users')->group(function (){
-           Route::get('/profile' , [UserController::class , 'getMyProfile']);
-           Route::get('/profileOf/{userID}' , [UserController::class , 'getProfileOfUser']);
-           Route::post('/updateProfile/{userID}' , [UserController::class , 'updateProfile']);
-        });
-
-        Route::get('/home' , [HomeController::class , 'getHome']);
 
         Route::prefix('/slider')->group(function (){
             Route::get('/getAll' , [SliderController::class , 'getAllSlider']);

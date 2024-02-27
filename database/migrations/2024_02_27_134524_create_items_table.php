@@ -18,6 +18,7 @@ return new class extends Migration
             $table->double('price')->nullable();
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->foreignId('area_id')->nullable()->references('id')->on('cities')->onDelete('set null');
+            $table->foreignId('sub_category_id')->nullable()->references('id')->on('categories')->onDelete('set null');
             $table->timestamps();
         });
     }
