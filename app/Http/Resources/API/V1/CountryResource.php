@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1;
 
+use App\HelperMethods\HelperMethod;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,7 +17,7 @@ class CountryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
             'name' => $this->name,
             'is_active' => boolval($this->is_active),
             'is_default' => boolval($this->is_default),

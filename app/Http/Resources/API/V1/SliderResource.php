@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1;
 
+use App\HelperMethods\HelperMethod;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class SliderResource extends JsonResource
             'id' => $this->id,
             'type' => $this->type,
             'image' => asset($this->image),
-            'title' => $this->title,
+            'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
             'sort' => intval($this->sort),
             'is_active' => boolval($this->is_active)
         ];

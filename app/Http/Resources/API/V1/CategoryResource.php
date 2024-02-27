@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1;
 
+use App\HelperMethods\HelperMethod;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,8 +17,8 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
+            'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
+            'description' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->description),
             'is_active' => boolval($this->is_active),
             'sort' => $this->sort,
             "image" => $this->image ? asset($this->image) : null,
