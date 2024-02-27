@@ -14,9 +14,14 @@ class CityResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        $languageKey = auth()->user()->language ?? 'en'; // Assuming 'en' as default if user not authenticated or language not set
+        $title = json_decode($this->title, true);
+        $titleValue = $title[$languageKey] ?? null;
+
         return [
             'id' => $this->id,
-            'title' => json_decode($this->title),
+            'title' => $titleValue,
             'is_active' => boolval($this->is_active),
             'country_name' => $this->country->name,
             'areas' => $this->areas
