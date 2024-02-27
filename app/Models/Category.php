@@ -16,4 +16,9 @@ class Category extends Model
         $image->move(public_path('category_images') , $newImageName);
         return $this->attributes['image'] =  '/'.'category_images'.'/' . $newImageName;
     }
+
+    public function subCategories()
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
 }

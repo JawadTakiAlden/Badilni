@@ -22,7 +22,8 @@ class CategoryResource extends JsonResource
             'sort' => $this->sort,
             "image" => $this->image ? asset($this->image) : null,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            "sub_categories" => CategoryResource::collection($this->subCategories)
         ];
     }
 }
