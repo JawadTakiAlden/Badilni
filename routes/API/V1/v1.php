@@ -46,6 +46,10 @@ Route::prefix("/v1")->group(function (){
             Route::get('/delete/{cityID}' , [CityController::class , 'delete']);
         });
 
+        Route::prefix('/areas')->group(function (){
+
+        });
+
         Route::prefix('/users')->group(function (){
            Route::get('/profile' , [UserController::class , 'getMyProfile']);
            Route::get('/profileOf/{userID}' , [UserController::class , 'getProfileOfUser']);

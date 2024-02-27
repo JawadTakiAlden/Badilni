@@ -54,7 +54,7 @@ class UserController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.account_account_not_found'));
             }
             $currentImage = $user->image;
-            $user->update($request->only(['name' , 'phone' , 'image']));
+            $user->update($request->only(['name' , 'phone' , 'image' , 'country_id']));
             if ($request->image && $currentImage){
                 File::delete(public_path($currentImage));
             }

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\API\V1\User;
+namespace App\Http\Requests\API\V1\Item;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfileRequest extends FormRequest
+class UpdateItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,7 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:30',
-            'phone' => 'string',
-            'image' => 'image|mimes:jpg,png,jpeg|max:4096',
-            'country_id' => 'numeric|exists:countries,id'
+            //
         ];
     }
 }
