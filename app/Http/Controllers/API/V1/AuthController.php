@@ -17,6 +17,7 @@ use App\Http\Requests\API\V1\Auth\VerifyEmailRequest;
 use App\Http\Resources\API\V1\UserResource;
 use App\HttpResponse\HTTPResponse;
 use App\Mail\EmailVerification;
+use App\Models\Country;
 use App\Models\User;
 use App\Models\UserDevice;
 use App\Models\VerificationCode;
@@ -65,7 +66,15 @@ class AuthController extends Controller
     public function signup(SingUpRequest $request) {
         try {
             DB::beginTransaction();
-            $user = User::create($request->only(['name' , 'email' , 'password']));
+            $data = $request->only(['name' , 'email' , 'password']);
+            if ($request->country_code){
+                return $request->country_code;
+//                $country = Country::where('state_key' , $request->country_code)->first();
+//                if ($country){
+//                    $data = array_merge($data , ['country_id' , $country->id]);
+//                }
+            }
+            $user = User::create($data);
             $this->GenerateCodeAndSendEmail($user);
             DB::commit();
             return $this->success([

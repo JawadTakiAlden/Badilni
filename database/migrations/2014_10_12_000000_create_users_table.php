@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('is_active')->default(true);
             $table->string('phone')->nullable();
+            $table->foreignId('country_id')->nullable()->references('id')->on('countries')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });

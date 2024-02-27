@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\CategoryController;
+use App\Http\Controllers\API\V1\CityController;
+use App\Http\Controllers\API\V1\CountryController;
 use App\Http\Controllers\API\V1\HomeController;
 use App\Http\Controllers\API\V1\SliderController;
 use App\Http\Controllers\API\V1\SplashController;
@@ -9,7 +11,7 @@ use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Support\Facades\Route;
 Route::prefix("/v1")->group(function (){
     Route::prefix('/auth')->group(function (){
-        Route::post('/signup',                   [AuthController::class, "signup"]);
+        Route::post('/signup',                   [AuthController::class, "signup"])->middleware('extractCountryFromIP');
         Route::post('/sendVerifyCode',           [AuthController::class, "sendVerifyCode"]);
         Route::post('/verifyEmail',              [AuthController::class, "verifyEmail"]);
         Route::post('/login',                    [AuthController::class, "login"]);
@@ -25,6 +27,23 @@ Route::prefix("/v1")->group(function (){
         Route::prefix('/auth')->group(function (){
             Route::post('/logout', [AuthController::class , 'logout']);
             Route::post('/changePassword', [AuthController::class , 'changePassword']);
+        });
+
+        Route::prefix('/countries')->group(function (){
+            Route::get('/getAll' , [CountryController::class , 'getAll']);
+            Route::get('/getActive' , [CountryController::class , 'getActive']);
+            Route::get('/create' , [CountryController::class , 'createCountry']);
+            Route::get('/update/{countryID}' , [CountryController::class , 'updateCountry']);
+            Route::get('/delete/{countryID}' , [CountryController::class , 'delete']);
+        });
+
+
+        Route::prefix('/cities')->group(function (){
+            Route::get('/getAll' , [CityController::class , 'getAll']);
+            Route::get('/getActive' , [CityController::class , 'getActive']);
+            Route::get('/create' , [CityController::class , 'createCity']);
+            Route::get('/update/{cityID}' , [CityController::class , 'updateCity']);
+            Route::get('/delete/{cityID}' , [CityController::class , 'delete']);
         });
 
         Route::prefix('/users')->group(function (){
