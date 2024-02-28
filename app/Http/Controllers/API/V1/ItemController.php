@@ -87,8 +87,9 @@ class ItemController extends Controller
         try {
             $items = Item::where('is_active' , true)
                 ->where('user_id' , '!=' , auth()->user()->id)
+                ->filter(['country_id','city_id' ,'area_id','search_text' ])
                 ->orderBy('created_at', 'desc')
-                ->limit(10)->get();
+                ->get();
             return $this->success(ItemResource::collection($items));
         }catch (\Throwable $th){
             DB::rollBack();

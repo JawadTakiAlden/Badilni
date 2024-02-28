@@ -22,4 +22,27 @@ class Item extends Model
     public function images(){
         return $this->hasMany(ItemImage::class);
     }
+
+    public function scopeFilter($query , array $filters){
+        $query->when($filters['country_id'] ?? false , fn($query , $country_id) =>
+            $query->whereHas('area' , fn($query) =>
+                $query->whereHas('city' , fn($query) =>
+                    $query->where('country_id' , $country_id)
+                )
+            )
+        );
+
+        $query->when($filters['city_id'] ?? false , fn($query , $city_id) =>
+            $query->whereHas('area' , fn($query) =>
+                $query->where('city_id' , $city_id)
+            )
+        );
+        $query->when($filters['area_id'] ?? false , fn($query , $area_id) =>
+            $query->where('area_id', $area_id)
+        );
+        $query->when($filters['search_text'] ?? false , fn($query , $search_text) =>
+            $query->where('title', 'Like' ,'%'. $search_text . '%')
+            ->orWhere('description' ,  'Like' ,'%'. $search_text . '%')
+        );
+    }
 }
