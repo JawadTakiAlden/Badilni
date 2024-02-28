@@ -92,7 +92,7 @@ class ItemController extends Controller
             if (!$item){
                 return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
             }
-            $item->update($request->only(['title' , 'area_id' ,'status' , 'sub_category_id' , 'is_active' , 'price' , 'description']));
+            $item->update($request->only(['title' , 'description' , 'area_id' ,'status' , 'sub_category_id' , 'is_active' , 'price']));
             if ($request->images){
                 foreach ($request->images as $image){
                     if (intval($image['flag']) === ImageFlag::DELETE){
