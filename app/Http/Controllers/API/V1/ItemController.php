@@ -23,7 +23,7 @@ class ItemController extends Controller
     }
 
     private function getItemByID($itemID , array $with = []){
-        return ItemImage::with($with)->where('id' , $itemID)->first();
+        return Item::with($with)->where('id' , $itemID)->first();
     }
 
     public function getAll(){
