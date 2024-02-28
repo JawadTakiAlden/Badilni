@@ -26,6 +26,16 @@ class ItemController extends Controller
         return ItemImage::with($with)->where('id' , $itemID)->first();
     }
 
+    public function getAll(){
+        try {
+            $items = Item::all();
+            return $this->success(ItemResource::collection($items));
+        }catch (\Throwable $th){
+            DB::rollBack();
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
     public function addItem(CreateItemRequest $request){
         try {
             DB::beginTransaction();
