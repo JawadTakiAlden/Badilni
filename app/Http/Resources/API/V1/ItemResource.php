@@ -20,7 +20,7 @@ class ItemResource extends JsonResource
             'description' => $this->description,
             'area' => AreaResource::make($this->area),
             'sub_category' => CategoryResource::make($this->subCategory),
-            'category' => $this->subCategory->category,
+            'category' => CategoryResource::make($this->subCategory->category),
             'status' => $this->status,
             'is_active' => boolval($this->is_active),
             'images' => ItemImageResource::collection($this->images),
