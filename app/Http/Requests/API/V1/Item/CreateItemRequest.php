@@ -28,6 +28,7 @@ class CreateItemRequest extends FormRequest
             'price' => 'nullable|numeric',
             'is_active' => 'boolean',
             'area_id' => 'required|exists:areas,id',
+            'status' => 'required|string|in:new,old',
             'sub_category_id' => [
                 'required',
                 Rule::exists('categories', 'id')->where(function ($query) {

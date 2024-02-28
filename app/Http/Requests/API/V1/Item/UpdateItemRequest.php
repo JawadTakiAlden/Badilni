@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\API\V1\Item;
 
+use App\Types\ImageFlag;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateItemRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,34 @@ class UpdateItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'string|max:255',
+            'description' => 'string',
+            'price' => 'nullable|numeric',
+            'is_active' => 'boolean',
+            'area_id' => 'exists:areas,id',
+            'status' => 'string|in:new,old',
+            'sub_category_id' => [
+                Rule::exists('categories', 'id')->where(function ($query) {
+                    $query->whereNotNull('parent_id');
+                })
+            ],
+            'images' => 'array|min:1',
+            'images.*.imageFile' => [
+                'required_if:images.*.flag,' . ImageFlag::ADD,
+                'image',
+                'mimes:jpg,png,jpeg',
+                'max:3072',
+            ],
+            'images.*.id' => [
+                'required_if:images.*.flag,' . implode(',',[ ImageFlag::DELETE , ImageFlag::UPDATE_IS_DEFAULT]),
+                'numeric',
+                'exists:item_images,id'
+            ],
+            'images.*.is_default' => [
+                'required_if:images.*.flag,' . ImageFlag::UPDATE_IS_DEFAULT,
+                'boolean'
+            ],
+            'images.*.flag' => 'required|numeric|in:'. implode(',', [ImageFlag::DELETE, ImageFlag::ADD, ImageFlag::UPDATE_IS_DEFAULT])
         ];
     }
 }
