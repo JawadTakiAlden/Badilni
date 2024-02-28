@@ -48,7 +48,7 @@ class UpdateItemRequest extends FormRequest
                 'exists:item_images,id'
             ],
             'images.*.is_default' => [
-                'required_if:images.*.flag,' . ImageFlag::UPDATE_IS_DEFAULT,
+                'required_if:images.*.flag,' . implode(',',[ImageFlag::UPDATE_IS_DEFAULT . ImageFlag::ADD]) ,
                 'boolean'
             ],
             'images.*.flag' => 'required|numeric|in:'. implode(',', [ImageFlag::DELETE, ImageFlag::ADD, ImageFlag::UPDATE_IS_DEFAULT])
