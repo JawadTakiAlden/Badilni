@@ -47,7 +47,43 @@ class ItemController extends Controller
         }
     }
 
+    public function myItems(){
+        try {
+            $items = Item::where('user_id' , auth()->user()->id)->get();
+            return $this->success(ItemResource::collection($items));
+        }catch (\Throwable $th){
+            DB::rollBack();
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
+    public function showItem($itemID){
+        try {
+            $item = $this->getItemByID($itemID);
+            if (!$item){
+                return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
+            }
+            return $this->success(ItemResource::make($item));
+        }catch (\Throwable $th){
+            DB::rollBack();
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
     public function getHome(){
+        try {
+            $items = Item::where('is_active' , true)
+                ->where('user_id' , '!=' , auth()->user()->id)
+                ->orderBy('created_at', 'desc')
+                ->limit(10)->get();
+            return $this->success(ItemResource::collection($items));
+        }catch (\Throwable $th){
+            DB::rollBack();
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
+    public function search(){
         try {
             $items = Item::where('is_active' , true)
                 ->where('user_id' , '!=' , auth()->user()->id)
