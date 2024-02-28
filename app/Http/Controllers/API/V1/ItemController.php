@@ -101,6 +101,7 @@ class ItemController extends Controller
                         ItemImage::create([
                            'item_id' => $item->id,
                            'is_default' => $image['is_default'],
+                           'is_active' => $image['is_active'] ?? true,
                            'image' => $image['imageFile']
                         ]);
                     }else if (intval($image['flag']) === ImageFlag::UPDATE_IS_DEFAULT){
