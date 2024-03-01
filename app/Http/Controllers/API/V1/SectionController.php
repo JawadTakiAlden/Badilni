@@ -35,7 +35,7 @@ class SectionController extends Controller
 
     public function getActive(){
         try {
-            $sections = Section::where('is_active')->get();
+            $sections = Section::where('is_active' , true)->get();
             return $this->success(SectionResource::collection($sections));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
