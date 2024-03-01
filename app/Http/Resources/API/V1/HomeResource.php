@@ -15,7 +15,7 @@ class HomeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'sections' => $this
+            'sections' => $this->data
         ];
     }
 }
