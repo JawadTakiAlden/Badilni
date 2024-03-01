@@ -37,6 +37,14 @@ Route::prefix("/v1")->group(function (){
                 Route::patch('/update/{countryID}' , [CountryController::class , 'updateCountry']);
                 Route::delete('/delete/{countryID}' , [CountryController::class , 'delete']);
             });
+
+            Route::prefix('/slider')->group(function (){
+                Route::get('/getAll' , [SliderController::class , 'getAllSlider']);
+                Route::post('/create' , [SliderController::class , 'createSlider']);
+                Route::post('/update/{slide_id}' , [SliderController::class , 'updateSlider']);
+                Route::delete('/delete/{slide_id}' , [SliderController::class , 'deleteSlider']);
+            });
+
             Route::prefix('/cities')->group(function (){
                 Route::get('/getAll' , [CityController::class , 'getAll']);
                 Route::post('/create' , [CityController::class , 'createCity']);
@@ -77,11 +85,7 @@ Route::prefix("/v1")->group(function (){
         });
 
         Route::prefix('/slider')->group(function (){
-            Route::get('/getAll' , [SliderController::class , 'getAllSlider']);
             Route::get('/getHome' , [SliderController::class , 'getHomeSlider']);
-            Route::post('/create' , [SliderController::class , 'createSlider']);
-            Route::post('/update/{slide_id}' , [SliderController::class , 'updateSlider']);
-            Route::delete('/delete/{slide_id}' , [SliderController::class , 'deleteSlider']);
         });
 
         Route::prefix('/categories')->group(function (){
