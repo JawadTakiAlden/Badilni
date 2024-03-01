@@ -7,6 +7,7 @@ use App\Http\Controllers\API\V1\CityController;
 use App\Http\Controllers\API\V1\CountryController;
 use App\Http\Controllers\API\V1\HomeController;
 use App\Http\Controllers\API\V1\ItemController;
+use App\Http\Controllers\API\V1\SectionController;
 use App\Http\Controllers\API\V1\SliderController;
 use App\Http\Controllers\API\V1\SplashController;
 use App\Http\Controllers\API\V1\UserController;
@@ -67,6 +68,12 @@ Route::prefix("/v1")->group(function (){
             Route::prefix('/items')->group(function (){
                 Route::get('/getAll' , [ItemController::class , 'getAll']);
             });
+            Route::prefix('/sections')->group(function (){
+                Route::get('/getAll' , [SectionController::class , 'getAll']);
+                Route::post('/create' , [SectionController::class , 'createSection']);
+                Route::patch('/update/{sectionID}' , [SectionController::class , 'editSection']);
+                Route::delete('/delete/{sectionID}' , [SectionController::class , 'delete']);
+            });
         });
 
         Route::prefix('/auth')->group(function (){
@@ -90,6 +97,10 @@ Route::prefix("/v1")->group(function (){
 
         Route::prefix('/categories')->group(function (){
             Route::get('/getActive' , [CategoryController::class , 'getActiveCategories']);
+        });
+
+        Route::prefix('/sections')->group(function (){
+            Route::get('/getActive' , [SectionController::class , 'getActive']);
         });
 
         Route::prefix('/items')->group(function (){

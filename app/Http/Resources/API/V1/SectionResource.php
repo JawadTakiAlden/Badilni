@@ -18,7 +18,7 @@ class SectionResource extends JsonResource
         return [
           'id' => $this->id,
           'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
-           'is_active' => $this->is_Active
+          'is_active' => $this->is_active
         ];
     }
 }
