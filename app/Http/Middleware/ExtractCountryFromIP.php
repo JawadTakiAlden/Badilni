@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Torann\GeoIP\Facades\GeoIP;
+
 class ExtractCountryFromIP
 {
     /**
@@ -15,10 +16,10 @@ class ExtractCountryFromIP
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $ipAddress = $request->ip();
-        $country = GeoIP::getLocation($request->ip())->country;
-        return $country;
-//        $request->merge(['country_code' => $country]);
-//        return $next($request);
+        $country = GeoIP::getLocation()->getAttribute('country');
+
+        $request->session()->put('country', $country);
+
+        return $next($request);
     }
 }

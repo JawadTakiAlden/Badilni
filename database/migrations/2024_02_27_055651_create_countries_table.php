@@ -17,7 +17,7 @@ return new class extends Migration
             $table->json("title");
             $table->string("flag");
             $table->string("state_key");
-            $table->tinyInteger("is_active")->default(1);
+            $table->boolean("is_active")->default(true);
             $table->boolean('is_default');
             $table->timestamps();
         });

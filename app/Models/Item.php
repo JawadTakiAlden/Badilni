@@ -44,5 +44,9 @@ class Item extends Model
             $query->where('title', 'Like' ,'%'. $search_text . '%')
             ->orWhere('description' ,  'Like' ,'%'. $search_text . '%')
         );
+
+        $query->when($filters['status'] ?? false , fn($query , $status) =>
+            $query->where('status', $status)
+        );
     }
 }
