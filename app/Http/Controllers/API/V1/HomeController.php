@@ -29,7 +29,7 @@ class HomeController extends Controller
                 'sections' => $sections,
                 'categories' => $categories,
                 'sliders' => $sliders
-            ]);
+            ])->first();
 
             return $this->success(HomeResource::make($data));
         }catch (\Throwable $th){
