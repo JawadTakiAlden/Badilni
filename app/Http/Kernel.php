@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminMiddelware;
 use App\Http\Middleware\ExtractCountryFromIP;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -65,6 +66,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'extractCountryFromIP' => ExtractCountryFromIP::class
+        'extractCountryFromIP' => ExtractCountryFromIP::class,
+        'admin' => AdminMiddelware::class
     ];
 }

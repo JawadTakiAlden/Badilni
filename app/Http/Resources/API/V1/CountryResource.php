@@ -20,7 +20,8 @@ class CountryResource extends JsonResource
             'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
             'is_active' => boolval($this->is_active),
             'is_default' => boolval($this->is_default),
-            'country_code' => $this->country_code
+            'country_code' => $this->country_code,
+            'cities' => $this->activeCities
         ];
     }
 }

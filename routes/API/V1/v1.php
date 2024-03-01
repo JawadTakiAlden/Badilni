@@ -26,40 +26,54 @@ Route::prefix("/v1")->group(function (){
     Route::get('/splash' , [SplashController::class , 'getSplashSlides']);
 
     Route::middleware('auth:api')->group(function(){
+
+        Route::middleware('admin')->group(function (){
+            Route::prefix('/users')->group(function (){
+                Route::post('/createAdminAccount' , [UserController::class , 'createAdminAccount']);
+            });
+            Route::prefix('/countries')->group(function (){
+                Route::get('/getAll' , [CountryController::class , 'getAll']);
+                Route::post('/create' , [CountryController::class , 'createCountry']);
+                Route::patch('/update/{countryID}' , [CountryController::class , 'updateCountry']);
+                Route::delete('/delete/{countryID}' , [CountryController::class , 'delete']);
+            });
+            Route::prefix('/cities')->group(function (){
+                Route::get('/getAll' , [CityController::class , 'getAll']);
+                Route::post('/create' , [CityController::class , 'createCity']);
+                Route::patch('/update/{cityID}' , [CityController::class , 'updateCity']);
+                Route::delete('/delete/{cityID}' , [CityController::class , 'delete']);
+            });
+            Route::prefix('/areas')->group(function (){
+                Route::get('/getAll' , [AreaController::class , 'getAll']);
+                Route::post('/create' , [AreaController::class , 'createArea']);
+                Route::patch('/update/{areaID}' , [AreaController::class , 'updateArea']);
+                Route::delete('/delete/{areaID}' , [AreaController::class , 'delete']);
+            });
+            Route::prefix('/categories')->group(function (){
+                Route::get('/getAll' , [CategoryController::class , 'getAllCategories']);
+                Route::post('/createCategory' , [CategoryController::class , 'createCategory']);
+                Route::post('/createSubCategory' , [CategoryController::class , 'createSubCategory']);
+                Route::post('/update/{category_id}' , [CategoryController::class , 'updateCategory']);
+                Route::delete('/delete/{category_id}' , [CategoryController::class , 'deleteCategory']);
+            });
+            Route::prefix('/items')->group(function (){
+                Route::get('/getAll' , [ItemController::class , 'getAll']);
+            });
+        });
+
         Route::prefix('/auth')->group(function (){
             Route::post('/logout', [AuthController::class , 'logout']);
             Route::post('/changePassword', [AuthController::class , 'changePassword']);
         });
 
         Route::prefix('/users')->group(function (){
-            Route::post('/createAdminAccount' , [UserController::class , 'createAdminAccount']);
             Route::get('/profile' , [UserController::class , 'getMyProfile']);
             Route::get('/profileOf/{userID}' , [UserController::class , 'getProfileOfUser']);
             Route::post('/updateProfile/{userID}' , [UserController::class , 'updateProfile']);
         });
 
         Route::prefix('/countries')->group(function (){
-            Route::get('/getAll' , [CountryController::class , 'getAll']);
             Route::get('/getActive' , [CountryController::class , 'getActive']);
-            Route::post('/create' , [CountryController::class , 'createCountry']);
-            Route::patch('/update/{countryID}' , [CountryController::class , 'updateCountry']);
-            Route::delete('/delete/{countryID}' , [CountryController::class , 'delete']);
-        });
-
-        Route::prefix('/cities')->group(function (){
-            Route::get('/getAll' , [CityController::class , 'getAll']);
-            Route::get('/getActive' , [CityController::class , 'getActive']);
-            Route::post('/create' , [CityController::class , 'createCity']);
-            Route::patch('/update/{cityID}' , [CityController::class , 'updateCity']);
-            Route::delete('/delete/{cityID}' , [CityController::class , 'delete']);
-        });
-
-        Route::prefix('/areas')->group(function (){
-            Route::get('/getAll' , [AreaController::class , 'getAll']);
-            Route::get('/getActive' , [AreaController::class , 'getActive']);
-            Route::post('/create' , [AreaController::class , 'createArea']);
-            Route::patch('/update/{areaID}' , [AreaController::class , 'updateArea']);
-            Route::delete('/delete/{areaID}' , [AreaController::class , 'delete']);
         });
 
         Route::prefix('/slider')->group(function (){
@@ -71,12 +85,7 @@ Route::prefix("/v1")->group(function (){
         });
 
         Route::prefix('/categories')->group(function (){
-            Route::get('/getAll' , [CategoryController::class , 'getAllCategories']);
             Route::get('/getActive' , [CategoryController::class , 'getActiveCategories']);
-            Route::post('/createCategory' , [CategoryController::class , 'createCategory']);
-            Route::post('/createSubCategory' , [CategoryController::class , 'createSubCategory']);
-            Route::post('/update/{category_id}' , [CategoryController::class , 'updateCategory']);
-            Route::delete('/delete/{category_id}' , [CategoryController::class , 'deleteCategory']);
         });
 
         Route::prefix('/items')->group(function (){

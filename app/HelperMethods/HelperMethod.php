@@ -24,4 +24,8 @@ class HelperMethod
         $titleValue = $title[$languageKey] ?? $title['en'];
         return $titleValue;
     }
+
+    public function requestUnAuthorizedResponse(){
+        return $this->error(__('messages.v1.middleware.unAuthorized'), '403');
+    }
 }
