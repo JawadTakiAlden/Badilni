@@ -10,6 +10,7 @@ use App\Http\Resources\API\V1\ItemResource;
 use App\HttpResponse\HTTPResponse;
 use App\Models\Item;
 use App\Models\ItemImage;
+use App\Models\Section;
 use App\Types\ImageFlag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -72,11 +73,26 @@ class ItemController extends Controller
 
     public function getHome(){
         try {
-            $items = Item::where('is_active' , true)
-                ->where('user_id' , '!=' , auth()->user()->id)
-                ->orderBy('created_at', 'desc')
-                ->limit(10)->get();
-            return $this->success(ItemResource::collection($items));
+            $section_id = \request('section_id');
+            $section = Section::where('id', $section_id)->first();
+            if (!$section){
+                return $this->helpers->getNotFoundResourceRespone(__('messages.v1.sections.section_not_found'));
+            }
+            $sectionTitle = json_decode($section->title)['en'];
+            if ($sectionTitle === 'newest'){
+                $items = Item::where('is_active' , true)
+                    ->where('user_id' , '!=' , auth()->user()->id)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+                return $this->success(ItemResource::collection($items));
+            }
+            else if ($sectionTitle === 'most viewed'){
+                $items = Item::where('is_active' , true)
+                    ->where('user_id' , '!=' , auth()->user()->id)
+                    ->orderBy('views', 'desc')
+                    ->paginate(10);
+                return $this->success(ItemResource::collection($items));
+            }
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);

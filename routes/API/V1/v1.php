@@ -93,7 +93,6 @@ Route::prefix("/v1")->group(function (){
         });
 
         Route::prefix('/items')->group(function (){
-           Route::get('/getAll' , [ItemController::class , 'getAll']);
            Route::get('/getActive' , [ItemController::class , 'getActive']);
            Route::get('/getHome' , [ItemController::class , 'getHome']);
            Route::get('/search' , [ItemController::class , 'search']);
