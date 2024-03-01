@@ -25,13 +25,13 @@ class HomeController extends Controller
             $sections = Section::where('is_active' , true)->get();
             $categories = Category::where('is_active' , true)->orderBy('sort' , 'desc')->get();
             $sliders = Slider::where('is_active' , true)->where('type'  , 'home')->orderBy('sort' , 'desc')->get();
-            $data = collect([
-                'sections' => $sections,
+            $data = collect()->add([
+               'sections' =>  $sections,
                 'categories' => $categories,
                 'sliders' => $sliders
-            ])->first();
+            ]);
 
-            return $this->success(HomeResource::make($data));
+            return $data;
         }catch (\Throwable $th){
             return $this->helper->getErrorResponse($th);
         }
