@@ -51,8 +51,10 @@ class UserController extends Controller
 
     public function createAdminAccount(CreateAdminAccountRequest $request){
         try {
-            $data = $request->only(array_merge($request->only(['name' , 'email' , 'password' , 'image' , 'language' , 'birthdate' , 'gender' , 'phone']) , ['type' => 'admin']));
-            $user = User::create($data);
+            $user = User::create(array_merge(
+                $request->only(['name' , 'email' , 'password' , 'image' , 'language' , 'birthdate' , 'gender' , 'phone']),
+                ['type' => 'admin']
+            ));
             $user->email_verified_at = now();
             $user->update();
             return $this->success(UserResource::make($user) , __('messages.v1.auth.create_admin_account'));
