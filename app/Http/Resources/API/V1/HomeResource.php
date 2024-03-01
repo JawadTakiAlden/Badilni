@@ -15,9 +15,9 @@ class HomeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'sections' => SectionResource::collection($this->sections),
-            'categories' => CategoryResource::collection($this->categories),
-            'sliders' => SliderResource::collection($this->sliders)
+            'sections' => SectionResource::collection($this->resource['sections']),
+            'categories' => CategoryResource::collection($this->resource['categories']),
+            'sliders' => SliderResource::collection($this->resource['sliders'])
         ];
     }
 }

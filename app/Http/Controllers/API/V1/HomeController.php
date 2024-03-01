@@ -27,14 +27,12 @@ class HomeController extends Controller
             $categories = Category::where('is_active' , true)->orderBy('sort' , 'desc')->get();
             $sliders = Slider::where('is_active' , true)->where('type'  , 'home')->orderBy('sort' , 'desc')->get();
             $collection = new Collection([
-                [
-                    'sections' =>  $sections,
-                    'categories' => $categories,
-                    'sliders' => $sliders
-                ]
+                'sections' => $sections,
+                'categories' => $categories,
+                'sliders' => $sliders
             ]);
 
-            return HomeResource::collection($collection);
+            return new HomeResource($collection);
         }catch (\Throwable $th){
             return $this->helper->getErrorResponse($th);
         }
