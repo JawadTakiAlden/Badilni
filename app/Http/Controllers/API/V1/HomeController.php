@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Section;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
@@ -25,13 +26,15 @@ class HomeController extends Controller
             $sections = Section::where('is_active' , true)->get();
             $categories = Category::where('is_active' , true)->orderBy('sort' , 'desc')->get();
             $sliders = Slider::where('is_active' , true)->where('type'  , 'home')->orderBy('sort' , 'desc')->get();
-            $data = collect()->push([
-               'sections' =>  $sections,
-                'categories' => $categories,
-                'sliders' => $sliders
-            ])->get(['sections','categories' , 'sliders']);
+            $collection = new Collection([
+                [
+                    'sections' =>  $sections,
+                    'categories' => $categories,
+                    'sliders' => $sliders
+                ]
+            ]);
 
-            return HomeResource::collection($data);
+            return HomeResource::collection($collection);
         }catch (\Throwable $th){
             return $this->helper->getErrorResponse($th);
         }
