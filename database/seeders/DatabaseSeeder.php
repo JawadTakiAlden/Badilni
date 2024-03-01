@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Section::create([
-           'title' => [
+           'title' => json_encode([
                'en' => 'most viewed',
                'ar' => 'الاكثر مشاهدة'
-           ],
+           ]),
            'is_active' => true,
            'is_default' => true
         ]);
