@@ -29,7 +29,7 @@ class HomeController extends Controller
                'sections' =>  $sections,
                 'categories' => $categories,
                 'sliders' => $sliders
-            ])->get(['*']);
+            ])->get(['sections','categories' , 'sliders']);
 
             return HomeResource::collection($data);
         }catch (\Throwable $th){
