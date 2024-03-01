@@ -31,7 +31,7 @@ class HomeController extends Controller
                 'sliders' => $sliders
             ]);
 
-            return $data;
+            return HomeResource::collection($data);
         }catch (\Throwable $th){
             return $this->helper->getErrorResponse($th);
         }
