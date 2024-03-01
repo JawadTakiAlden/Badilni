@@ -32,6 +32,7 @@ Route::prefix("/v1")->group(function (){
             Route::prefix('/users')->group(function (){
                 Route::post('/createAdminAccount' , [UserController::class , 'createAdminAccount']);
             });
+
             Route::prefix('/countries')->group(function (){
                 Route::get('/getAll' , [CountryController::class , 'getAll']);
                 Route::post('/create' , [CountryController::class , 'createCountry']);
@@ -52,12 +53,14 @@ Route::prefix("/v1")->group(function (){
                 Route::patch('/update/{cityID}' , [CityController::class , 'updateCity']);
                 Route::delete('/delete/{cityID}' , [CityController::class , 'delete']);
             });
+
             Route::prefix('/areas')->group(function (){
                 Route::get('/getAll' , [AreaController::class , 'getAll']);
                 Route::post('/create' , [AreaController::class , 'createArea']);
                 Route::patch('/update/{areaID}' , [AreaController::class , 'updateArea']);
                 Route::delete('/delete/{areaID}' , [AreaController::class , 'delete']);
             });
+
             Route::prefix('/categories')->group(function (){
                 Route::get('/getAll' , [CategoryController::class , 'getAllCategories']);
                 Route::post('/createCategory' , [CategoryController::class , 'createCategory']);
@@ -65,9 +68,11 @@ Route::prefix("/v1")->group(function (){
                 Route::post('/update/{category_id}' , [CategoryController::class , 'updateCategory']);
                 Route::delete('/delete/{category_id}' , [CategoryController::class , 'deleteCategory']);
             });
+
             Route::prefix('/items')->group(function (){
                 Route::get('/getAll' , [ItemController::class , 'getAll']);
             });
+
             Route::prefix('/sections')->group(function (){
                 Route::get('/getAll' , [SectionController::class , 'getAll']);
                 Route::post('/create' , [SectionController::class , 'createSection']);
