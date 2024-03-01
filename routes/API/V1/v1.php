@@ -108,6 +108,8 @@ Route::prefix("/v1")->group(function (){
             Route::get('/getActive' , [SectionController::class , 'getActive']);
         });
 
+        Route::get('/home' , [HomeController::class , 'getHome']);
+
         Route::prefix('/items')->group(function (){
            Route::get('/getActive' , [ItemController::class , 'getActive']);
            Route::get('/getHome' , [ItemController::class , 'getHome']);
