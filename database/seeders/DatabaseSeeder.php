@@ -66,39 +66,39 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $country1 = Country::create([
-            'title' => json_encode(['en' => 'United States', 'ar' => 'الولايات المتحدة']),
+            'title' => ['en' => 'United States', 'ar' => 'الولايات المتحدة'],
             'country_code' => 'US',
             'is_active' => true,
             'is_default' => false,
         ]);
 
         $country2 = Country::create([
-            'title' => json_encode(['en' => 'United Kingdom', 'ar' => 'المملكة المتحدة']),
+            'title' => ['en' => 'United Kingdom', 'ar' => 'المملكة المتحدة'],
             'country_code' => 'UK',
             'is_active' => true,
             'is_default' => false,
         ]);
 
         $city1 = City::create([
-            'title' => json_encode(['en' => 'New York City' , 'ar' => 'مدينة نيويورك']),
+            'title' => ['en' => 'New York City' , 'ar' => 'مدينة نيويورك'],
             'country_id' => $country1->id,
             'is_active' => true
         ]);
 
         $city2 = City::create([
-            'title' => json_encode(['en' => 'London' , 'ar' => 'لندن']),
+            'title' => ['en' => 'London' , 'ar' => 'لندن'],
             'country_id' => $country2->id,
             'is_active' => true
         ]);
 
         Area::create([
-            'title' => json_encode(['en' => 'Times Square' , 'ar' => 'ساحة تايمز']),
+            'title' => ['en' => 'Times Square' , 'ar' => 'ساحة تايمز'],
             'city_id' => $city1->id,
             'is_active' => true
         ]);
 
          Area::create([
-            'title' => json_encode(['en' => 'Covent Garden' , 'ar' => 'كوفنت غاردن']),
+            'title' => ['en' => 'Covent Garden' , 'ar' => 'كوفنت غاردن'],
             'city_id' => $city2->id,
             'is_active' => true
         ]);
