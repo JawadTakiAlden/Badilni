@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Section;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,7 +48,7 @@ class DatabaseSeeder extends Seeder
             ]),
             'is_active' => true,
             'sort' => 0,
-            'image' => File::get(public_path('seederImage/image.jpg'))
+            'image' => Storage::disk('public')->get('seederImage/image.jpg')
         ]);
 
         $sub_category = Category::create([
@@ -62,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'parent_id' => $category->id,
             'is_active' => true,
             'sort' => 0,
-            'image' => File::get(public_path('seederImage/image.jpg'))
+            'image' => Storage::disk('public')->get('seederImage/image.jpg')
         ]);
 
         $country1 = Country::create([
