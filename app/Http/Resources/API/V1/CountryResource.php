@@ -21,7 +21,7 @@ class CountryResource extends JsonResource
             'is_active' => boolval($this->is_active),
             'is_default' => boolval($this->is_default),
             'country_code' => $this->country_code,
-            'cities' => $this->activeCities
+            'cities' => CityResource::collection($this->activeCities)
         ];
     }
 }

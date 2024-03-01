@@ -21,7 +21,7 @@ class CityResource extends JsonResource
             'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
             'is_active' => boolval($this->is_active),
             'country_name' => $this->country->name,
-            'areas' => $this->areas
+            'areas' => AreaResource::collection($this->activeAreas)
         ];
     }
 }
