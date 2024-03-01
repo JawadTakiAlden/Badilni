@@ -25,7 +25,7 @@ class HomeController extends Controller
             $sections = Section::where('is_active' , true)->get();
             $categories = Category::where('is_active' , true)->orderBy('sort' , 'desc')->get();
             $sliders = Slider::where('is_active' , true)->where('type'  , 'home')->orderBy('sort' , 'desc')->get();
-            $data = collect()->add([
+            $data = collect()->push([
                'sections' =>  $sections,
                 'categories' => $categories,
                 'sliders' => $sliders
