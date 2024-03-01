@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json("title");
             $table->foreignId("country_id")->references('id')->on('countries')->onDelete('cascade');
-            $table->tinyInteger("is_active")->default(1);
+            $table->boolean("is_active")->default(true);
             $table->timestamps();
         });
     }
