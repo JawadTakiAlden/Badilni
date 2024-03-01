@@ -18,14 +18,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        Section::create([
-//           'title' => [
-//               'en' => 'most viewed',
-//               'ar' => 'الاكثر مشاهدة'
-//           ],
-//           'is_active' => true,
-//           'is_default' => true
-//        ]);
+        Section::create([
+           'title' => [
+               'en' => 'most viewed',
+               'ar' => 'الاكثر مشاهدة'
+           ],
+           'is_active' => true,
+           'is_default' => true
+        ]);
 //
 //        Section::create([
 //            'title' => [
