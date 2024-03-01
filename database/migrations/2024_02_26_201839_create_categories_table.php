@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json("title");
             $table->json("description")->nullable();
-            $table->tinyInteger("is_active")->default(1);
+            $table->boolean("is_active")->default(true);
             $table->integer("sort");
             $table->integer('parent_id')->nullable();
             $table->string("image");
