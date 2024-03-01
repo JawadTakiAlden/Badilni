@@ -57,7 +57,7 @@ class CountryController extends Controller
                     'is_default' => false
                 ]);
             }
-            $country = Country::create(array_merge($request->only(['name', 'title', 'flag', 'state_key', 'is_active']) ,['is_default' => $is_default]));
+            $country = Country::create(array_merge($request->only(['title',  'country_code', 'is_active']) ,['is_default' => $is_default]));
             DB::commit();
             return $this->success(CountryResource::make($country),__('messages.v1.country.crete_country'));
         }catch (\Throwable $th){
@@ -77,7 +77,7 @@ class CountryController extends Controller
                         'is_default' => false
                     ]);
             }
-            $country->update($request->only(['name', 'title', 'flag', 'state_key', 'is_active', 'is_default']));
+            $country->update($request->only(['title', 'country_code', 'is_active', 'is_default']));
             return $this->success(CountryResource::make($country) , __("messages.v1.country.update_country"));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);

@@ -23,10 +23,8 @@ class UpdateCountryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:40',
             'title' =>  ['json',new JsonContainsKey()],
-            'flag' => 'string',
-            'state_key' => 'string',
+            'country_code' => 'string',
             'is_active' => 'boolean',
             'is_default' => 'boolean',
         ];

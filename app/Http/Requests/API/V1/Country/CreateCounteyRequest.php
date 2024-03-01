@@ -23,10 +23,8 @@ class CreateCounteyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:40',
             'title' =>  ['required','json',new JsonContainsKey()],
-            'flag' => 'required|string',
-            'state_key' => 'required|string',
+            'country_code' => 'required|string',
             'is_active' => 'required|boolean',
             'is_default' => 'required|boolean',
         ];

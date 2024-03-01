@@ -18,11 +18,9 @@ class CountryResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
-            'name' => $this->name,
             'is_active' => boolval($this->is_active),
             'is_default' => boolval($this->is_default),
-            'flag' => $this->flag,
-            'state_ket' => $this->state_key
+            'country_code' => $this->country_code
         ];
     }
 }
