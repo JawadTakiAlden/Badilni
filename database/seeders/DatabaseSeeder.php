@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             ]),
             'is_active' => true,
             'sort' => 0,
-            'image' => Storage::disk('public')->get('seederImage/image.jpg')
+            'image' => Storage::disk('public')->get(public_path('seederImage/image.jpg'))
         ]);
 
         $sub_category = Category::create([
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'parent_id' => $category->id,
             'is_active' => true,
             'sort' => 0,
-            'image' => Storage::disk('public')->get('seederImage/image.jpg')
+            'image' => Storage::disk('public')->get(public_path('seederImage/image.jpg'))
         ]);
 
         $country1 = Country::create([
