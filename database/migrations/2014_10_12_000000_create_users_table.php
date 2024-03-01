@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('is_active')->default(true);
             $table->string('phone')->nullable();
+            $table->enum('type' , ['admin' , 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });

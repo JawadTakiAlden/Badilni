@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1;
 
 use App\HelperMethods\HelperMethod;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Auth\CreateAdminAccountRequest;
+use App\Http\Requests\API\V1\Auth\SingUpRequest;
 use App\Http\Requests\API\V1\User\UpdateProfileRequest;
 use App\Http\Resources\API\V1\UserResource;
 use App\HttpResponse\HTTPResponse;
@@ -42,6 +44,18 @@ class UserController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.account_account_not_found'));
             }
             return $this->success(UserResource::make($user));
+        }catch (\Throwable $th){
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
+    public function createAdminAccount(CreateAdminAccountRequest $request){
+        try {
+            $data = $request->only(array_merge($request->only(['name' , 'email' , 'password' , 'image' , 'language' , 'birthdate' , 'gender' , 'phone']) , ['type' => 'admin']));
+            $user = User::create($data);
+            $user->email_verified_at = now();
+            $user->update();
+            return $this->success(UserResource::make($user) , __('messages.v1.auth.create_admin_account'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }

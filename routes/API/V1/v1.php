@@ -32,6 +32,7 @@ Route::prefix("/v1")->group(function (){
         });
 
         Route::prefix('/users')->group(function (){
+            Route::post('/createAdminAccount' , [UserController::class , 'createAdminAccount']);
             Route::get('/profile' , [UserController::class , 'getMyProfile']);
             Route::get('/profileOf/{userID}' , [UserController::class , 'getProfileOfUser']);
             Route::post('/updateProfile/{userID}' , [UserController::class , 'updateProfile']);
