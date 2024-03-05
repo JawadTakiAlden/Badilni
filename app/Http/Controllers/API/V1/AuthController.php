@@ -94,6 +94,7 @@ class AuthController extends Controller
                 return $this->error(__('messages.v1.account.account_disabled') , 403);
             }
             if ($user->email_verified_at == null) {
+                $this->GenerateCodeAndSendEmail($user);
                 return $this->error(__('messages.v1.auth.account_not_verified') , 403);
             }
           $token = $user->createToken("UserToken");
