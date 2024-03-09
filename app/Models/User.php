@@ -64,4 +64,12 @@ class User extends Authenticatable
     public function userDevices(){
         return $this->hasMany(UserDevice::class);
     }
+
+    public function notification(){
+        return $this->hasMany(Notification::class , 'notified_user_id');
+    }
+
+    public function unReadNotification(){
+        return $this->notifications()->count();
+    }
 }

@@ -22,7 +22,8 @@ class UserResource extends JsonResource
             'image' => $this->image ? asset($this->image) : null,
             'birthdate' => $this->birthdate,
             'gender' => $this->gender,
-            'language' => $this->language
+            'language' => $this->language,
+            'un_read_notification' => $this->unReadNotification()
         ];
     }
 }

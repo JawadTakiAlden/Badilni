@@ -7,6 +7,7 @@ use App\Http\Controllers\API\V1\CityController;
 use App\Http\Controllers\API\V1\CountryController;
 use App\Http\Controllers\API\V1\HomeController;
 use App\Http\Controllers\API\V1\ItemController;
+use App\Http\Controllers\API\V1\NotificationController;
 use App\Http\Controllers\API\V1\SectionController;
 use App\Http\Controllers\API\V1\SliderController;
 use App\Http\Controllers\API\V1\SplashController;
@@ -122,6 +123,11 @@ Route::prefix("/v1")->group(function (){
            Route::post('/edit/{itemID}' , [ItemController::class , 'editItem']);
            Route::delete('/delete/{itemID}' , [ItemController::class , 'deleteItem']);
            Route::post('/exchange' , [ExchangeController::class , 'exchangeItems']);
+        });
+
+        Route::prefix('/notification')->group(function (){
+            Route::get('/numberOfUnReadNotification' , [NotificationController::class , 'numberOfUnReadNotification']);
+            Route::get('/myNotification' , [NotificationController::class , 'myNotification']);
         });
     });
 });

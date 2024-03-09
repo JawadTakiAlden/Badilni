@@ -69,7 +69,6 @@ class ExchangeController extends Controller
                 DB::rollBack();
                 return $this->error(__('messages.error.unknown_exchange_type'),422);
             }
-
         }catch (\Throwable $throwable){
             DB::rollBack();
             return $this->serverError();
