@@ -23,6 +23,10 @@ class Item extends Model
         return $this->hasMany(ItemImage::class);
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public function scopeFilter($query , array $filters){
         $query->when($filters['country_id'] ?? false , fn($query , $country_id) =>
             $query->whereHas('area' , fn($query) =>

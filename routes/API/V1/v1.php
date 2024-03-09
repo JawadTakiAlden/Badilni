@@ -11,6 +11,7 @@ use App\Http\Controllers\API\V1\SectionController;
 use App\Http\Controllers\API\V1\SliderController;
 use App\Http\Controllers\API\V1\SplashController;
 use App\Http\Controllers\API\V1\UserController;
+use App\Http\Controllers\ExchangeController;
 use Illuminate\Support\Facades\Route;
 Route::prefix("/v1")->group(function (){
     Route::prefix('/auth')->group(function (){
@@ -120,6 +121,7 @@ Route::prefix("/v1")->group(function (){
            Route::post('/add' , [ItemController::class , 'addItem']);
            Route::post('/edit/{itemID}' , [ItemController::class , 'editItem']);
            Route::delete('/delete/{itemID}' , [ItemController::class , 'deleteItem']);
+           Route::post('/exchange' , [ExchangeController::class , 'exchangeItems']);
         });
     });
 });

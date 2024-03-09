@@ -16,4 +16,10 @@ trait HTTPResponse
             'message' => $message,
         ] , $code);
     }
+
+    public function serverError(){
+        return response([
+            'message' => __('messages.error.server_error'),
+        ] , 500);
+    }
 }

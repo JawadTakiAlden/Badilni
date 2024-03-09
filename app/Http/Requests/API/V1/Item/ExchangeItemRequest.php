@@ -11,7 +11,7 @@ class ExchangeItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class ExchangeItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'exchange_type' => 'required|string|in:cash,change',
+            'exchanged_item' => 'required|numeric|exists:items,id',
+            'extra_money' => 'numeric|sometimes',
+            'offer_money' => 'numeric|sometimes',
+            'my_item' => 'required_if:type,change|numeric|exists:items,id',
+            'price' => 'required_if:type,cash|numeric|min:0',
         ];
     }
 }
