@@ -65,11 +65,11 @@ class User extends Authenticatable
         return $this->hasMany(UserDevice::class);
     }
 
-    public function notification(){
+    public function myNotification(){
         return $this->hasMany(Notification::class , 'notified_user_id');
     }
 
     public function unReadNotification(){
-        return $this->notifications->count();
+        return $this->myNotification->count();
     }
 }
