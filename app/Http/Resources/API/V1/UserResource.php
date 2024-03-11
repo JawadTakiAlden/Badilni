@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'birthdate' => $this->birthdate,
             'gender' => $this->gender,
             'language' => $this->language,
-            'un_read_notification' => $this->unReadNotification()
+//            'un_read_notification' => $this->unReadNotification()
         ];
     }
 }
