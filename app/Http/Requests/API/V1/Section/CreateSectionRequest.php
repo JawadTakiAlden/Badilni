@@ -28,7 +28,9 @@ class CreateSectionRequest extends FormRequest
                 'json',
                 new JsonContainsKey()
             ],
-            'is_active' => 'required|boolean'
+            'is_active' => 'required|boolean',
+            'items' => 'array',
+            'items.*' => 'numeric|exists:items,id'
         ];
     }
 }

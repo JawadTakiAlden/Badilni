@@ -27,7 +27,9 @@ class UpdateSectionRequest extends FormRequest
                 'json',
                 new JsonContainsKey()
             ],
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
+            'items' => 'array',
+            'items.*' => 'numeric|exists:items,id'
         ];
     }
 }

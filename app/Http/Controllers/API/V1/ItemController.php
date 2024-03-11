@@ -92,6 +92,8 @@ class ItemController extends Controller
                     ->orderBy('views', 'desc')
                     ->paginate(10);
                 return $this->success(ItemResource::collection($items));
+            }else {
+                return $this->success(ItemResource::collection($section->items));
             }
         }catch (\Throwable $th){
             DB::rollBack();

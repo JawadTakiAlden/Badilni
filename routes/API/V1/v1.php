@@ -5,6 +5,7 @@ use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\CityController;
 use App\Http\Controllers\API\V1\CountryController;
+use App\Http\Controllers\API\V1\ExchangeController;
 use App\Http\Controllers\API\V1\HomeController;
 use App\Http\Controllers\API\V1\ItemController;
 use App\Http\Controllers\API\V1\NotificationController;
@@ -12,7 +13,6 @@ use App\Http\Controllers\API\V1\SectionController;
 use App\Http\Controllers\API\V1\SliderController;
 use App\Http\Controllers\API\V1\SplashController;
 use App\Http\Controllers\API\V1\UserController;
-use App\Http\Controllers\ExchangeController;
 use Illuminate\Support\Facades\Route;
 Route::prefix("/v1")->group(function (){
     Route::prefix('/auth')->group(function (){
@@ -81,6 +81,10 @@ Route::prefix("/v1")->group(function (){
                 Route::patch('/update/{sectionID}' , [SectionController::class , 'editSection']);
                 Route::delete('/delete/{sectionID}' , [SectionController::class , 'delete']);
             });
+
+            Route::prefix('/exchangesOffer')->group(function (){
+                Route::get('/getAll' , [ExchangeController::class , 'getAllExchangeOffers']);
+            });
         });
 
         Route::prefix('/auth')->group(function (){
@@ -123,6 +127,13 @@ Route::prefix("/v1")->group(function (){
            Route::post('/edit/{itemID}' , [ItemController::class , 'editItem']);
            Route::delete('/delete/{itemID}' , [ItemController::class , 'deleteItem']);
            Route::post('/exchange' , [ExchangeController::class , 'exchangeItems']);
+        });
+
+        Route::prefix('/exchangesOffer')->group(function (){
+            Route::get('/get' , [ExchangeController::class , 'getExchangeOffers']);
+            Route::post('/acceptExchange/{exchange}' , [ExchangeController::class , 'acceptExchange']);
+            Route::post('/rejectExchange/{exchange}' , [ExchangeController::class , 'rejectExchange']);
+            Route::post('/cancelExchange/{exchange}' , [ExchangeController::class , 'cancelExchange']);
         });
 
         Route::prefix('/notification')->group(function (){

@@ -10,4 +10,8 @@ class Section extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function items(){
+        return $this->belongsToMany(Item::class , 'item_section' , 'section_id');
+    }
 }

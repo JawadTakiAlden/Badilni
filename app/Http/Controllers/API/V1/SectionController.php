@@ -57,6 +57,9 @@ class SectionController extends Controller
     public function createSection(CreateSectionRequest $request){
         try {
             $section = Section::create($request->only(['title' , 'is_active']));
+            if ($request->items){
+                $section->sync($request->items);
+            }
             return $this->success(SectionResource::make($section) , __('messages.v1.sections.create_section'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
@@ -70,6 +73,9 @@ class SectionController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.section.section_not_found'));
             }
             $section->update($request->only(['title' , 'is_active']));
+            if ($request->items){
+                $section->sync($request->items);
+            }
             return $this->success(SectionResource::make($section) , __('messages.v1.sections.update_section'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);

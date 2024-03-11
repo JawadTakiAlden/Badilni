@@ -17,6 +17,10 @@ return new class extends Migration
             $table->json('my_item')->nullable();
             $table->enum('exchange_type' , ['cash' , 'change']);
             $table->double('price')->nullable();
+            $table->foreignId('exchange_user_id')->nullable()->references('id')->on('users')->onDelete('set null');
+            $table->foreignId('owner_user_id')->nullable()->references('id')->on('users')->onDelete('set null');
+            $table->json('exchange_user');
+            $table->json('owner_user');
             $table->double('extra_money')->nullable();
             $table->double('offer_money')->nullable();
             $table->enum('status' , ['pending' , 'rejected' , 'accepted'])->default('pending');
