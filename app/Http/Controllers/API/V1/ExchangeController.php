@@ -18,7 +18,8 @@ class ExchangeController extends Controller
 
     public function getAllExchangeOffers(){
         try {
-
+            $exchanges = Exchange::all();
+            return $this->success(ExchangeResource::collection($exchanges));
         }catch (\Throwable $th){
             return $this->serverError();
         }
