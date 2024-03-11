@@ -70,6 +70,6 @@ class User extends Authenticatable
     }
 
     public function unReadNotification(){
-        return $this->notifications()->count();
+        return $this->notifications->count();
     }
 }
