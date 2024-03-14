@@ -27,7 +27,6 @@ class ExchangeController extends Controller
 
     public function exchangeItems(ExchangeItemRequest $request){
         try {
-
             $exchange_type = $request->exchange_type;
             $exhanged_item = Item::with(['images','user'])->where('id',$request->exchanged_item)->first();
             if ($exhanged_item->user->id === $request->user()->id){

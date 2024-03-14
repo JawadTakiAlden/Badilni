@@ -98,6 +98,10 @@ Route::prefix("/v1")->group(function (){
             Route::post('/updateProfile/{userID}' , [UserController::class , 'updateProfile']);
         });
 
+        Route::prefix('/areas')->group(function (){
+            Route::get('/getActive' , [AreaController::class , 'getActive']);
+        });
+
         Route::prefix('/countries')->group(function (){
             Route::get('/getActive' , [CountryController::class , 'getActive']);
         });
