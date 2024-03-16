@@ -4,7 +4,10 @@ namespace App\Http\Controllers\API\V1;
 
 use App\HelperMethods\HelperMethod;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\CategoryResource;
 use App\Http\Resources\API\V1\HomeResource;
+use App\Http\Resources\API\V1\SectionResource;
+use App\Http\Resources\API\V1\SliderResource;
 use App\HttpResponse\HTTPResponse;
 use App\Models\Category;
 use App\Models\Section;
@@ -26,13 +29,11 @@ class HomeController extends Controller
             $sections = Section::where('is_active' , true)->get();
             $categories = Category::where('is_active' , true)->orderBy('sort' , 'desc')->get();
             $sliders = Slider::where('is_active' , true)->where('type'  , 'home')->orderBy('sort' , 'desc')->get();
-            $collection = new Collection([
-                'sections' => $sections,
-                'categories' => $categories,
-                'sliders' => $sliders
+            return $this->success([
+               'sections' => SectionResource::collection($sections),
+               'categories' => CategoryResource::collection($categories),
+               'sliders' => SliderResource::collection($sliders)
             ]);
-
-            return new HomeResource($collection);
         }catch (\Throwable $th){
             return $this->helper->getErrorResponse($th);
         }
