@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\AreaController;
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\CityController;
+use App\Http\Controllers\API\V1\ConversationController;
 use App\Http\Controllers\API\V1\CountryController;
 use App\Http\Controllers\API\V1\ExchangeController;
 use App\Http\Controllers\API\V1\HomeController;
@@ -143,6 +144,13 @@ Route::prefix("/v1")->group(function (){
         Route::prefix('/notification')->group(function (){
             Route::get('/numberOfUnReadNotification' , [NotificationController::class , 'numberOfUnReadNotification']);
             Route::get('/myNotification' , [NotificationController::class , 'myNotification']);
+        });
+
+
+        Route::prefix('/chat')->group(function (){
+           Route::get('/myConversation' , [ConversationController::class , 'myConversation']);
+           Route::get('/conversation/{conversation}' , [ConversationController::class , 'showConversation']);
+           Route::post('/sendMessage' , [ConversationController::class , 'sendMessage']);
         });
     });
 });
