@@ -19,6 +19,9 @@ class HelperMethod
     }
 
     public static function extractValueDependOnLanguageOfRequestUser($jsonValue){
+        if (!$jsonValue){
+            return null;
+        }
         $languageKey = auth()->user()->language ?? 'en';
         $title = json_decode($jsonValue, true);
         $titleValue = $title[$languageKey] ?? $title['en'];
