@@ -24,7 +24,11 @@ class HelperMethod
         }
         $languageKey = auth()->user()->language ?? 'en';
         $title = json_decode($jsonValue, true);
-        $titleValue = $title[$languageKey] ?? $title['en'];
+        if (isset($title[$languageKey])){
+            $titleValue = $title[$languageKey];
+        }else{
+            $titleValue = $title['en'];
+        }
         return $titleValue;
     }
 
