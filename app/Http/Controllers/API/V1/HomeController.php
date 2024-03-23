@@ -30,9 +30,9 @@ class HomeController extends Controller
             $categories = Category::where('is_active' , true)->orderBy('sort' , 'desc')->get();
             $sliders = Slider::where('is_active' , true)->where('type'  , 'home')->orderBy('sort' , 'desc')->get();
             return $this->success([
-               'sections' => SectionResource::collection($sections),
-               'categories' => CategoryResource::collection($categories),
-//               'sliders' => SliderResource::collection($sliders)
+//               'sections' => SectionResource::collection($sections),
+//               'categories' => CategoryResource::collection($categories),
+               'sliders' => SliderResource::collection($sliders)
             ]);
 //            return $this->success([
 //                'sections' =>$sections,
