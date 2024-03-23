@@ -19,7 +19,6 @@ class SliderResource extends JsonResource
             'id' => $this->id,
             'type' => $this->type,
             'image' => asset($this->image),
-//            'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
             'title' => $this->title,
             'sort' => intval($this->sort),
             'is_active' => boolval($this->is_active)
