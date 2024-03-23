@@ -135,9 +135,9 @@ Route::prefix("/v1")->group(function (){
 
         Route::prefix('/exchangesOffer')->group(function (){
             Route::get('/get' , [ExchangeController::class , 'getExchangeOffers']);
-            Route::post('/acceptExchange/{exchange}' , [ExchangeController::class , 'acceptExchange']);
-            Route::post('/rejectExchange/{exchange}' , [ExchangeController::class , 'rejectExchange']);
-            Route::post('/cancelExchange/{exchange}' , [ExchangeController::class , 'cancelExchange']);
+            Route::patch('/acceptExchange/{exchange}' , [ExchangeController::class , 'acceptExchange']);
+            Route::patch('/rejectExchange/{exchange}' , [ExchangeController::class , 'rejectExchange']);
+            Route::patch('/cancelExchange/{exchange}' , [ExchangeController::class , 'cancelExchange']);
         });
 
         Route::prefix('/notification')->group(function (){
