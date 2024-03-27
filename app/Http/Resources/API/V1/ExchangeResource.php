@@ -18,7 +18,7 @@ class ExchangeResource extends JsonResource
             'id' => $this->id,
             'exchange_user' => UserResource::make(json_decode($this->exchange_user)),
             'owner_user' => UserResource::make(json_decode($this->owner_user)),
-            'my_item' => ItemResource::make(json_decode($this->my_item)),
+            'my_item' => $this->my_item ? ItemResource::make(json_decode($this->my_item)) : null,
             'exchanged_item' => ItemResource::make(json_decode($this->exchanged_item)),
             'exchange_user_id' => $this->exchange_user_id,
             'owner_user_id' => $this->owner_user_id,
