@@ -17,15 +17,15 @@ class ExchangeResource extends JsonResource
     public function toArray(Request $request): array
     {
         $exchange_user = json_decode($this->exchange_user);
-        $exchange_user = User::where('id' , $exchange_user['id'])->first();
+        $exchange_user = User::where('id' , $exchange_user->id)->first();
         $owner_user = json_decode($this->owner_user);
-        $owner_user = User::where('id' , $owner_user['id'])->first();
+        $owner_user = User::where('id' , $owner_user->id)->first();
         $exchanged_item = json_decode($this->exchanged_item);
-        $exchanged_item = Item::where('id' , $exchanged_item['id'])->first();
+        $exchanged_item = Item::where('id' , $exchanged_item->id)->first();
 
         if ($this->my_item) {
             $my_item = json_decode($this->my_item);
-            $my_item = Item::where('id' , $my_item['id'])->first();
+            $my_item = Item::where('id' , $my_item->id)->first();
         }
 
         return [
