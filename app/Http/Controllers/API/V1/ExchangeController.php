@@ -106,8 +106,10 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.error.unknown_exchange_filter'),422);
             }
         }catch (\Throwable $throwable){
-            return $this->serverError();
+//            return $this->serverError();
+            return  $throwable->getMessage();
         }
+
     }
 
     public function acceptExchange($exchangeID){
