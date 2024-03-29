@@ -45,7 +45,7 @@ class CategoryController extends Controller
 
     public function createCategory(CreateCategoryRequest $request){
         try {
-            $category = Category::create($request->only(['title' , 'description' , 'parent_id' , 'is_active' , 'sort' , 'image']));
+            $category = Category::create($request->only(['title' , 'description', 'is_active' , 'sort' , 'image']));
             return $this->success(CategoryResource::make($category) , __('messages.v1.category.create_category'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);

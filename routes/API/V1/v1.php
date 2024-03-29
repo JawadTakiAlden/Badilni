@@ -66,7 +66,6 @@ Route::prefix("/v1")->group(function (){
             Route::prefix('/categories')->group(function (){
                 Route::get('/getAll' , [CategoryController::class , 'getAllCategories']);
                 Route::post('/createCategory' , [CategoryController::class , 'createCategory']);
-                Route::post('/createSubCategory' , [CategoryController::class , 'createSubCategory']);
                 Route::post('/update/{category_id}' , [CategoryController::class , 'updateCategory']);
                 Route::delete('/delete/{category_id}' , [CategoryController::class , 'deleteCategory']);
             });

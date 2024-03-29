@@ -29,11 +29,9 @@ class CreateItemRequest extends FormRequest
             'is_active' => 'boolean',
             'area_id' => 'required|exists:areas,id',
             'status' => 'required|string|in:new,old',
-            'sub_category_id' => [
+            'category_id' => [
                 'required',
-                Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->whereNotNull('parent_id');
-                })
+                Rule::exists('categories', 'id')
             ],
             'images' => 'required|array|min:1',
             'images.*.imageFile' => 'required|image|mimes:jpg,png,jpeg|max:3072',

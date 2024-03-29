@@ -119,7 +119,7 @@ class ItemController extends Controller
         try {
             DB::beginTransaction();
             $data = array_merge(
-                $request->only(['title' , 'area_id' , 'status', 'sub_category_id' , 'is_active' , 'price' , 'description']),
+                $request->only(['title' , 'area_id' , 'status', 'category_id' , 'is_active' , 'price' , 'description']),
                 ['user_id' => $request->user()->id]
             );
             $item = Item::create($data);

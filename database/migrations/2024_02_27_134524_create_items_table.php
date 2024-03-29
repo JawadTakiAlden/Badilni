@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status' , ['old' , 'new']);
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->foreignId('area_id')->nullable()->references('id')->on('areas')->onDelete('set null');
-            $table->foreignId('sub_category_id')->nullable()->references('id')->on('categories')->onDelete('set null');
+            $table->foreignId('category_id')->nullable()->references('id')->on('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

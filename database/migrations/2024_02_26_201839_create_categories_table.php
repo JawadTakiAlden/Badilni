@@ -17,7 +17,6 @@ return new class extends Migration
             $table->json("description")->nullable();
             $table->boolean("is_active")->default(true);
             $table->integer("sort");
-            $table->integer('parent_id')->nullable();
             $table->string("image")->nullable();
             $table->timestamps();
         });
