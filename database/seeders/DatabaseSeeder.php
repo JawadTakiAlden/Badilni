@@ -68,14 +68,12 @@ class DatabaseSeeder extends Seeder
             'title' => json_encode(['en' => 'United States', 'ar' => 'الولايات المتحدة']),
             'country_code' => 'US',
             'is_active' => true,
-            'is_default' => false,
         ]);
 
         $country2 = Country::create([
             'title' => json_encode(['en' => 'United Kingdom', 'ar' => 'المملكة المتحدة']),
             'country_code' => 'UK',
             'is_active' => true,
-            'is_default' => false,
         ]);
 
         $city1 = City::create([
