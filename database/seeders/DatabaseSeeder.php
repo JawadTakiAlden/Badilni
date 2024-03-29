@@ -50,19 +50,6 @@ class DatabaseSeeder extends Seeder
             'sort' => 0,
         ]);
 
-        $sub_category = Category::create([
-            'title' => json_encode([
-                'en' => "Legion 5",
-                'ar' => 'ليجن 5'
-            ]),
-            'description' => json_encode([
-                'en' => 'legion series the most powerful series coming from lenovo',
-                'ar' => 'سلسة لابتوبات لليجن هي من اقوى الساسل التي تأتي من شركة لينوفو العالمية'
-            ]),
-            'parent_id' => $category->id,
-            'is_active' => true,
-            'sort' => 0,
-        ]);
 
         $country1 = Country::create([
             'title' => json_encode(['en' => 'United States', 'ar' => 'الولايات المتحدة']),
