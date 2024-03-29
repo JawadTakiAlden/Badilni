@@ -133,7 +133,7 @@ class ItemController extends Controller
                 }
             }
             DB::commit();
-            return $this->success(ItemResource::make($item) , __('messages.v1.items.item_added_successfully'));
+            return $this->success($item , __('messages.v1.items.item_added_successfully'));
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);
