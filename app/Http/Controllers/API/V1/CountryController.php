@@ -46,18 +46,8 @@ class CountryController extends Controller
 
     public function createCountry(CreateCounteyRequest $request){
         try {
-            $count = Country::count();
-            $is_default = $request->is_default;
-            if ($count === 0 || !$is_default){
-                $is_default = true;
-            }
             DB::beginTransaction();
-            if ($count > 0 && $is_default){
-                Country::where('is_default' , true)->update([
-                    'is_default' => false
-                ]);
-            }
-            $country = Country::create(array_merge($request->only(['title',  'country_code', 'is_active']) ,['is_default' => $is_default]));
+            $country = Country::create($request->only(['title',  'country_code', 'is_active']));
             DB::commit();
             return $this->success(CountryResource::make($country),__('messages.v1.country.crete_country'));
         }catch (\Throwable $th){

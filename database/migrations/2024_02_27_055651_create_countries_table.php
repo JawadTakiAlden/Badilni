@@ -16,7 +16,6 @@ return new class extends Migration
             $table->json("title");
             $table->string("country_code");
             $table->boolean("is_active")->default(true);
-            $table->boolean('is_default');
             $table->timestamps();
         });
     }

@@ -26,7 +26,6 @@ class CreateCounteyRequest extends FormRequest
             'title' =>  ['required','json',new JsonContainsKey()],
             'country_code' => 'required|string',
             'is_active' => 'required|boolean',
-            'is_default' => 'required|boolean',
         ];
     }
 }
