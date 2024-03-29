@@ -122,17 +122,16 @@ class ItemController extends Controller
                 $request->only(['title' , 'area_id' , 'status', 'sub_category_id' , 'is_active' , 'price' , 'description']),
                 ['user_id' => $request->user()->id]
             );
-            return $data;
             $item = Item::create($data);
-//            if ($request->images){
-//                foreach ($request->images as $image){
-//                    ItemImage::create([
-//                       'image' =>  $image['imageFile'],
-//                       'is_default' => $image['is_default'],
-//                       'item_id' => $item->id
-//                    ]);
-//                }
-//            }
+            if ($request->images){
+                foreach ($request->images as $image){
+                    ItemImage::create([
+                       'image' =>  $image['imageFile'],
+                       'is_default' => $image['is_default'],
+                       'item_id' => $item->id
+                    ]);
+                }
+            }
             DB::commit();
             return $this->success(ItemResource::make($item) , __('messages.v1.items.item_added_successfully'));
         }catch (\Throwable $th){
