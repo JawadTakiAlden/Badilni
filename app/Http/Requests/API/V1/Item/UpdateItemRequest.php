@@ -30,10 +30,8 @@ class UpdateItemRequest extends FormRequest
             'is_active' => 'boolean',
             'area_id' => 'exists:areas,id',
             'status' => 'string|in:new,old',
-            'sub_category_id' => [
-                Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->whereNotNull('parent_id');
-                })
+            'category_id' => [
+                Rule::exists('categories', 'id')
             ],
             'images' => 'array|min:1',
             'images.*.imageFile' => [

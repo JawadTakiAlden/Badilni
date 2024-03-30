@@ -19,15 +19,23 @@ class ItemResource extends JsonResource
         $base = [
             'id' => $this->id,
             'title' => $this->title,
-            'price' => $this->price,
-            'category_name' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->category->title),
-            'default_image' => ItemImageResource::make($this->images->where('is_default' , true)->first())
         ];
+
 
         if ($request->query('page') === 'widthDetails'){
             $base = array_merge($base , [
                'images' => $this->images,
                 'description' => $this->description,
+            ]);
+        }else if ($request->query('page') === 'home'){
+            $base = array_merge($base , [
+                'price' => $this->price,
+                'category_name' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->category->title),
+                'default_image' => ItemImageResource::make($this->images->where('is_default' , true)->first())
+            ]);
+        }else if ($request->query('page') === 'my_items'){
+            $base = array_merge($base , [
+                'default_image' => ItemImageResource::make($this->images->where('is_default' , true)->first())
             ]);
         }
 

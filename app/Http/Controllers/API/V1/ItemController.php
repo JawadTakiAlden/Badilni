@@ -133,7 +133,7 @@ class ItemController extends Controller
                 }
             }
             DB::commit();
-            return $this->success($item , __('messages.v1.items.item_added_successfully'));
+            return $this->success(null , __('messages.v1.items.item_added_successfully'));
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);
@@ -147,7 +147,7 @@ class ItemController extends Controller
             if (!$item){
                 return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
             }
-            $item->update($request->only(['title' , 'description' , 'area_id' ,'status' , 'sub_category_id' , 'is_active' , 'price']));
+            $item->update($request->only(['title' , 'description' , 'area_id' ,'status' , 'category_id' , 'is_active' , 'price']));
             if ($request->images){
                 foreach ($request->images as $image){
                     if (intval($image['flag']) === ImageFlag::DELETE){
@@ -169,7 +169,7 @@ class ItemController extends Controller
                 }
             }
             DB::commit();
-            return $this->success(ItemResource::make($item) , __('messages.v1.items.item_deleted_successfully'));
+            return $this->success(null , __('messages.v1.items.item_deleted_successfully'));
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);
