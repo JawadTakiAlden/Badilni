@@ -153,7 +153,7 @@ class ExchangeController extends Controller
                 'status' => 'rejected'
             ]);
 
-            return $this->success(ExchangeResource::make($exchange) , __('messages.exchange_rejected'));
+            return $this->success(null , __('messages.exchange_rejected'));
         }catch (\Throwable $th){
             return $this->serverError();
         }
@@ -170,7 +170,7 @@ class ExchangeController extends Controller
                 return $this->error(__('cant_cancel_other_exchanges') , 403);
             }
             $exchange->delete();
-            return $this->success(ExchangeResource::make($exchange) , __('messages.exchange_canceled'));
+            return $this->success(null , __('messages.exchange_canceled'));
         }catch (\Throwable $th){
             return $this->serverError();
         }

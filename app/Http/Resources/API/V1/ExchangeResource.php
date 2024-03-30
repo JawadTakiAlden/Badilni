@@ -24,27 +24,48 @@ class ExchangeResource extends JsonResource
         $exchanged_item = json_decode($this->exchanged_item);
         $exchanged_item = Item::where('id' , $exchanged_item->id)->first();
 
+
+
         if ($this->my_item) {
             $my_item = json_decode($this->my_item);
             $my_item = Item::where('id' , $my_item->id)->first();
         }
 
-        $data = [
+        $baseData = [
             'id' => $this->id,
-            'exchange_user' => $exchange_user->name,
-            'owner_user_name' => $owner_user->name,
-            'my_item' => $this->my_item ? [
-                'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->title),
-                'description' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->description),
-            ] : null,
-            'exchanged_item' => ItemResource::make($exchanged_item),
-            'exchange_user_id' => $this->exchange_user_id,
-            'owner_user_id' => $this->owner_user_id,
+            'exchange_type' => $this->exchange_type,
+            'price' => $this->price,
             'extra_money' => $this->extra_money,
             'offer_money' => $this->offer_modey,
-            'price' => $this->price,
-            'exchange_type' => $this->exchange_type
+            'exchanged_item' => [
+                'id' => $exchanged_item->id,
+                'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->title),
+                'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->description),
+                'image' => $exchanged_item->images->where('is_default' , true)->first()->image,
+                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->catgeoy->title)
+            ],
+            'my_item' => $my_item ? [
+                'id' => $my_item->id,
+                'title' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->title),
+                'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->description),
+                'image' => $my_item->images->where('is_default' , true)->first()->image,
+                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->catgeoy->title)
+            ] : null,
+            'exchange_user' => [
+                'id' => $exchange_user->id,
+                'name' => $exchange_user->name,
+                'image' => $exchange_user->image,
+                'gender' => $exchange_user->gender,
+                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchange_user->country->title)
+            ],
+            'owner_user' => [
+                'id' => $owner_user->id,
+                'name' => $owner_user->name,
+                'image' => $owner_user->image,
+                'gender' => $owner_user->gender,
+                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($owner_user->country->title)
+            ],
         ];
-        return $data;
+        return $baseData;
     }
 }
