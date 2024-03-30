@@ -17,7 +17,6 @@ class ItemImageResource extends JsonResource
         return [
             'id' => $this->id,
             'image' => asset($this->image),
-            'is_default' => $this->is_default
         ];
     }
 }

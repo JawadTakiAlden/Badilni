@@ -78,7 +78,7 @@ class ItemController extends Controller
             if (!$section){
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.sections.section_not_found'));
             }
-            $sectionTitle = json_decode($section->title)['en'];
+            $sectionTitle = json_decode($section->title)->en;
             if ($sectionTitle === 'newest'){
                 $items = Item::where('is_active' , true)
                     ->where('user_id' , '!=' , auth()->user()->id)

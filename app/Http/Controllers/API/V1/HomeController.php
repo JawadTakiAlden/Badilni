@@ -34,11 +34,6 @@ class HomeController extends Controller
                'categories' => CategoryResource::collection($categories),
                'sliders' => SliderResource::collection($sliders)
             ]);
-//            return $this->success([
-//                'sections' =>$sections,
-//                'categories' =>$categories,
-//                'sliders' => $sliders,
-//            ]);
         }catch (\Throwable $th){
             return $this->helper->getErrorResponse($th);
         }

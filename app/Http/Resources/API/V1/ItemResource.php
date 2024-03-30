@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\API\V1;
 
+use App\HelperMethods\HelperMethod;
+use App\Models\ItemImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,16 +16,21 @@ class ItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $base = [
             'id' => $this->id,
             'title' => $this->title,
-            'description' => $this->description,
-            'area' => AreaResource::make($this->area),
-            'sub_category' => CategoryResource::make($this->subCategory),
-            'category' => CategoryResource::make($this->subCategory->category),
-            'status' => $this->status,
-            'is_active' => boolval($this->is_active),
-            'images' => ItemImageResource::collection($this->images),
+            'price' => $this->price,
+            'category_name' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->category->title),
+            'default_image' => ItemImageResource::make($this->images->where('is_default' , true)->first())
         ];
+
+        if ($request->query('page') === 'widthDetails'){
+            $base = array_merge($base , [
+               'images' => $this->images,
+                'description' => $this->description,
+            ]);
+        }
+
+        return $base;
     }
 }
