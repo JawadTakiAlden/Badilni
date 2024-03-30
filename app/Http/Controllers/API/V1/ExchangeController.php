@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\HelperMethods\HelperMethod;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Item\ExchangeItemRequest;
 use App\Http\Resources\API\V1\ExchangeResource;
@@ -29,20 +30,39 @@ class ExchangeController extends Controller
         try {
             $exchange_type = $request->exchange_type;
             $exhanged_item = Item::with(['images','user'])->where('id',$request->exchanged_item)->first();
-            if ($exhanged_item->user->id === $request->user()->id){
+            if ($exhanged_item->user_id === $request->user()->id){
                 return $this->error(__('messages.error.exchange_with_yourself' , 422));
             }
             DB::beginTransaction();
-            if ($exchange_type === 'chas'){
+            $owner_user = $exhanged_item->user;
+            $exchange_user = $request->user();
+            if ($exchange_type === 'cash'){
                 $data = [
-                  'exchanged_item' => json_encode($exhanged_item),
+                    'exchanged_item' => json_encode([
+                        'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
+                        'title' => $exhanged_item->title,
+                        'description' => $exhanged_item->description,
+                        'category_name' => $exhanged_item->catgeory->title
+                    ]),
                   'exchange_type' => $exchange_type,
-                  'exchange_user_id' => auth()->user()->id,
-                  'owner_user_id' => $exhanged_item->user->id,
-                  'exchange_user' => auth()->user(),
-                  'owner_user' => $exhanged_item->user,
+                  'exchange_user_id' => $request->user()->id,
+                  'owner_user_id' => $exhanged_item->user_id,
+                    'exchange_user' => json_encode([
+                        'id' => $owner_user->id,
+                        'name' => $exchange_user->name,
+                        'image' => $exchange_user->image,
+                        'gender' => $exchange_user->gender,
+                        'location' => $exchange_user->country->title
+                    ]),
+                    'owner_user' => json_encode([
+                        'id' => $owner_user->id,
+                        'name' => $owner_user->name,
+                        'image' => $owner_user->image,
+                        'gender' => $owner_user->gender,
+                        'location' => $owner_user->country->title
+                    ]),
                 ];
-                $data = array_merge($data, $request->only(['price']));
+                $data = array_merge($data, $request->get('price'));
                 $exchange = Exchange::create($data);
                 Notification::create([
                    'title' => json_encode([
@@ -57,16 +77,34 @@ class ExchangeController extends Controller
                 ]);
                 DB::commit();
                 return $this->success($exchange , __('exchanged_asked_successfully'));
-            }else if ($exchange_type === 'change'){
+            }
+            else if ($exchange_type === 'change'){
                 $my_item = Item::with(['images' , 'user'])->where('id' , $request->my_item)->first();
+
                 $data = [
-                    'exchanged_item' => json_encode($exhanged_item),
-                    'my_item' => json_encode($my_item),
+                    'exchanged_item' => json_encode([
+                        'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
+                        'title' => $exhanged_item->title,
+                        'description' => $my_item->description,
+                        'category_name' => $my_item->catgeory->title
+                    ]),
+                    'my_item' => json_encode([
+                        'image' => $my_item->images->where('is_default' , true)->first()->image,
+                        'title' => $my_item->title,
+                        'description' => $my_item->description,
+                        'category_name' => $my_item->catgeory->title
+                    ]),
                     'exchange_type' => $exchange_type,
-                    'exchange_user_id' => auth()->user()->id,
+                    'exchange_user_id' => $request->user()->id,
                     'owner_user_id' => $exhanged_item->user->id,
-                    'exchange_user' => auth()->user(),
-                    'owner_user' => $exhanged_item->user,
+                    'exchange_user' => json_encode([
+                        'name' => $exchange_user->name,
+                        'image' => $exchange_user->image
+                    ]),
+                    'owner_user' => json_encode([
+                        'name' => $owner_user->name,
+                        'image' => $owner_user->image
+                    ]),
                 ];
                 $data = array_merge($data, $request->only(['extra_money' , 'offer_money']));
                 $exchange = Exchange::create($data);

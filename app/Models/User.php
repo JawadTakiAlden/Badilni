@@ -72,4 +72,8 @@ class User extends Authenticatable
     public function unReadNotification(){
         return $this->myNotification->count();
     }
+
+    public function country(){
+        return $this->belongsTo(Country::class);
+    }
 }
