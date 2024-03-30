@@ -79,22 +79,23 @@ class ItemController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.sections.section_not_found'));
             }
             $sectionTitle = json_decode($section->title)->en;
-            if ($sectionTitle === 'newest'){
-                $items = Item::where('is_active' , true)
-                    ->where('user_id' , '!=' , auth()->user()->id)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10);
-                return $this->success(ItemResource::collection($items));
-            }
-            else if ($sectionTitle === 'most viewed'){
-                $items = Item::where('is_active' , true)
-                    ->where('user_id' , '!=' , auth()->user()->id)
-                    ->orderBy('views', 'desc')
-                    ->paginate(10);
-                return $this->success(ItemResource::collection($items));
-            }else {
-                return $this->success(ItemResource::collection($section->items));
-            }
+            return  $sectionTitle;
+//            if ($sectionTitle === 'newest'){
+//                $items = Item::where('is_active' , true)
+//                    ->where('user_id' , '!=' , auth()->user()->id)
+//                    ->orderBy('created_at', 'desc')
+//                    ->paginate(10);
+//                return $this->success(ItemResource::collection($items));
+//            }
+//            else if ($sectionTitle === 'most viewed'){
+//                $items = Item::where('is_active' , true)
+//                    ->where('user_id' , '!=' , auth()->user()->id)
+//                    ->orderBy('views', 'desc')
+//                    ->paginate(10);
+//                return $this->success(ItemResource::collection($items));
+//            }else {
+//                return $this->success(ItemResource::collection($section->items));
+//            }
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);
