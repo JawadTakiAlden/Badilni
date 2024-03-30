@@ -30,6 +30,9 @@ class ExchangeController extends Controller
         try {
             $exchange_type = $request->exchange_type;
             $exhanged_item = Item::with(['images','user'])->where('id',$request->exchanged_item)->first();
+            if (!$exhanged_item){
+                return $this->error(__('messages.error.item_not_found' , 404));
+            }
             if ($exhanged_item->user_id === $request->user()->id){
                 return $this->error(__('messages.error.exchange_with_yourself' , 422));
             }
@@ -45,10 +48,10 @@ class ExchangeController extends Controller
                         'category_name' => $exhanged_item->catgeory->title
                     ]),
                   'exchange_type' => $exchange_type,
-                  'exchange_user_id' => $request->user()->id,
+                  'exchange_user_id' => $exchange_user->id,
                   'owner_user_id' => $exhanged_item->user_id,
                     'exchange_user' => json_encode([
-                        'id' => $owner_user->id,
+                        'id' => $exchange_user->id,
                         'name' => $exchange_user->name,
                         'image' => $exchange_user->image,
                         'gender' => $exchange_user->gender,
@@ -95,15 +98,21 @@ class ExchangeController extends Controller
                         'category_name' => $my_item->catgeory->title
                     ]),
                     'exchange_type' => $exchange_type,
-                    'exchange_user_id' => $request->user()->id,
+                    'exchange_user_id' => $exchange_user->id,
                     'owner_user_id' => $exhanged_item->user->id,
                     'exchange_user' => json_encode([
+                        'id' => $exchange_user->id,
                         'name' => $exchange_user->name,
-                        'image' => $exchange_user->image
+                        'image' => $owner_user->image,
+                        'gender' => $owner_user->gender,
+                        'location' => $owner_user->country->title
                     ]),
                     'owner_user' => json_encode([
+                        'id' => $owner_user->id,
                         'name' => $owner_user->name,
-                        'image' => $owner_user->image
+                        'image' => $owner_user->image,
+                        'gender' => $owner_user->gender,
+                        'location' => $owner_user->country->title
                     ]),
                 ];
                 $data = array_merge($data, $request->only(['extra_money' , 'offer_money']));
