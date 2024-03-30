@@ -39,101 +39,61 @@ class ExchangeController extends Controller
             DB::beginTransaction();
             $owner_user = $exhanged_item->user;
             $exchange_user = $request->user();
+            $data = [
+                'exchanged_item' => json_encode([
+                    'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
+                    'title' => $exhanged_item->title,
+                    'description' => $exhanged_item->description,
+                    'category_name' => $exhanged_item->catgeory->title
+                ]),
+                'exchange_type' => $exchange_type,
+                'exchange_user_id' => $exchange_user->id,
+                'owner_user_id' => $exhanged_item->user_id,
+                'exchange_user' => json_encode([
+                    'id' => $exchange_user->id,
+                    'name' => $exchange_user->name,
+                    'image' => $exchange_user->image,
+                    'gender' => $exchange_user->gender,
+                    'location' => $exchange_user->country->title
+                ]),
+                'owner_user' => json_encode([
+                    'id' => $owner_user->id,
+                    'name' => $owner_user->name,
+                    'image' => $owner_user->image,
+                    'gender' => $owner_user->gender,
+                    'location' => $owner_user->country->title
+                ]),
+            ];
             if ($exchange_type === 'cash'){
-                $data = [
-                    'exchanged_item' => json_encode([
-                        'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
-                        'title' => $exhanged_item->title,
-                        'description' => $exhanged_item->description,
-                        'category_name' => $exhanged_item->catgeory->title
-                    ]),
-                  'exchange_type' => $exchange_type,
-                  'exchange_user_id' => $exchange_user->id,
-                  'owner_user_id' => $exhanged_item->user_id,
-                    'exchange_user' => json_encode([
-                        'id' => $exchange_user->id,
-                        'name' => $exchange_user->name,
-                        'image' => $exchange_user->image,
-                        'gender' => $exchange_user->gender,
-                        'location' => $exchange_user->country->title
-                    ]),
-                    'owner_user' => json_encode([
-                        'id' => $owner_user->id,
-                        'name' => $owner_user->name,
-                        'image' => $owner_user->image,
-                        'gender' => $owner_user->gender,
-                        'location' => $owner_user->country->title
-                    ]),
-                ];
                 $data = array_merge($data, $request->get('price'));
-                $exchange = Exchange::create($data);
-                Notification::create([
-                   'title' => json_encode([
-                       "en" => "title of notification",
-                       "ar" => "عنوان الاشعار"
-                   ]),
-                    "body" => json_encode([
-                        "en" => "body of notification",
-                        "ar" => "موضوع الاشعار"
-                    ]),
-                    'notified_user_id' => $exhanged_item->user->id
-                ]);
-                DB::commit();
-                return $this->success($exchange , __('exchanged_asked_successfully'));
             }
             else if ($exchange_type === 'change'){
                 $my_item = Item::with(['images' , 'user'])->where('id' , $request->my_item)->first();
-
-                $data = [
-                    'exchanged_item' => json_encode([
-                        'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
-                        'title' => $exhanged_item->title,
-                        'description' => $my_item->description,
-                        'category_name' => $my_item->catgeory->title
-                    ]),
+                $data = array_merge($data, $request->only(['extra_money' , 'offer_money']));
+                $data = array_merge($data, [
                     'my_item' => json_encode([
                         'image' => $my_item->images->where('is_default' , true)->first()->image,
                         'title' => $my_item->title,
                         'description' => $my_item->description,
                         'category_name' => $my_item->catgeory->title
                     ]),
-                    'exchange_type' => $exchange_type,
-                    'exchange_user_id' => $exchange_user->id,
-                    'owner_user_id' => $exhanged_item->user->id,
-                    'exchange_user' => json_encode([
-                        'id' => $exchange_user->id,
-                        'name' => $exchange_user->name,
-                        'image' => $owner_user->image,
-                        'gender' => $owner_user->gender,
-                        'location' => $owner_user->country->title
-                    ]),
-                    'owner_user' => json_encode([
-                        'id' => $owner_user->id,
-                        'name' => $owner_user->name,
-                        'image' => $owner_user->image,
-                        'gender' => $owner_user->gender,
-                        'location' => $owner_user->country->title
-                    ]),
-                ];
-                $data = array_merge($data, $request->only(['extra_money' , 'offer_money']));
-                $exchange = Exchange::create($data);
-                Notification::create([
-                    'title' => json_encode([
-                        "en" => "title of notification",
-                        "ar" => "عنوان الاشعار"
-                    ]),
-                    "body" => json_encode([
-                        "en" => "body of notification",
-                        "ar" => "موضوع الاشعار"
-                    ]),
-                    'notified_user_id' => $exhanged_item->user->id
                 ]);
-                DB::commit();
-                return $this->success($exchange , __('exchanged_asked_successfully'));
             }else{
                 DB::rollBack();
                 return $this->error(__('messages.error.unknown_exchange_type'),422);
             }
+            Exchange::create($data);
+            Notification::create([
+                'title' => json_encode([
+                    "en" => "title of notification",
+                    "ar" => "عنوان الاشعار"
+                ]),
+                "body" => json_encode([
+                    "en" => "body of notification",
+                    "ar" => "موضوع الاشعار"
+                ]),
+                'notified_user_id' => $exchange_user->id
+            ]);
         }catch (\Throwable $throwable){
             DB::rollBack();
             return $this->serverError();

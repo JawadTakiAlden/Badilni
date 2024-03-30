@@ -183,7 +183,7 @@ class ItemController extends Controller
                 return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
             }
             $item->delete();
-            return $this->success(ItemResource::make($item) , __('messages.v1.items.item_deleted_successfully'));
+            return $this->success(null , __('messages.v1.items.item_deleted_successfully'));
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);
