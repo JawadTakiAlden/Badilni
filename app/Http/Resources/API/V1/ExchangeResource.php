@@ -28,7 +28,7 @@ class ExchangeResource extends JsonResource
         }
 
         return [
-            'title' => $exchanged_item->title,
+            'description' => $exchanged_item->description,
         ];
 
         $baseData = [
@@ -39,7 +39,7 @@ class ExchangeResource extends JsonResource
             'offer_money' => $this->offer_modey,
             'exchanged_item' => [
 //                'id' => $exchanged_item->id,
-                'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->title),
+                'title' => $exchanged_item->title,
                 'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->description),
                 'image' => $exchanged_item->image,
                 'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->category_name)
