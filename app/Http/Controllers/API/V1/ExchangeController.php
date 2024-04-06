@@ -111,8 +111,7 @@ class ExchangeController extends Controller
                 return $this->success(ExchangeResource::collection($exchanges));
             }else if ($filter === 'send'){
                 $exchanges = Exchange::where('exchange_user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->get();
-//                return $this->success(ExchangeResource::collection($exchanges));
-                return $exchanges;
+                return $this->success(ExchangeResource::collection($exchanges));
             }else{
                 return $this->error(__('messages.error.unknown_exchange_filter'),422);
             }
