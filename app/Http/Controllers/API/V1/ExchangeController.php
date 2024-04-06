@@ -41,6 +41,7 @@ class ExchangeController extends Controller
             $exchange_user = $request->user();
             $data = [
                 'exchanged_item' => json_encode([
+                    'id' => $exhanged_item->id,
                     'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
                     'title' => $exhanged_item->title,
                     'description' => $exhanged_item->description,
@@ -72,6 +73,7 @@ class ExchangeController extends Controller
                 $data = array_merge($data, $request->only(['extra_money' , 'offer_money']));
                 $data = array_merge($data, [
                     'my_item' => json_encode([
+                        'id' => $my_item->id,
                         'image' => $my_item->images->where('is_default' , true)->first()->image,
                         'title' => $my_item->title,
                         'description' => $my_item->description,
