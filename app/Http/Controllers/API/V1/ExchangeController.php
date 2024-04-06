@@ -36,6 +36,7 @@ class ExchangeController extends Controller
             if ($exhanged_item->user_id === $request->user()->id){
                 return $this->error(__('messages.error.exchange_with_yourself') , 422);
             }
+            return $exhanged_item;
             DB::beginTransaction();
             $owner_user = $exhanged_item->user;
             $exchange_user = $request->user();
