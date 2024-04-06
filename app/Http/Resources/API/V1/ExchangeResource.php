@@ -20,11 +20,12 @@ class ExchangeResource extends JsonResource
         $exchange_user = json_decode($this->exchange_user);
         $exchange_user = User::where('id' , $exchange_user->id)->first();
 
-        return[
-            'user' => $exchange_user
-        ];
+
         $owner_user = json_decode($this->owner_user);
         $owner_user = User::where('id' , $owner_user->id)->first();
+        return[
+            'owner' => $owner_user
+        ];
         $exchanged_item = json_decode($this->exchanged_item);
         $exchanged_item = Item::where('id' , $exchanged_item->id)->first();
 
