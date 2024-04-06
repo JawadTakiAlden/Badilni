@@ -23,9 +23,7 @@ class ExchangeResource extends JsonResource
 
         $exchanged_item = json_decode($this->exchanged_item);
 
-        if ($this->my_item) {
-            $my_item = json_decode($this->my_item);
-        }
+        $my_item = json_decode($this->my_item);
 
         $baseData = [
             'id' => $this->id,
