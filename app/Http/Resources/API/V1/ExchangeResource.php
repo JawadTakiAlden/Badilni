@@ -52,13 +52,13 @@ class ExchangeResource extends JsonResource
                 'gender' => $exchange_user->gender,
                 'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchange_user->location)
             ],
-//            'owner_user' => [
-//                'id' => $owner_user->id,
-//                'name' => $owner_user->name,
-//                'image' => $owner_user->image,
-//                'gender' => $owner_user->gender,
-//                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($owner_user->location)
-//            ],
+            'owner_user' => [
+                'id' => $owner_user->id,
+                'name' => $owner_user->name,
+                'image' => $owner_user->image,
+                'gender' => $owner_user->gender,
+                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($owner_user->location)
+            ],
         ];
         return $baseData;
     }
