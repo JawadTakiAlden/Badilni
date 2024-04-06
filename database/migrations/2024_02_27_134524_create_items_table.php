@@ -18,7 +18,7 @@ return new class extends Migration
             $table->double('price')->nullable();
             $table->boolean('is_active')->default(1);
             $table->enum('status' , ['old' , 'new']);
-            $table->integer('views');
+            $table->integer('views')->default(0);
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->foreignId('area_id')->nullable()->references('id')->on('areas')->onDelete('set null');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories')->onDelete('set null');

@@ -64,6 +64,8 @@ class ItemController extends Controller
             if (!$item){
                 return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
             }
+            $item->views += 1;
+            $item->update();
             return $this->success(ItemResource::make($item));
         }catch (\Throwable $th){
             DB::rollBack();
