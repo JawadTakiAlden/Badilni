@@ -33,13 +33,13 @@ class ExchangeResource extends JsonResource
             'price' => $this->price,
             'extra_money' => $this->extra_money,
             'offer_money' => $this->offer_modey,
-//            'exchanged_item' => [
-////                'id' => $exchanged_item->id,
-//                'title' => $exchanged_item->title,
-//                'description' =>  $exchanged_item->description,
-//                'image' => $exchanged_item->image,
-//                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->category_name)
-//            ],
+            'exchanged_item' => [
+//                'id' => $exchanged_item->id,
+                'title' => $exchanged_item->title,
+                'description' =>  $exchanged_item->description,
+                'image' => $exchanged_item->image,
+                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->category_name)
+            ],
 //            'my_item' => $my_item ? [
 ////                'id' => $my_item->id,
 //                'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->title),
