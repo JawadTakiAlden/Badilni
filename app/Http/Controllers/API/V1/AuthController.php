@@ -141,7 +141,7 @@ class AuthController extends Controller
                 }
                 return $this->success(UserResource::make($user) , __('messages.v1.auth.password_changed'));
             }else{
-                return $this->error(__('messages.v1.auth.wrong_current_password'),401);
+                return $this->error(__('messages.v1.auth.wrong_current_password'),400);
             }
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
