@@ -95,7 +95,7 @@ class ExchangeController extends Controller
                 'notified_user_id' => $exchange_user->id
             ]);
             DB::commit();
-            return $this->success(null , __('messages._exchange_successfully_requested'));
+            return $this->success(null , __('messages.exchange_successfully_requested'));
         }catch (\Throwable $throwable){
             DB::rollBack();
 //            return $this->serverError();
