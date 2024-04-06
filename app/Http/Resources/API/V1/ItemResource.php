@@ -32,7 +32,6 @@ class ItemResource extends JsonResource
                 'category_name' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->category->title),
             ]);
         }
-
         return $base;
     }
 }
