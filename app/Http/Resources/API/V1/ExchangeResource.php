@@ -37,29 +37,29 @@ class ExchangeResource extends JsonResource
 //                'id' => $exchanged_item->id,
                 'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->title),
                 'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->description),
-                'image' => $exchanged_item->images->where('is_default' , true)->first()->image,
-                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->catgeoy->title)
+                'image' => $exchanged_item->image,
+                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->category_name)
             ],
             'my_item' => $my_item ? [
 //                'id' => $my_item->id,
-                'title' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->title),
+                'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->title),
                 'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->description),
-                'image' => $my_item->images->where('is_default' , true)->first()->image,
-                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->catgeoy->title)
+                'image' => $my_item->image,
+                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->category_name)
             ] : null,
             'exchange_user' => [
                 'id' => $exchange_user->id,
                 'name' => $exchange_user->name,
                 'image' => $exchange_user->image,
                 'gender' => $exchange_user->gender,
-                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchange_user->country->title)
+                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchange_user->location)
             ],
             'owner_user' => [
                 'id' => $owner_user->id,
                 'name' => $owner_user->name,
                 'image' => $owner_user->image,
                 'gender' => $owner_user->gender,
-                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($owner_user->country->title)
+                'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($owner_user->location)
             ],
         ];
         return $baseData;
