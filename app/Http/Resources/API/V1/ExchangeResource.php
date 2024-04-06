@@ -23,13 +23,13 @@ class ExchangeResource extends JsonResource
 
         $owner_user = json_decode($this->owner_user);
         $owner_user = User::where('id' , $owner_user->id)->first();
-        return[
-            'owner' => $owner_user
-        ];
+
         $exchanged_item = json_decode($this->exchanged_item);
         $exchanged_item = Item::where('id' , $exchanged_item->id)->first();
 
-
+        return[
+            'item' => $exchanged_item
+        ];
 
         if ($this->my_item) {
             $my_item = json_decode($this->my_item);
