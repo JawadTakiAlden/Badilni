@@ -29,7 +29,7 @@ class ExchangeController extends Controller
     public function exchangeItems(ExchangeItemRequest $request){
         try {
             $exchange_type = $request->exchange_type;
-            $exhanged_item = Item::with(['images','user'])->where('id',$request->exchanged_item)->first();
+            $exhanged_item = Item::with(['category','images','user'])->where('id',$request->exchanged_item)->first();
             if (!$exhanged_item){
                 return $this->error(__('messages.error.item_not_found') , 422);
             }
@@ -37,7 +37,6 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.error.exchange_with_yourself') , 422);
             }
             return $exhanged_item;
-            return $exhanged_item->category;
             DB::beginTransaction();
             $owner_user = $exhanged_item->user;
             $exchange_user = $request->user();
