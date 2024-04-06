@@ -61,7 +61,7 @@ class ExchangeController extends Controller
                     'name' => $owner_user->name,
                     'image' => $owner_user->image,
                     'gender' => $owner_user->gender,
-                    'location' => $exchange_user->country?->title
+                    'location' => $owner_user->country?->title
                 ]),
             ];
             if ($exchange_type === 'cash'){
