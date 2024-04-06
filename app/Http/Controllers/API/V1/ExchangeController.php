@@ -99,7 +99,7 @@ class ExchangeController extends Controller
         }catch (\Throwable $throwable){
             DB::rollBack();
 //            return $this->serverError();
-            return $this->serverError();
+            return $throwable->getMessage();
         }
     }
 
