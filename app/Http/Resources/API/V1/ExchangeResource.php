@@ -28,7 +28,7 @@ class ExchangeResource extends JsonResource
         }
 
         return [
-            'description' => $exchanged_item->category_name,
+            'location' => $exchange_user->location,
         ];
 
         $baseData = [
