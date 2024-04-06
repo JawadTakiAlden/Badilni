@@ -36,7 +36,6 @@ class ExchangeController extends Controller
             if ($exhanged_item->user_id === $request->user()->id){
                 return $this->error(__('messages.error.exchange_with_yourself') , 422);
             }
-            return $exhanged_item->category->title;
             DB::beginTransaction();
             $owner_user = $exhanged_item->user;
             $exchange_user = $request->user();
@@ -45,7 +44,7 @@ class ExchangeController extends Controller
                     'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
                     'title' => $exhanged_item->title,
                     'description' => $exhanged_item->description,
-                    'category_name' => $exhanged_item->catgeory->title
+                    'category_name' => $exhanged_item->category->title
                 ]),
                 'exchange_type' => $exchange_type,
                 'exchange_user_id' => $exchange_user->id,
@@ -76,7 +75,7 @@ class ExchangeController extends Controller
                         'image' => $my_item->images->where('is_default' , true)->first()->image,
                         'title' => $my_item->title,
                         'description' => $my_item->description,
-                        'category_name' => $my_item->catgeory->title
+                        'category_name' => $my_item->category->title
                     ]),
                 ]);
             }else{
