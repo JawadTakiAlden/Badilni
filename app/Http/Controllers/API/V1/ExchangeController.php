@@ -98,8 +98,8 @@ class ExchangeController extends Controller
             return $this->success(null , __('messages.exchange_successfully_requested'));
         }catch (\Throwable $throwable){
             DB::rollBack();
-//            return $this->serverError();
-            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
+            return $this->serverError();
+//            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
         }
     }
 
@@ -116,9 +116,9 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.error.unknown_exchange_filter'),422);
             }
         }catch (\Throwable $throwable){
-            return $this->serverError();
+//            return $this->serverError();
+            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
         }
-
     }
 
     public function acceptExchange($exchangeID){
