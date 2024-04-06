@@ -34,14 +34,14 @@ class ExchangeResource extends JsonResource
             'extra_money' => $this->extra_money,
             'offer_money' => $this->offer_modey,
             'exchanged_item' => [
-                'id' => $exchanged_item->id,
+//                'id' => $exchanged_item->id,
                 'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->title),
                 'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->description),
                 'image' => $exchanged_item->images->where('is_default' , true)->first()->image,
                 'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->catgeoy->title)
             ],
             'my_item' => $my_item ? [
-                'id' => $my_item->id,
+//                'id' => $my_item->id,
                 'title' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->title),
                 'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->description),
                 'image' => $my_item->images->where('is_default' , true)->first()->image,
