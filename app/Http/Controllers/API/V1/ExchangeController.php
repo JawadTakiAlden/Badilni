@@ -42,7 +42,7 @@ class ExchangeController extends Controller
             $data = [
                 'exchanged_item' => json_encode([
                     'id' => $exhanged_item->id,
-                    'image' => $exhanged_item->images->where('is_default' , true)->first()->image,
+                    'image' => $exhanged_item->images,
                     'title' => $exhanged_item->title,
                     'description' => $exhanged_item->description,
                     'category_name' => $exhanged_item->category->title
@@ -74,7 +74,7 @@ class ExchangeController extends Controller
                 $data = array_merge($data, [
                     'my_item' => json_encode([
                         'id' => $my_item->id,
-                        'image' => $my_item->images->where('is_default' , true)->first()->image,
+                        'image' => $my_item->images,
                         'title' => $my_item->title,
                         'description' => $my_item->description,
                         'category_name' => $my_item->category->title
