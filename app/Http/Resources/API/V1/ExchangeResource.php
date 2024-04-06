@@ -28,7 +28,7 @@ class ExchangeResource extends JsonResource
         }
 
         return [
-            'description' => $exchanged_item->description,
+            'description' => $exchanged_item->category_name,
         ];
 
         $baseData = [
@@ -40,7 +40,7 @@ class ExchangeResource extends JsonResource
             'exchanged_item' => [
 //                'id' => $exchanged_item->id,
                 'title' => $exchanged_item->title,
-                'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->description),
+                'description' =>  $exchanged_item->description,
                 'image' => $exchanged_item->image,
                 'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->category_name)
             ],
