@@ -40,13 +40,13 @@ class ExchangeResource extends JsonResource
                 'image' => $exchanged_item->image,
                 'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchanged_item->category_name)
             ],
-//            'my_item' => $my_item ? [
-////                'id' => $my_item->id,
-//                'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->title),
-//                'description' =>  HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->description),
-//                'image' => $my_item->image,
-//                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->category_name)
-//            ] : null,
+            'my_item' => $my_item ? [
+//                'id' => $my_item->id,
+                'title' => $my_item->title,
+                'description' =>  $my_item->description,
+                'image' => $my_item->image,
+                'category' => HelperMethod::extractValueDependOnLanguageOfRequestUser($my_item->category_name)
+            ] : null,
 //            'exchange_user' => [
 //                'id' => $exchange_user->id,
 //                'name' => $exchange_user->name,
