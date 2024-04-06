@@ -25,7 +25,7 @@ class ExchangeResource extends JsonResource
         $owner_user = User::where('id' , $owner_user->id)->first();
 
         $exchanged_item = json_decode($this->exchanged_item);
-        $exchanged_item = Item::where('id' , $exchanged_item->id)->first();
+//        $exchanged_item = Item::where('id' , $exchanged_item->id)->first();
 
         return[
             'item' => $exchanged_item
