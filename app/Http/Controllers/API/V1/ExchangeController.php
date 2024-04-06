@@ -31,10 +31,10 @@ class ExchangeController extends Controller
             $exchange_type = $request->exchange_type;
             $exhanged_item = Item::with(['images','user'])->where('id',$request->exchanged_item)->first();
             if (!$exhanged_item){
-                return $this->error(__('messages.error.item_not_found' , 404));
+                return $this->error(__('messages.error.item_not_found') , 422);
             }
             if ($exhanged_item->user_id === $request->user()->id){
-                return $this->error(__('messages.error.exchange_with_yourself' , 422));
+                return $this->error(__('messages.error.exchange_with_yourself') , 422);
             }
             DB::beginTransaction();
             $owner_user = $exhanged_item->user;
@@ -80,7 +80,7 @@ class ExchangeController extends Controller
                 ]);
             }else{
                 DB::rollBack();
-                return $this->error('jawad check api',422);
+                return $this->error(__('messages.error.unknown_exchange_type'),422);
             }
             Exchange::create($data);
             Notification::create([
@@ -95,7 +95,7 @@ class ExchangeController extends Controller
                 'notified_user_id' => $exchange_user->id
             ]);
             DB::commit();
-            return $this->success(null , 'jawad check api');
+            return $this->success(null , __('messages.exchange_successfully_requested'));
         }catch (\Throwable $throwable){
             DB::rollBack();
 //            return $this->serverError();
