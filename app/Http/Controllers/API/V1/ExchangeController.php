@@ -65,7 +65,7 @@ class ExchangeController extends Controller
                 ]),
             ];
             if ($exchange_type === 'cash'){
-                $data = array_merge($data, $request->get('price'));
+                $data = array_merge($data, $request->only(['price']));
             }
             else if ($exchange_type === 'change'){
                 $my_item = Item::with(['images' , 'user'])->where('id' , $request->my_item)->first();
