@@ -25,6 +25,7 @@ class ItemResource extends JsonResource
         if ($request->query('page') === 'widthDetails'){
             $base = array_merge($base , [
                 'description' => $this->description,
+                'category_name' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->category->title),
             ]);
         }else if ($request->query('page') === 'home'){
             $base = array_merge($base , [
