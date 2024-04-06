@@ -98,6 +98,7 @@ class ExchangeController extends Controller
             return $this->success(null , __('messages._exchange_successfully_requested'));
         }catch (\Throwable $throwable){
             DB::rollBack();
+//            return $this->serverError();
             return $this->serverError();
         }
     }
@@ -115,8 +116,7 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.error.unknown_exchange_filter'),422);
             }
         }catch (\Throwable $throwable){
-//            return $this->serverError();
-            return  $throwable->getMessage();
+            return $this->serverError();
         }
 
     }

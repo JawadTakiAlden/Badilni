@@ -21,7 +21,6 @@ class ItemResource extends JsonResource
             'title' => $this->title,
         ];
 
-
         if ($request->query('page') === 'widthDetails'){
             $base = array_merge($base , [
                'images' => $this->images,
