@@ -37,7 +37,7 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.error.exchange_with_yourself') , 422);
             }
 
-            return $exhanged_item->catgeory->title;
+            return $exhanged_item->catgeory;
             DB::beginTransaction();
             $owner_user = $exhanged_item->user;
             $exchange_user = $request->user();
