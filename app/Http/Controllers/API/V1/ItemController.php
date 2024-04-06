@@ -50,7 +50,7 @@ class ItemController extends Controller
 
     public function myItems(){
         try {
-            $items = Item::where('user_id' , auth()->user()->id)->get();
+            $items = Item::where('user_id' , auth()->user()->id)->filter(\request(['search_text']))->get();
             return $this->success(ItemResource::collection($items));
         }catch (\Throwable $th){
             DB::rollBack();
