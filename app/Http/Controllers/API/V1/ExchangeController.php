@@ -80,7 +80,7 @@ class ExchangeController extends Controller
                 ]);
             }else{
                 DB::rollBack();
-                return $this->error(__('messages.error.unknown_exchange_type'),422);
+                return $this->error('jawad check api',422);
             }
             Exchange::create($data);
             Notification::create([
@@ -95,7 +95,7 @@ class ExchangeController extends Controller
                 'notified_user_id' => $exchange_user->id
             ]);
             DB::commit();
-            return $this->success(null , __('messages.exchange_successfully_requested'));
+            return $this->success(null , 'jawad check api');
         }catch (\Throwable $throwable){
             DB::rollBack();
 //            return $this->serverError();
