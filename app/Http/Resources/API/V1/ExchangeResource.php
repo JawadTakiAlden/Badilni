@@ -31,6 +31,7 @@ class ExchangeResource extends JsonResource
             'price' => $this->price,
             'extra_money' => $this->extra_money,
             'offer_money' => $this->offer_modey,
+            'status' => $this->status,
             'exchanged_item' => [
                 'title' => $exchanged_item->title,
                 'description' =>  $exchanged_item->description,
