@@ -52,5 +52,9 @@ class Item extends Model
         $query->when($filters['status'] ?? false , fn($query , $status) =>
             $query->where('status', $status)
         );
+
+        $query->when($filters['category_id'] ?? false , fn($query , $category_id) =>
+            $query->where('category_id', $category_id)
+        );
     }
 }

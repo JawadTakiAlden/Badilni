@@ -40,7 +40,7 @@ class ItemController extends Controller
     }
     public function getActive(){
         try {
-            $items = Item::where('is_active' , true)->get();
+            $items = Item::where('is_active' , true)->filter(\request(['category_id']))->get();
             return $this->success(ItemResource::collection($items));
         }catch (\Throwable $th){
             DB::rollBack();
@@ -107,7 +107,7 @@ class ItemController extends Controller
         try {
             $items = Item::where('is_active' , true)
                 ->where('user_id' , '!=' , auth()->user()->id)
-                ->filter(\request(['country_id','city_id' ,'area_id','search_text','status' ]))
+                ->filter(\request(['country_id','city_id' ,'area_id','search_text','status' , 'category_id' ]))
                 ->orderBy('created_at', 'desc')
                 ->get();
             return $this->success(ItemResource::collection($items));
