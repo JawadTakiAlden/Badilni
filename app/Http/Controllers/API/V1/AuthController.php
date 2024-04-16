@@ -185,6 +185,7 @@ class AuthController extends Controller
             );
             DB::commit();
             return $this->success([
+                'token' => $user->createToken("UserToken")->accessToken,
                 "user" => UserResource::make($user)
             ] , __('messages.v1.auth.verified_successfully'));
         }catch (\Throwable $th){
