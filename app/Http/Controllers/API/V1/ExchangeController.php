@@ -168,7 +168,7 @@ class ExchangeController extends Controller
             if (!$exchange){
                 return $this->error(__('messages.exchange_not_found' , 404));
             }
-            if ($exchange->owner_user_id !== auth()->user()->id){
+            if ($exchange->exchange_user_id !== auth()->user()->id){
                 return $this->error(__('cant_cancel_other_exchanges') , 403);
             }
             $exchange->delete();
