@@ -26,6 +26,11 @@ class ItemResource extends JsonResource
             $base = array_merge($base , [
                 'description' => $this->description,
                 'category_name' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->category->title),
+                'price' => $this->price,
+                'category_id' => $this->category_id,
+                'area_id' => $this->area_id,
+                'is_active' => $this->is_active,
+                'status' => $this->status,
             ]);
         }else if ($request->query('page') === 'home'){
             $base = array_merge($base , [
