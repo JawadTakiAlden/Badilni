@@ -73,6 +73,9 @@ return [
             "exchange_accepted" => "تم القبول بنجاح",
             "exchange_rejected" => "تم الرفض بنجاح",
             "exchange_canceled" => "تم الإلغاء بنجاح",
+        ],
+        "favorite" => [
+            "item_added_to_favorite" => "تم الاضافة الى المفضلة بنجاح"
         ]
         ]
     ];

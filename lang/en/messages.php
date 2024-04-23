@@ -75,6 +75,9 @@ return [
             "exchange_accepted" => "accepted successfully",
             "exchange_rejected" => "rejected successfully",
             "exchange_canceled" => "canceled successfully",
+        ],
+        "favorite" => [
+            "item_added_to_favorite" => "item added to favorite successfully"
         ]
     ]
 ];

@@ -8,6 +8,7 @@ use App\Http\Requests\API\V1\Item\CreateItemRequest;
 use App\Http\Requests\API\V1\Item\UpdateItemRequest;
 use App\Http\Resources\API\V1\ItemResource;
 use App\HttpResponse\HTTPResponse;
+use App\Models\Favorite;
 use App\Models\Item;
 use App\Models\ItemImage;
 use App\Models\Section;
@@ -186,6 +187,25 @@ class ItemController extends Controller
             }
             $item->delete();
             return $this->success(null , __('messages.v1.items.item_deleted_successfully'));
+        }catch (\Throwable $th){
+            DB::rollBack();
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
+
+
+    public function addToFavorite($itemID) {
+        try {
+            $item = $this->getItemByID($itemID);
+            if (!$item){
+                return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
+            }
+            Favorite::create([
+                'user_id' => auth()->user()->id,
+                'item_id' => $itemID
+            ]);
+            return $this->success(null , __('messages.v1.favorite.item_added_to_favorite'));
         }catch (\Throwable $th){
             DB::rollBack();
             return $this->helpers->getErrorResponse($th);
