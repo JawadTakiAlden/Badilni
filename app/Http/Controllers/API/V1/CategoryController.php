@@ -72,7 +72,7 @@ class CategoryController extends Controller
             if ($request->image){
                 File::delete(public_path($currntImagePath));
             }
-            return $this->success(CategoryResource::make($category) , __('messages.v1.category.updated_successfully'));
+            return $this->success(CategoryResource::make($category) , __('messages.v1.category.update_category'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
@@ -87,7 +87,7 @@ class CategoryController extends Controller
             $currntImagePath = $category->image;
             $category->delete();
             File::delete(public_path($currntImagePath));
-            return $this->success(CategoryResource::make($category) , __('messages.v1.category.deleted_successfully'));
+            return $this->success(CategoryResource::make($category) , __('messages.v1.category.delete_category'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }

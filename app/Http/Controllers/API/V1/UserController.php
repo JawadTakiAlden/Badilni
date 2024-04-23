@@ -41,7 +41,7 @@ class UserController extends Controller
         try {
             $user = $this->getUserByID($userID);
             if (!$user){
-                return $this->helpers->getNotFoundResourceRespone(__('messages.v1.account_account_not_found'));
+                return $this->helpers->getNotFoundResourceRespone(__('messages.v1.account.account_not_found'));
             }
             return $this->success(UserResource::make($user));
         }catch (\Throwable $th){
@@ -74,7 +74,7 @@ class UserController extends Controller
             if ($request->image && $currentImage){
                 File::delete(public_path($currentImage));
             }
-            return $this->success(UserResource::make($user));
+            return $this->success(UserResource::make($user) , __('messages.v1.account.update_profile'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }

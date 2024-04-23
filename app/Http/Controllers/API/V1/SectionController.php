@@ -60,7 +60,7 @@ class SectionController extends Controller
             if ($request->items){
                 $section->sync($request->items);
             }
-            return $this->success(SectionResource::make($section) , __('messages.v1.sections.create_section'));
+            return $this->success(SectionResource::make($section) , __('messages.v1.section.create_section'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
@@ -76,7 +76,7 @@ class SectionController extends Controller
             if ($request->items){
                 $section->sync($request->items);
             }
-            return $this->success(SectionResource::make($section) , __('messages.v1.sections.update_section'));
+            return $this->success(SectionResource::make($section) , __('messages.v1.section.update_section'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }
@@ -89,7 +89,7 @@ class SectionController extends Controller
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.section.section_not_found'));
             }
             $section->delete();
-            return $this->success(SectionResource::make($section) , __('messages.v1.sections.delete_section'));
+            return $this->success(SectionResource::make($section) , __('messages.v1.section.delete_section'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }

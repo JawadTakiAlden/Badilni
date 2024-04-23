@@ -31,10 +31,10 @@ class ExchangeController extends Controller
             $exchange_type = $request->exchange_type;
             $exhanged_item = Item::with(['category','images','user'])->where('id',$request->exchanged_item)->first();
             if (!$exhanged_item){
-                return $this->error(__('messages.error.item_not_found') , 422);
+                return $this->error(__('messages.v1.items.item_not_found') , 422);
             }
             if ($exhanged_item->user_id === $request->user()->id){
-                return $this->error(__('messages.error.exchange_with_yourself') , 422);
+                return $this->error(__('messages.v1.exchange.exchange_with_yourself') , 422);
             }
             DB::beginTransaction();
             $owner_user = $exhanged_item->user;
@@ -82,7 +82,7 @@ class ExchangeController extends Controller
                 ]);
             }else{
                 DB::rollBack();
-                return $this->error(__('messages.error.unknown_exchange_type'),422);
+                return $this->error(__('messages.v1.exchange.unknown_exchange_type'),422);
             }
             Exchange::create($data);
             Notification::create([
@@ -127,10 +127,10 @@ class ExchangeController extends Controller
         try {
             $exchange = Exchange::where('id' , $exchangeID)->first();
             if (!$exchange){
-                return $this->error(__('messages.exchange_not_found' , 404));
+                return $this->error(__('messages.v1.exchange.exchange_not_found' , 404));
             }
             if ($exchange->owner_user_id !== auth()->user()->id){
-                return $this->error(__('cant_accept_other_exchanges') , 403);
+                return $this->error(__('messages.v1.exchange.permission_denied') , 403);
             }
             $exchange->update([
                 'status' => 'accepted'
@@ -146,16 +146,16 @@ class ExchangeController extends Controller
         try {
             $exchange = Exchange::where('id' , $exchangeID)->first();
             if (!$exchange){
-                return $this->error(__('messages.exchange_not_found' , 404));
+                return $this->error(__('messages.v1.exchange.exchange_not_found' , 404));
             }
             if ($exchange->owner_user_id !== auth()->user()->id){
-                return $this->error(__('cant_reject_other_exchanges') , 403);
+                return $this->error(__('messages.v1.exchange.permission_denied') , 403);
             }
             $exchange->update([
                 'status' => 'rejected'
             ]);
 
-            return $this->success(null , __('messages.exchange_rejected'));
+            return $this->success(null , __('messages.v1.exchange.exchange_rejected'));
         }catch (\Throwable $th){
             return $this->serverError();
         }
@@ -166,13 +166,13 @@ class ExchangeController extends Controller
         try {
             $exchange = Exchange::where('id' , $exchangeID)->first();
             if (!$exchange){
-                return $this->error(__('messages.exchange_not_found' , 404));
+                return $this->error(__('messages.v1.exchange.exchange_not_found' , 404));
             }
             if ($exchange->exchange_user_id !== auth()->user()->id){
-                return $this->error(__('cant_cancel_other_exchanges') , 403);
+                return $this->error(__('messages.v1.exchange.permission_denied') , 403);
             }
             $exchange->delete();
-            return $this->success(null , __('messages.exchange_canceled'));
+            return $this->success(null , __('messages.v1.exchange.exchange_canceled'));
         }catch (\Throwable $th){
             return $this->serverError();
         }

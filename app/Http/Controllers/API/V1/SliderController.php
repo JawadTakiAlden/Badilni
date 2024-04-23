@@ -69,7 +69,7 @@ class SliderController extends Controller
             if ($request->image){
                 File::delete(public_path($currentImagePath));
             }
-            return $this->success(SliderResource::make($slide) , __('messages.v1.slider.create_slide'));
+            return $this->success(SliderResource::make($slide) , __('messages.v1.slider.update_slide'));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);
         }

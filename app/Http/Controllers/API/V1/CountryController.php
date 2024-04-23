@@ -49,7 +49,7 @@ class CountryController extends Controller
             DB::beginTransaction();
             $country = Country::create($request->only(['title',  'country_code', 'is_active']));
             DB::commit();
-            return $this->success(CountryResource::make($country),__('messages.v1.country.crete_country'));
+            return $this->success(CountryResource::make($country),__('messages.v1.country.create_country'));
         }catch (\Throwable $th){
             DB::commit();
             return $this->helpers->getErrorResponse($th);
