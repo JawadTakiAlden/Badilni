@@ -55,6 +55,14 @@ class User extends Authenticatable
                 File::delete($imagePath);
             }
         });
+        static::updating(function($user) {
+            if (request('image')){
+                $imagePath = public_path($user->image);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
+                }
+            }
+        });
     }
 
     public function verificationCodes() {
