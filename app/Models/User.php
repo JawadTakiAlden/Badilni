@@ -46,24 +46,24 @@ class User extends Authenticatable
         return $this->attributes['image'] =  '/'.'user_images'.'/' . $newImageName;
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::deleting(function ($user) {
-            $imagePath = public_path($user->image);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
-            }
-        });
-        static::updating(function($user) {
-            if (request('image')){
-                $imagePath = public_path($user->image);
-                if (File::exists($imagePath)) {
-                    File::delete($imagePath);
-                }
-            }
-        });
-    }
+//    protected static function boot()
+//    {
+//        parent::boot();
+//        static::deleting(function ($user) {
+//            $imagePath = public_path($user->image);
+//            if (File::exists($imagePath)) {
+//                File::delete($imagePath);
+//            }
+//        });
+//        static::updating(function($user) {
+//            if (request('image')){
+//                $imagePath = public_path($user->image);
+//                if (File::exists($imagePath)) {
+//                    File::delete($imagePath);
+//                }
+//            }
+//        });
+//    }
 
     public function verificationCodes() {
         return $this->hasMany(VerificationCode::class);
