@@ -39,6 +39,16 @@ class ItemController extends Controller
             return $this->helpers->getErrorResponse($th);
         }
     }
+
+    public function myFavoritesItem(){
+        try {
+            $items = \request()->user()->favoriteItems;
+            return $this->success(ItemResource::collection($items));
+        }catch (\Throwable $th){
+            DB::rollBack();
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
     public function getActive(){
         try {
             $items = Item::where('is_active' , true)->filter(\request(['category_id']))->get();
@@ -200,6 +210,10 @@ class ItemController extends Controller
             $item = $this->getItemByID($itemID);
             if (!$item){
                 return  $this->helpers->getNotFoundResourceRespone(__('messages.v1.items.item_not_found'));
+            }
+            if (Favorite::where('user_id' , auth()->user()->id)->where('item_id' , $itemID)->exists()){
+                Favorite::where('user_id' , auth()->user()->id)->where('item_id' , $itemID)->delete();
+                return $this->success(null , __('messages.v1.favorite.item_added_to_favorite'));
             }
             Favorite::create([
                 'user_id' => auth()->user()->id,

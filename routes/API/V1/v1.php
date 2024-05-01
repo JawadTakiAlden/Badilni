@@ -126,6 +126,7 @@ Route::prefix("/v1")->group(function (){
            Route::get('/show/{itemID}' , [ItemController::class , 'showItem']);
            Route::get('/myItems' , [ItemController::class , 'myItems']);
            Route::post('/addToFavorite/{itemID}' , [ItemController::class , 'addToFavorite']);
+           Route::post('/myFavorites' , [ItemController::class , 'myFavoritesItem']);
            Route::post('/add' , [ItemController::class , 'addItem']);
            Route::post('/edit/{itemID}' , [ItemController::class , 'editItem']);
            Route::delete('/delete/{itemID}' , [ItemController::class , 'deleteItem']);
