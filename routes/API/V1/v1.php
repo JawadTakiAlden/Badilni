@@ -66,6 +66,8 @@ Route::prefix("/v1")->group(function (){
             Route::prefix('/categories')->group(function (){
                 Route::get('/getAll' , [CategoryController::class , 'getAllCategories']);
                 Route::post('/createCategory' , [CategoryController::class , 'createCategory']);
+                Route::post('/createSub' , [CategoryController::class , 'createSubCategory']);
+                Route::get('/getSubCategoryOfCategory/{categoryID}' , [CategoryController::class , 'getAllSubCategoryOfCategory']);
                 Route::post('/update/{category_id}' , [CategoryController::class , 'updateCategory']);
                 Route::delete('/delete/{category_id}' , [CategoryController::class , 'deleteCategory']);
             });
@@ -111,6 +113,7 @@ Route::prefix("/v1")->group(function (){
 
         Route::prefix('/categories')->group(function (){
             Route::get('/getActive' , [CategoryController::class , 'getActiveCategories']);
+            Route::get('/getActiveSubCategoryOfCategory/{categoryID}' , [CategoryController::class , 'getActiveSubCategoryOfCategory']);
         });
 
         Route::prefix('/sections')->group(function (){

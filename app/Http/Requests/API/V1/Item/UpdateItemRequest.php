@@ -31,7 +31,7 @@ class UpdateItemRequest extends FormRequest
             'area_id' => 'exists:areas,id',
             'status' => 'string|in:new,old',
             'category_id' => [
-                Rule::exists('categories', 'id')
+                Rule::exists('categories', 'id')->whereNot('parent_id' , null)
             ],
             'images' => 'array|min:1',
             'images.*.imageFile' => [

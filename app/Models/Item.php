@@ -53,8 +53,14 @@ class Item extends Model
             $query->where('status', $status)
         );
 
+        $query->when($filters['sub_category_id'] ?? false , fn($query , $sub_category_id) =>
+            $query->where('category_id', $sub_category_id)
+        );
+
         $query->when($filters['category_id'] ?? false , fn($query , $category_id) =>
-            $query->where('category_id', $category_id)
+        $query->whereHas('category' , fn($query) =>
+            $query->where('parent_id' , $category_id)
+        )
         );
     }
 }

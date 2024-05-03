@@ -27,7 +27,7 @@ class CreateCategoryRequest extends FormRequest
             'description' => ['json',new JsonContainsKey()],
             'is_active' => 'boolean',
             'sort' => 'required|numeric',
-            'image' => 'required|image|mimes:jpg,png,jpeg|max:3072'
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:3072',
         ];
     }
 }

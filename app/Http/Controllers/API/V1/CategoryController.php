@@ -25,6 +25,25 @@ class CategoryController extends Controller
     private function getCategorByID($categoryID , array $with = []){
         return Category::with($with)->where('id',$categoryID)->first();
     }
+
+    public function getAllSubCategoryOfCategory ($categoryId) {
+        try {
+            $categories = Category::where('parent_id' , $categoryId)->where('is_active' , true)->orderBy('sort')->get();
+            return $this->success(CategoryResource::collection($categories));
+        }catch (\Throwable $th){
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
+    public function getActiveSubCategoryOfCategory ($categoryId) {
+        try {
+            $categories = Category::where('parent_id' , $categoryId)->wehre('is_active' , true)->orderBy('sort')->get();
+            return $this->success(CategoryResource::collection($categories));
+        }catch (\Throwable $th){
+            return $this->helpers->getErrorResponse($th);
+        }
+    }
+
     public function getAllCategories(){
         try {
             $categories = Category::where('parent_id' , null)->orderBy('sort')->get();

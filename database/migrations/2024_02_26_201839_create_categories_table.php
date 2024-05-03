@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean("is_active")->default(true);
             $table->integer("sort");
             $table->string("image")->nullable();
+            $table->foreignId('parent_id')->nullable()->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -118,7 +118,7 @@ class ItemController extends Controller
         try {
             $items = Item::where('is_active' , true)
                 ->where('user_id' , '!=' , auth()->user()->id)
-                ->filter(\request(['country_id','city_id' ,'area_id','search_text','status' , 'category_id' ]))
+                ->filter(\request(['country_id','city_id' ,'area_id','search_text','status' , 'sub_category_id' , 'category_id']))
                 ->orderBy('created_at', 'desc')
                 ->get();
             return $this->success(ItemResource::collection($items));

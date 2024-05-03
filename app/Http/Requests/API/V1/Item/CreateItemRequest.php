@@ -31,7 +31,7 @@ class CreateItemRequest extends FormRequest
             'status' => 'required|string|in:new,old',
             'category_id' => [
                 'required',
-                Rule::exists('categories', 'id')
+                Rule::exists('categories', 'id')->whereNot('parent_id' , null)
             ],
             'images' => 'required|array|min:1',
             'images.*.imageFile' => 'required|image|mimes:jpg,png,jpeg|max:3072',
