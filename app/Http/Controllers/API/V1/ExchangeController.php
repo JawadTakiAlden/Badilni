@@ -118,8 +118,8 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.error.unknown_exchange_filter'),422);
             }
         }catch (\Throwable $throwable){
-//            return $this->serverError();
-            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
+            return $this->serverError();
+//            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
         }
     }
 
