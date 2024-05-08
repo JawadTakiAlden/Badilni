@@ -24,7 +24,27 @@ class MessageController extends Controller
 
     public function getMyConversation() {
         try {
+            $userId = \request()->user()->id;
 
+            $messages = Message::where(function ($query) use ($userId) {
+                $query->where('from', $userId)
+                    ->orWhere('to', $userId);
+            })->get();
+
+            $conversations = $messages->groupBy(function ($message) use ($userId) {
+                return $message->from === $userId ? $message->to : $message->from;
+            });
+
+            $conversations = $conversations->map(function ($messageGroup, $userId) {
+                $user = User::find($userId);
+                $messages = $messageGroup->all();
+                return (object) [
+                    'user' => $user,
+                    'messages' => $messages,
+                ];
+            });
+
+            return $this->success($conversations);
         }catch (\Throwable $th){
             return $this->serverError();
         }

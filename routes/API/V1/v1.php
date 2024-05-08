@@ -8,6 +8,7 @@ use App\Http\Controllers\API\V1\CountryController;
 use App\Http\Controllers\API\V1\ExchangeController;
 use App\Http\Controllers\API\V1\HomeController;
 use App\Http\Controllers\API\V1\ItemController;
+use App\Http\Controllers\API\V1\MessageController;
 use App\Http\Controllers\API\V1\NotificationController;
 use App\Http\Controllers\API\V1\SectionController;
 use App\Http\Controllers\API\V1\SliderController;
@@ -148,6 +149,10 @@ Route::prefix("/v1")->group(function (){
             Route::get('/myNotification' , [NotificationController::class , 'myNotification']);
         });
 
+        Route::prefix('conversations')->group(function () {
+            Route::post('/sendMessage' , [MessageController::class , 'store']);
+            Route::get('/getMyConversation' , [MessageController::class , 'getMyConversation']);
+        });
     });
 });
 
