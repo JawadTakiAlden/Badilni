@@ -151,7 +151,7 @@ Route::prefix("/v1")->group(function (){
 
         Route::prefix('conversations')->group(function () {
             Route::post('/sendMessage' , [MessageController::class , 'store']);
-            Route::get('/messagesWith/{user}' , [MessageController::class , 'getMessagesBetween']);
+            Route::get('/messagesWith' , [MessageController::class , 'getMessages']);
         });
     });
 });

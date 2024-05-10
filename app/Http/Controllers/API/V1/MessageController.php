@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Events\SendMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Message\SendMessageRequest;
 use App\Http\Resources\API\V1\MessageResource;
@@ -16,26 +17,24 @@ class MessageController extends Controller
     use HTTPResponse;
     public function store(SendMessageRequest $request){
         try {
-            $message = Message::create(array_merge($request->only(['to' , 'body']) , ['from' => $request->user()->id]));
+            $message = Message::create(array_merge($request->only(['to' , 'body' , 'exchange_id']) , ['from' => $request->user()->id]));
+            event(new SendMessageEvent($request->exchange_id , $message));
             return $this->success(MessageResource::make($message));
         }catch (\Throwable $th){
             return $this->serverError();
         }
     }
-    public function getMessagesBetween($anotherUserID){
+    public function getMessages($exchangeID){
         try {
             DB::beginTransaction();
-            $messages = [];
-            if (\request()->query('mode') === 'send'){
-                $messages = Message::where('from' , \request()->user()->id)->where('to' , $anotherUserID)->get();
-            }else if (\request()->query('mode') === 'received'){
-                $messages = Message::where('from' , $anotherUserID)->where('to' , \request()->user()->id)->get();
-            }
-            foreach ($messages  as $message){
-                $message->update([
-                   'is_read' => true
-                ]);
-            }
+                $messages = Message::where('exchange_id' , $exchangeID)->get();
+                if ($messages){
+                    foreach ($messages  as $message){
+                        $message->update([
+                            'is_read' => true
+                        ]);
+                    }
+                }
             DB::commit();
             return $this->success(MessageResource::collection($messages));
         }catch (\Throwable $th){

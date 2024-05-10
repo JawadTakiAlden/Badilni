@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Exchange;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('conversation.{exchangeID}' , function ($user , $id){
+    return Exchange::where('id' , $id)->where(fn($query) =>
+        $query->where('exchange_user_id' , $user->id)->orWhere('owner_user_id' , $user->id)
+    )->exists();
 });

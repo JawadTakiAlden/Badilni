@@ -23,7 +23,8 @@ class SendMessageRequest extends FormRequest
     {
         return [
             'body' => "string|required",
-            'to' => 'required|numeric|exists:users,id'
+            'to' => 'required|numeric|exists:users,id',
+            'exchange_id' => 'required|numeric|exists:exchanges,id'
         ];
     }
 }
