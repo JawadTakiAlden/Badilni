@@ -9,6 +9,7 @@ use App\HttpResponse\HTTPResponse;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -21,32 +22,53 @@ class MessageController extends Controller
             return $this->serverError();
         }
     }
-
-    public function getMyConversation() {
+    public function getMessagesBetween($anotherUserID){
         try {
-            $userId = \request()->user()->id;
-
-            $messages = Message::where(function ($query) use ($userId) {
-                $query->where('from', $userId)
-                    ->orWhere('to', $userId);
-            })->get();
-
-            $conversations = $messages->groupBy(function ($message) use ($userId) {
-                return $message->from === $userId ? $message->to : $message->from;
-            });
-
-            $conversations = $conversations->map(function ($messageGroup, $userId) {
-                $user = User::find($userId);
-                $messages = $messageGroup->all();
-                return (object) [
-                    'user' => $user,
-                    'messages' => $messages,
-                ];
-            });
-
-            return $this->success($conversations);
+            DB::beginTransaction();
+            $messages = [];
+            if (\request()->query('mode') === 'send'){
+                $messages = Message::where('from' , \request()->user()->id)->where('to' , $anotherUserID)->get();
+            }else if (\request()->query('mode') === 'received'){
+                $messages = Message::where('from' , $anotherUserID)->where('to' , \request()->user()->id)->get();
+            }
+            foreach ($messages  as $message){
+                $message->update([
+                   'is_read' => true
+                ]);
+            }
+            DB::commit();
+            return $this->success(MessageResource::collection($messages));
         }catch (\Throwable $th){
+            DB::rollBack();
             return $this->serverError();
         }
     }
+
+//    public function getMyConversation() {
+//        try {
+//            $userId = \request()->user()->id;
+//
+//            $messages = Message::where(function ($query) use ($userId) {
+//                $query->where('from', $userId)
+//                    ->orWhere('to', $userId);
+//            })->get();
+//
+//            $conversations = $messages->groupBy(function ($message) use ($userId) {
+//                return $message->from === $userId ? $message->to : $message->from;
+//            });
+//
+//            $conversations = $conversations->map(function ($messageGroup, $userId) {
+//                $user = User::find($userId);
+//                $messages = $messageGroup->all();
+//                return (object) [
+//                    'user' => $user,
+//                    'messages' => $messages,
+//                ];
+//            });
+//
+//            return $this->success($conversations);
+//        }catch (\Throwable $th){
+//            return $this->serverError();
+//        }
+//    }
 }
