@@ -8,8 +8,6 @@ use App\Http\Requests\API\V1\Message\SendMessageRequest;
 use App\Http\Resources\API\V1\MessageResource;
 use App\HttpResponse\HTTPResponse;
 use App\Models\Message;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
@@ -28,13 +26,8 @@ class MessageController extends Controller
         try {
             DB::beginTransaction();
                 $messages = Message::where('exchange_id' , $exchangeID)->get();
-                if ($messages){
-                    foreach ($messages  as $message){
-                        $message->update([
-                            'is_read' => true
-                        ]);
-                    }
-                }
+            Message::where('exchange_id', $exchangeID)
+                ->update(['is_read' => true]);
             DB::commit();
             return $this->success(MessageResource::collection($messages));
         }catch (\Throwable $th){

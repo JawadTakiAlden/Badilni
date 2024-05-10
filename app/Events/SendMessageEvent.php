@@ -16,15 +16,19 @@ class SendMessageEvent implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
 
-    private $exchangeID;
-    private $message;
+    public $exchangeID;
+    public $message;
+    public $fromUser;
+    public $toUser;
     /**
      * Create a new event instance.
      */
-    public function __construct($exchangeID , $message)
+    public function __construct($exchangeID , $message , $fromUser = null , $toUser = null)
     {
         $this->exchangeID =$exchangeID;
         $this->message = $message;
+        $this->fromUser = $fromUser;
+        $this->toUser = $toUser;
     }
 
     /**
