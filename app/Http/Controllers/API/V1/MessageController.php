@@ -32,7 +32,7 @@ class MessageController extends Controller
             return $this->success(MessageResource::collection($messages));
         }catch (\Throwable $th){
             DB::rollBack();
-            return $this->serverError();
+            return $this->error($th->getMessage() , 500);
         }
     }
 
