@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('from')->references('id')->on('users')->onDelete('set null');
-            $table->foreignId('to')->references('id')->on('users')->onDelete('set null');
+            $table->foreignId('from')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('to')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('exchange_id')->references('id')->on('exchanges')->onDelete('cascade');
             $table->text('body');
             $table->boolean('is_read')->default(false);
