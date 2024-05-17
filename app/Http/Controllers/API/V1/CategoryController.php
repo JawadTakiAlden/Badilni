@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
     public function getActiveSubCategoryOfCategory ($categoryId) {
         try {
-            $categories = Category::where('parent_id' , $categoryId)->wehre('is_active' , true)->orderBy('sort')->get();
+            $categories = Category::where('parent_id' , $categoryId)->where('is_active' , true)->orderBy('sort')->get();
             return $this->success(CategoryResource::collection($categories));
         }catch (\Throwable $th){
             return $this->helpers->getErrorResponse($th);

@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function getHome(){
         try {
             $sections = Section::where('is_active' , true)->get();
-            $categories = Category::where('is_active' , true)->orderBy('sort' , 'desc')->get();
+            $categories = Category::where('is_active' , true)->where('parent_id' , null)->orderBy('sort' , 'desc')->get();
             $sliders = Slider::where('is_active' , true)->where('type'  , 'home')->orderBy('sort' , 'desc')->get();
             return $this->success([
                'sections' => SectionResource::collection($sections),
