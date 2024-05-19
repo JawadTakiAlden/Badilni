@@ -18,17 +18,13 @@ class SendMessageEvent implements ShouldBroadcastNow
 
     public $exchangeID;
     public $message;
-    public $fromUser;
-    public $toUser;
     /**
      * Create a new event instance.
      */
-    public function __construct($exchangeID , $message , $fromUser = null , $toUser = null)
+    public function __construct($exchangeID , $message)
     {
         $this->exchangeID =$exchangeID;
         $this->message = $message;
-        $this->fromUser = $fromUser;
-        $this->toUser = $toUser;
     }
 
     /**
