@@ -17,7 +17,7 @@ class MessageResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'is_read' => $this->is_read,
+            'is_read' => boolval($this->is_read),
             'is_mine' => $this->from === $request->user()->id
         ];
     }
