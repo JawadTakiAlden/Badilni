@@ -16,7 +16,7 @@ class MessageController extends Controller
     public function store(SendMessageRequest $request){
         try {
             $message = Message::create(array_merge($request->only(['to' , 'exchange_id' , 'body']) , ['from' => $request->user()->id]));
-//            event(new SendMessageEvent($request->exchange_id , $message));
+            event(new SendMessageEvent($request->exchange_id , $message));
             return $this->success(MessageResource::make($message));
         }catch (\Throwable $th){
 //            return $this->serverError();
