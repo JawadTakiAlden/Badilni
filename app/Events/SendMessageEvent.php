@@ -39,15 +39,9 @@ class SendMessageEvent implements ShouldBroadcastNow
         ];
     }
 
-//    public function boradcastWith() {
-//        return [
-//          'message' => MessageResource::make($this->message)
-//        ];
-//    }
-
-    public function handle(){
+    public function boradcastWith() {
         return [
-            'message' => MessageResource::make($this->message)
+          'message' => MessageResource::make($this->message)
         ];
     }
 }
