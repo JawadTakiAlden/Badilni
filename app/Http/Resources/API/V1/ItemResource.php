@@ -32,6 +32,8 @@ class ItemResource extends JsonResource
                 'area_id' => $this->area_id,
                 'is_active' => $this->is_active,
                 'status' => $this->status,
+                'city_id' => $this->area->city->id,
+                'country_id' => $this->area->city->country->id
             ]);
         }else if ($request->query('page') === 'home'){
             $base = array_merge($base , [
