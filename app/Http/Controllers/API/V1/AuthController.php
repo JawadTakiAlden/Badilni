@@ -85,7 +85,7 @@ class AuthController extends Controller
 
             $user = User::where('email' , $request->email)->first();
             if (!$user){
-                return $this->helpers->getNotFoundResourceRespone(__('messages.v1.auth.account_not_found'));
+                return $this->helpers->getNotFoundResourceRespone(__('messages.v1.auth.account.account_not_found'));
             }
             if (!Auth::attempt($request->only(['email' , 'password']))){
                 return $this->error(__('messages.v1.auth.login_credentials_error') , 401);
