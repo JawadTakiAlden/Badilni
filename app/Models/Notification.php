@@ -13,7 +13,7 @@ class Notification extends Model
 
     protected $table = 'notifications';
 
-    public function BasicSendNotification($title, $body, $FcmToken)
+    public static function BasicSendNotification($title, $body, $FcmToken)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
         $server_key = config('app.firebase_server_key');
@@ -56,7 +56,12 @@ class Notification extends Model
     {
         parent::boot();
         static::creating(function ($notification) {
-            self::BasicSendNotification($notification->title , $notification->body , [$notification->notified_user_id]);
+            $notificationToken = $notification->user->userDevices->pluck('notification_token');
+            self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
         });
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
