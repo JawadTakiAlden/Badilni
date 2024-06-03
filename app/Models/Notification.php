@@ -55,7 +55,7 @@ class Notification extends Model
     protected static function boot()
     {
         parent::boot();
-        static::creating(function ($notification) {
+        static::created(function ($notification) {
             $notificationToken = $notification->user->userDevices->pluck('notification_token');
             self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
         });
