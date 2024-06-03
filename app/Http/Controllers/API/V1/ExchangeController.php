@@ -95,7 +95,7 @@ class ExchangeController extends Controller
         }catch (\Throwable $throwable){
             DB::rollBack();
 //            return $this->serverError();
-            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
+            return $this->error([$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()] , 500);
         }
     }
 
