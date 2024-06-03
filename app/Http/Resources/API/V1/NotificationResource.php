@@ -17,8 +17,8 @@ class NotificationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'title' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->title),
-            'body' => HelperMethod::extractValueDependOnLanguageOfRequestUser($this->body),
+            'title' =>$this->title,
+            'body' => $this->body,
             'created_at' => Carbon::parse($this->created_at)->format('l F Y')
         ];
     }

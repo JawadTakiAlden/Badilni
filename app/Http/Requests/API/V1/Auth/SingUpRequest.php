@@ -25,7 +25,8 @@ class SingUpRequest extends FormRequest
             'email'                 => 'required|string|unique:users,email',
             'password'              => 'required|string|min:6',
             'name'                  => 'required|string|max:28',
-            'type'                  => 'string|in|admin,user'
+            'type'                  => 'string|in|admin,user',
+            'phone'                 => 'string|required'
         ];
     }
     public function filters()
@@ -33,7 +34,8 @@ class SingUpRequest extends FormRequest
         return [
             'email' => 'trim|strip_tags|escape|lowercase',
             'password' => 'trim|strip_tags',
-            'name' => 'trim|strip_tags|escape'
+            'name' => 'trim|strip_tags|escape',
+            'phone' => 'trim|lowercase',
         ];
     }
 }

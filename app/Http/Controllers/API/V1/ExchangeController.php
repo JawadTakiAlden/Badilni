@@ -86,14 +86,8 @@ class ExchangeController extends Controller
             }
             Exchange::create($data);
             Notification::create([
-                'title' => json_encode([
-                    "en" => "title of notification",
-                    "ar" => "عنوان الاشعار"
-                ]),
-                "body" => json_encode([
-                    "en" => "body of notification",
-                    "ar" => "موضوع الاشعار"
-                ]),
+                'title' =>  "title of notification",
+                "body" => "body of notification",
                 'notified_user_id' => $exchange_user->id
             ]);
             DB::commit();
@@ -109,7 +103,7 @@ class ExchangeController extends Controller
         try {
             $filter = \request('exchange_filter');
             if ($filter === 'received'){
-                $exchanges = Exchange::where('owner_user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->get();
+                $exchanges = Exchange::where('owner_user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->whereNot('status' , 'accepted')->get();
                 return $this->success(ExchangeResource::collection($exchanges));
             }else if ($filter === 'send'){
                 $exchanges = Exchange::where('exchange_user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->get();
@@ -132,6 +126,7 @@ class ExchangeController extends Controller
             if ($exchange->owner_user_id !== auth()->user()->id){
                 return $this->error(__('messages.v1.exchange.permission_denied') , 403);
             }
+
             $exchange->update([
                 'status' => 'accepted'
             ]);

@@ -66,7 +66,7 @@ class AuthController extends Controller
     public function signup(SingUpRequest $request) {
         try {
             DB::beginTransaction();
-            $data = $request->only(['name' , 'email' , 'password']);
+            $data = $request->only(['name' , 'email' , 'password' , 'phone']);
             $user = User::create($data);
             $this->GenerateCodeAndSendEmail($user);
             DB::commit();
@@ -79,10 +79,8 @@ class AuthController extends Controller
         }
     }
 
-
     public function login(LoginRequest $request){
         try {
-
             $user = User::where('email' , $request->email)->first();
             if (!$user){
                 return $this->helpers->getNotFoundResourceRespone(__('messages.v1.auth.account.account_not_found'));

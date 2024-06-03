@@ -37,4 +37,5 @@ class NotificationController extends Controller
             return $this->serverError();
         }
     }
+
 }
