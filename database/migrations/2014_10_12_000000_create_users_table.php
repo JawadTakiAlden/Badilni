@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('image')->nullable();
-            $table->string('phone');
             $table->enum("language",["en","ar"])->default("en");
             $table->dateTime('birthdate')->nullable();
             $table->enum('gender' , ['male' , 'female'])->nullable();
