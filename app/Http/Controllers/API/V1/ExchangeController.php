@@ -155,7 +155,11 @@ class ExchangeController extends Controller
             $exchange->update([
                 'status' => 'rejected'
             ]);
-
+            Notification::create([
+                'title' =>  "notification rejected",
+                "body" => "from ahmad notification to reject the exchange ",
+                'notified_user_id' => $exchange->exchange_user_id
+            ]);
             return $this->success(null , __('messages.v1.exchange.exchange_rejected'));
         }catch (\Throwable $th){
             return $this->serverError();
