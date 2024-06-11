@@ -16,7 +16,6 @@ class SendMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
     public $exchangeID;
     public $message;
     /**
@@ -36,7 +35,7 @@ class SendMessageEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('conversation.'.$this->exchangeID),
+            'conversation.'.$this->exchangeID,
         ];
     }
 
