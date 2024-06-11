@@ -127,9 +127,13 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.v1.exchange.permission_denied') , 403);
             }
 
-            $exchange->update([
-                'status' => 'accepted'
-            ]);
+//            $exchange->update([
+//                'status' => 'accepted'
+//            ]);
+
+            $exchangedItem = json_decode($exchange->exchanged_item);
+
+            return $exchangedItem;
 
             return $this->success(ExchangeResource::make($exchange) , __('messages.exchange_accepted'));
         }catch (\Throwable $th){
