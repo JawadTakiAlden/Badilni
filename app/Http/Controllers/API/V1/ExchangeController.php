@@ -135,6 +135,11 @@ class ExchangeController extends Controller
             Item::where('id' , $exchangedItemID)->update([
                 'flag' => "exchanged"
             ]);
+            Notification::create([
+                'title' =>  "notification rejected",
+                "body" => "from ahmad notification to reject the exchange ",
+                'notified_user_id' => $exchange->exchange_user_id
+            ]);
             DB::commit();
             return $this->success(ExchangeResource::make($exchange) , __('messages.exchange_accepted'));
         }catch (\Throwable $th){
