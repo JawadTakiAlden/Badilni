@@ -88,7 +88,7 @@ class ExchangeController extends Controller
             Notification::create([
                 'title' =>  "title of notification",
                 "body" => "body of notification",
-                'notified_user_id' => $exchange_user->id
+                'notified_user_id' => $owner_user->id
             ]);
             DB::commit();
             return $this->success(null , __('messages.exchange_successfully_requested'));
