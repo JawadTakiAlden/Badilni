@@ -18,7 +18,8 @@ class MessageResource extends JsonResource
             'id' => $this->id,
             'body' => $this->body,
             'is_read' => boolval($this->is_read),
-            'is_mine' => $this->from === $request->user()->id
+            'is_mine' => $this->from === $request->user()->id,
+            'date' => $this->created_at->format('h:i A'),
         ];
     }
 }
