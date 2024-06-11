@@ -51,7 +51,7 @@ class ItemController extends Controller
     }
     public function getActive(){
         try {
-            $items = Item::where('is_active' , true)->filter(\request(['category_id']))->get();
+            $items = Item::where('is_active' , true)->whereNot('flag' , 'exchanged')->filter(\request(['category_id']))->get();
             return $this->success(ItemResource::collection($items));
         }catch (\Throwable $th){
             DB::rollBack();
@@ -94,6 +94,7 @@ class ItemController extends Controller
             $sectionTitle = json_decode($section->title)->en;
             if ($sectionTitle === 'newest'){
                 $items = Item::where('is_active' , true)
+                    ->whereNot('flag' , 'exchanged')
                     ->where('user_id' , '!=' , auth()->user()->id)
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
@@ -102,6 +103,7 @@ class ItemController extends Controller
             else if ($sectionTitle === 'most viewed'){
                 $items = Item::where('is_active' , true)
                     ->where('user_id' , '!=' , auth()->user()->id)
+                    ->whereNot('flag' , 'exchanged')
                     ->orderBy('views', 'desc')
                     ->paginate(10);
                 return $this->success(ItemResource::collection($items));
@@ -118,6 +120,7 @@ class ItemController extends Controller
         try {
             $items = Item::where('is_active' , true)
                 ->where('user_id' , '!=' , auth()->user()->id)
+                ->whereNot('flag' , 'exchanged')
                 ->filter(\request(['country_id','city_id' ,'area_id','search_text','status' , 'sub_category_id' , 'category_id']))
                 ->orderBy('created_at', 'desc')
                 ->get();

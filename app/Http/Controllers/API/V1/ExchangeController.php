@@ -119,6 +119,7 @@ class ExchangeController extends Controller
 
     public function acceptExchange($exchangeID){
         try {
+            DB::beginTransaction();
             $exchange = Exchange::where('id' , $exchangeID)->first();
             if (!$exchange){
                 return $this->error(__('messages.v1.exchange.exchange_not_found' , 404));
@@ -127,16 +128,17 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.v1.exchange.permission_denied') , 403);
             }
 
-//            $exchange->update([
-//                'status' => 'accepted'
-//            ]);
-
-            $exchangedItem = json_decode($exchange->exchanged_item)->id;
-
-            return $exchangedItem;
-
+            $exchange->update([
+                'status' => 'accepted'
+            ]);
+            $exchangedItemID = json_decode($exchange->exchanged_item)->id;
+            Item::where('id' , $exchangedItemID)->update([
+                'flag' => "exchanged"
+            ]);
+            DB::commit();
             return $this->success(ExchangeResource::make($exchange) , __('messages.exchange_accepted'));
         }catch (\Throwable $th){
+            DB::rollBack();
             return $this->serverError();
         }
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Message\SendMessageRequest;
 use App\Http\Resources\API\V1\MessageResource;
 use App\HttpResponse\HTTPResponse;
+use App\Models\Exchange;
 use App\Models\Message;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,21 @@ class MessageController extends Controller
     public function store(SendMessageRequest $request){
         try {
             $message = Message::create(array_merge($request->only(['to' , 'exchange_id' , 'body']) , ['from' => $request->user()->id]));
-            event(new SendMessageEvent($request->exchange_id , $message));
+            $exchange = Exchange::where('id' , $request->exchange_id)->first();
+            if (!$exchange) {
+                return $this->error('Invalid exchange ID.', 404);
+            }
+
+            $authorizedUserIds = [$exchange->owner_user_id, $exchange->exchange_user_id];
+            if (!in_array($request->user()->id, $authorizedUserIds)) {
+                return $this->error('Unauthorized to send message for this exchange.', 403);
+            }
+
+            $recipientId = ($exchange->owner_user_id === $request->user()->id)
+                ? $exchange->exchange_user_id
+                : $exchange->owner_user_id;
+
+            event(new SendMessageEvent($request->exchange_id , $recipientId , $message));
             return $this->success(MessageResource::make($message));
         }catch (\Throwable $th){
 //            return $this->serverError();

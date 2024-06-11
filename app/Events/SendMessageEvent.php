@@ -18,13 +18,15 @@ class SendMessageEvent implements ShouldBroadcast
 
     public $exchangeID;
     public $message;
+    public $recipientId;
     /**
      * Create a new event instance.
      */
-    public function __construct($exchangeID , $message)
+    public function __construct($exchangeID , $recipientId , $message)
     {
         $this->exchangeID =$exchangeID;
         $this->message = $message;
+        $this->recipientId = $recipientId;
     }
 
     /**
@@ -35,7 +37,7 @@ class SendMessageEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            'conversation.'.$this->exchangeID,
+            'conversation.'.$this->exchangeID.'.'.$this->recipientId,
         ];
     }
 
