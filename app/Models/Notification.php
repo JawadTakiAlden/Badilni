@@ -16,7 +16,7 @@ class Notification extends Model
     public static function BasicSendNotification($title, $body, $FcmToken)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
-        $server_key = config('app.firebase_server_key');
+        $server_key = env('firebase_server_key');
         $date = [
             'registration_ids' => $FcmToken,
             'notification' => [
