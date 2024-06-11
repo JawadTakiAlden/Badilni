@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('conversation.{exchangeID}' , function ($user , $id){
-    return Exchange::where('id' , $id)->where(fn($query) =>
+Broadcast::channel('conversation.{exchangeID}.{recipientId}' , function ($user , $exchangeID){
+    return Exchange::where('id' , $exchangeID)->where(fn($query) =>
         $query->where('exchange_user_id' , $user->id)->orWhere('owner_user_id' , $user->id)
     )->exists();
 });
