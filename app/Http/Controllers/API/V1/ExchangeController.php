@@ -131,7 +131,7 @@ class ExchangeController extends Controller
 //                'status' => 'accepted'
 //            ]);
 
-            $exchangedItem = json_decode($exchange->exchanged_item);
+            $exchangedItem = json_decode($exchange->exchanged_item)->id;
 
             return $exchangedItem;
 
