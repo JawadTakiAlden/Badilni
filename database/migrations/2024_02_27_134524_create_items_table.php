@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->foreignId('area_id')->nullable()->references('id')->on('areas')->onDelete('set null');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories')->onDelete('set null');
-            $table->boolean('flag')->default('exists'); // when the exchange for this item accepted , this will be exchanged and will not appear anymore in response of items
+            $table->string('flag')->default('exists'); // when the exchange for this item accepted , this will be exchanged and will not appear anymore in response of items
             $table->timestamps();
         });
     }
