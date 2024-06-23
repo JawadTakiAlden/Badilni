@@ -51,7 +51,7 @@ class ExchangeResource extends JsonResource
                 'name' => $exchange_user->name,
                 'image' => $exchange_user->image,
                 'gender' => $exchange_user->gender,
-                'phone' => $exchange_user->phone,
+                'phone' => $this->exchangeUser->phone,
                 'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($exchange_user->location)
             ],
             'owner_user' => [
@@ -59,7 +59,7 @@ class ExchangeResource extends JsonResource
                 'name' => $owner_user->name,
                 'image' => $owner_user->image,
                 'gender' => $owner_user->gender,
-                'phone' => $owner_user->phone,
+                'phone' => $this->ownerUser->phone,
                 'location' => HelperMethod::extractValueDependOnLanguageOfRequestUser($owner_user->location)
             ],
         ];
