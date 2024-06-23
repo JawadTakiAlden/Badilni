@@ -15,7 +15,7 @@ class Notification extends Model
 
     public static function BasicSendNotification($title, $body, $FcmToken)
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
+        $url = 'https://fcm.googleapis.com/v1/projects/padilni-12811/messages:send';
         $server_key = config('app.firebase_server_key');
         $date = [
             'registration_ids' => $FcmToken,
@@ -28,7 +28,7 @@ class Notification extends Model
         $encodedData = json_encode($date);
 
         $headers = [
-            'Authorization: key=' . $server_key,
+            'Authorization: Bearer '.$server_key,
             'Content-Type: application/json'
         ];
 
