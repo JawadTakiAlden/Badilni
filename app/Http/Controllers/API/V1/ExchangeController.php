@@ -103,7 +103,7 @@ class ExchangeController extends Controller
         try {
             $filter = \request('exchange_filter');
             if ($filter === 'received'){
-                $exchanges = Exchange::where('owner_user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->whereNot('status' , 'accepted')->get();
+                $exchanges = Exchange::where('owner_user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->get();
                 return $this->success(ExchangeResource::collection($exchanges));
             }else if ($filter === 'send'){
                 $exchanges = Exchange::where('exchange_user_id' , auth()->user()->id)->orderBy('created_at' , 'desc')->get();
@@ -112,8 +112,8 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.error.unknown_exchange_filter'),422);
             }
         }catch (\Throwable $throwable){
-//            return $this->serverError();
-            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
+            return $this->serverError();
+//            return [$throwable->getMessage() , $throwable->getFile() , $throwable->getLine()];
         }
     }
 
