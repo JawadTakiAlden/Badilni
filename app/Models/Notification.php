@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification as FirebaseNotification;
 
 class Notification extends Model
 {
@@ -15,41 +18,25 @@ class Notification extends Model
 
     public static function BasicSendNotification($title, $body, $FcmToken)
     {
-        $url = 'https://fcm.googleapis.com/v1/projects/padilni-12811/messages:send';
-        $server_key = config('app.firebase_server_key');
-        $date = [
-            'registration_ids' => $FcmToken,
-            'notification' => [
-                'title' => $title,
-                'body' => $body
-            ]
-        ];
+        $firebase = (new Factory())
+            ->withServiceAccount(__DIR__.'/../../config/firebase_credentials.json');
 
-        $encodedData = json_encode($date);
+        $messaging = $firebase->createMessaging();
 
-        $headers = [
-            'Authorization: Bearer '.$server_key,
-            'Content-Type: application/json'
-        ];
 
-        $ch = curl_init();
+        $notification = FirebaseNotification::create($title, $body);
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
-
-        $result = curl_exec($ch);
-//
-//        if ($result === FALSE) {
-//            return HelperFunction::ServerErrorResponse();
-//        }
-//        curl_close($ch);
-//        return $this->success($result, __('messages.notification_controller.send_successfully'));
+        // Loop through each FCM token and send the notification
+        foreach ((array)$FcmToken as $token) {
+            $message = CloudMessage::withTarget('token', $token)
+                ->withNotification($notification);
+            try {
+                $messaging->send($message);
+            } catch (\Exception $e) {
+                // Log or handle the exception as needed
+                error_log('Failed to send notification: ' . $e->getMessage());
+            }
+        }
     }
 
     protected static function boot()
