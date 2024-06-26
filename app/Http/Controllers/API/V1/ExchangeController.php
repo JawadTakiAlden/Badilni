@@ -85,15 +85,11 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.v1.exchange.unknown_exchange_type'),422);
             }
             Exchange::create($data);
-            $notification = Notification::create([
+            Notification::create([
                 'title' =>  "title of notification",
                 "body" => "body of notification",
                 'notified_user_id' => $owner_user->id
             ]);
-
-            DB::rollBack();
-            dd($notification->user()->userDevices);
-
             DB::commit();
             return $this->success(null , __('messages.exchange_successfully_requested'));
         }catch (\Throwable $throwable){
