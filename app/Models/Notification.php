@@ -27,7 +27,6 @@ class Notification extends Model
         $notification = FirebaseNotification::create($title, $body);
         // Loop through each FCM token and send the notification
         foreach ((array)$FcmToken as $token) {
-            dd($token);
             $message = CloudMessage::withTarget('token', $token)
                 ->withNotification($notification);
             try {
@@ -43,7 +42,9 @@ class Notification extends Model
     {
         parent::boot();
         static::created(function ($notification) {
-            $notificationToken = $notification->user->userDevices->pluck('notification_token');
+//            ->pluck('notification_token')
+            $notificationToken = $notification->user->userDevices;
+            dd($notificationToken);
             self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
         });
     }
