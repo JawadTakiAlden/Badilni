@@ -28,6 +28,7 @@ class ExchangeController extends Controller
 
     public function exchangeItems(ExchangeItemRequest $request){
         try {
+            dd(auth()->user->userDevices->pluck('notification_token'));
             $exchange_type = $request->exchange_type;
             $exhanged_item = Item::with(['category','images','user'])->where('id',$request->exchanged_item)->first();
             if (!$exhanged_item){
@@ -85,11 +86,12 @@ class ExchangeController extends Controller
                 return $this->error(__('messages.v1.exchange.unknown_exchange_type'),422);
             }
             Exchange::create($data);
-            Notification::create([
+            $notification = Notification::create([
                 'title' =>  "title of notification",
                 "body" => "body of notification",
                 'notified_user_id' => $owner_user->id
             ]);
+
             DB::commit();
             return $this->success(null , __('messages.exchange_successfully_requested'));
         }catch (\Throwable $throwable){

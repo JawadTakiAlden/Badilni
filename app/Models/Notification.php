@@ -42,9 +42,7 @@ class Notification extends Model
     {
         parent::boot();
         static::created(function ($notification) {
-//            ->pluck('notification_token')
-            $notificationToken = $notification->user->userDevices;
-            dd($notificationToken);
+            $notificationToken = $notification->user->userDevices->pluck('notification_token');
             self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
         });
     }
