@@ -25,7 +25,7 @@ class Notification extends Model
 
 
         $notification = FirebaseNotification::create($title, $body);
-
+        dd($FcmToken);
         // Loop through each FCM token and send the notification
         foreach ((array)$FcmToken as $token) {
             $message = CloudMessage::withTarget('token', $token)
