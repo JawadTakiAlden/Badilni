@@ -38,14 +38,14 @@ class Notification extends Model
         }
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::created(function ($notification) {
-            $notificationToken = $notification->user->userDevices->pluck('notification_token');
-            self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
-        });
-    }
+//    protected static function boot()
+//    {
+//        parent::boot();
+//        static::created(function ($notification) {
+//            $notificationToken = $notification->user->userDevices->pluck('notification_token');
+//            self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
+//        });
+//    }
 
     public function user(){
         return $this->belongsTo(User::class , 'notified_user_id');
