@@ -28,7 +28,6 @@ class ExchangeController extends Controller
 
     public function exchangeItems(ExchangeItemRequest $request){
         try {
-            dd(auth()->user()->userDevices->pluck('notification_token'));
             $exchange_type = $request->exchange_type;
             $exhanged_item = Item::with(['category','images','user'])->where('id',$request->exchanged_item)->first();
             if (!$exhanged_item){
@@ -91,6 +90,9 @@ class ExchangeController extends Controller
                 "body" => "body of notification",
                 'notified_user_id' => $owner_user->id
             ]);
+
+            DB::rollBack();
+            dd($notification);
 
             DB::commit();
             return $this->success(null , __('messages.exchange_successfully_requested'));
