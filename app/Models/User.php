@@ -75,7 +75,7 @@ class User extends Authenticatable
     }
 
     public function userDevices(){
-        return $this->hasMany(UserDevice::class);
+        return $this->hasMany(UserDevice::class , 'user_id');
     }
 
     public function myNotification(){

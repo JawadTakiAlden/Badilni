@@ -92,7 +92,7 @@ class ExchangeController extends Controller
             ]);
 
             DB::rollBack();
-            dd($notification->user);
+            dd($notification->user->userDevices);
 
             DB::commit();
             return $this->success(null , __('messages.exchange_successfully_requested'));
