@@ -16,36 +16,36 @@ class Notification extends Model
 
     protected $table = 'notifications';
 
-    public static function BasicSendNotification($title, $body, $FcmToken)
-    {
-        $firebase = (new Factory())
-            ->withServiceAccount(__DIR__.'/../../config/firebase_credentials.json');
+//    public static function BasicSendNotification($title, $body, $FcmToken)
+//    {
+//        $firebase = (new Factory())
+//            ->withServiceAccount(__DIR__.'/../../config/firebase_credentials.json');
+//
+//        $messaging = $firebase->createMessaging();
+//
+//
+//        $notification = FirebaseNotification::create($title, $body);
+//        // Loop through each FCM token and send the notification
+//        foreach ($FcmToken as $token) {
+//            $message = CloudMessage::withTarget('token', $token)
+//                ->withNotification($notification);
+//            try {
+//                $messaging->send($message);
+//            } catch (\Exception $e) {
+//                // Log or handle the exception as needed
+//                error_log('Failed to send notification: ' . $e->getMessage());
+//            }
+//        }
+//    }
 
-        $messaging = $firebase->createMessaging();
-
-
-        $notification = FirebaseNotification::create($title, $body);
-        // Loop through each FCM token and send the notification
-        foreach ($FcmToken as $token) {
-            $message = CloudMessage::withTarget('token', $token)
-                ->withNotification($notification);
-            try {
-                $messaging->send($message);
-            } catch (\Exception $e) {
-                // Log or handle the exception as needed
-                error_log('Failed to send notification: ' . $e->getMessage());
-            }
-        }
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::created(function ($notification) {
-            $notificationToken = $notification->user->userDevices->pluck('notification_token');
-            self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
-        });
-    }
+//    protected static function boot()
+//    {
+//        parent::boot();
+//        static::created(function ($notification) {
+//            $notificationToken = $notification->user->userDevices->pluck('notification_token');
+//            self::BasicSendNotification($notification->title , $notification->body , $notificationToken);
+//        });
+//    }
 
     public function user(){
         return $this->belongsTo(User::class , 'notified_user_id');

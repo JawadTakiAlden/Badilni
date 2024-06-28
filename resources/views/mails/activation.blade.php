@@ -12,7 +12,7 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Best regards'),<br />Padilni Team
+@lang('Best regards'),<br />DailyDeals Team
 @endif
 
 

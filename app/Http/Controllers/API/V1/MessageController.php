@@ -9,6 +9,7 @@ use App\Http\Resources\API\V1\MessageResource;
 use App\HttpResponse\HTTPResponse;
 use App\Models\Exchange;
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
@@ -30,7 +31,12 @@ class MessageController extends Controller
             $recipientId = ($exchange->owner_user_id === $request->user()->id)
                 ? $exchange->exchange_user_id
                 : $exchange->owner_user_id;
-
+            $user = User::where('id' , $recipientId)->first();
+            NotificationController::BasicSendNotification('new message' , [
+                'body' => $message->body,
+                'type' => "message",
+                'exchange_id' => $request->exchange_id
+            ] , $user->userDevices->pluck('notification_token'));
             event(new SendMessageEvent($request->exchange_id , $recipientId , $message));
             return $this->success(MessageResource::make($message));
         }catch (\Throwable $th){
