@@ -32,6 +32,7 @@ class MessageController extends Controller
                 ? $exchange->exchange_user_id
                 : $exchange->owner_user_id;
             $user = User::where('id' , $recipientId)->first();
+
             NotificationController::BasicSendNotification('new message' , [
                 'body' => $message->body,
                 'type' => "message",
