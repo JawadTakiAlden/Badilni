@@ -141,10 +141,15 @@ class ExchangeController extends Controller
             Item::where('id' , $exchangedItemID)->update([
                 'flag' => "exchanged"
             ]);
-            Notification::create([
-                'title' =>  "notification rejected",
-                "body" => "from ahmad notification to reject the exchange ",
+            $notification = Notification::create([
+                'title' =>  "your exchange accepted !",
+                "body" => "one of your exchanges request accepted by ts owner",
                 'notified_user_id' => $exchange->exchange_user_id
+            ]);
+            $firebaseNotification = new FirebaseNotification();
+            $firebaseNotification->BasicSendNotification($notification->title , $notification->body , $notification->user->userDevices->pluck('notification_token') , [
+                'type' => 'accept_exchange',
+                'exchange_id' => $exchangeID
             ]);
             DB::commit();
             return $this->success(ExchangeResource::make($exchange) , __('messages.exchange_accepted'));
