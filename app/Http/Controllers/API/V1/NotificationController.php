@@ -40,27 +40,4 @@ class NotificationController extends Controller
             return $this->serverError();
         }
     }
-
-    public static function BasicSendNotification($title , array $notificationData, $FcmToken)
-    {
-        $firebase = (new Factory())
-            ->withServiceAccount(__DIR__.'/../../config/firebase_credentials.json');
-
-        $messaging = $firebase->createMessaging();
-
-
-        $notification = FirebaseNotification::create($title, json_encode($notificationData));
-        // Loop through each FCM token and send the notification
-        foreach ($FcmToken as $token) {
-            $message = CloudMessage::withTarget('token', $token)
-                ->withNotification($notification);
-            try {
-                $messaging->send($message);
-            } catch (\Exception $e) {
-                // Log or handle the exception as needed
-                error_log('Failed to send notification: ' . $e->getMessage());
-            }
-        }
-    }
-
 }

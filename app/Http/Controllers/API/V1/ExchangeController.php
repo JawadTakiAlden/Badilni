@@ -10,6 +10,7 @@ use App\HttpResponse\HTTPResponse;
 use App\Models\Exchange;
 use App\Models\Item;
 use App\Models\Notification;
+use App\Notifications\FirebaseNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -90,12 +91,13 @@ class ExchangeController extends Controller
                 "body" => $owner_user->name . " ask to exchange ".$exhanged_item->title . ' ,see more details about the request',
                 'notified_user_id' => $owner_user->id
             ]);
-
-            NotificationController::BasicSendNotification($notification->title , [
+            $notificationBody = [
                 'body' => $notification->body,
                 'type' => 'exchange',
                 'exchange_id' => $exchange->id
-            ], $notification->user->userDevices->pluck('notification_token'));
+            ];
+            $firebaseNotification = new FirebaseNotification();
+            $firebaseNotification->BasicSendNotification($notification->title , $notificationBody , $notification->user->userDevices->pluck('notification_token'));
             DB::commit();
             return $this->success(null , __('messages.exchange_successfully_requested'));
         }catch (\Throwable $throwable){

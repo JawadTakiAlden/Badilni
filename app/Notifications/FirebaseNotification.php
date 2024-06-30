@@ -22,11 +22,9 @@ class FirebaseNotification
     public function BasicSendNotification($title , array $notificationData, array $FcmToken)
     {
         $notification = Notification::create($title, json_encode($notificationData));
-
         foreach ($FcmToken as $token) {
             $message = CloudMessage::withTarget('token', $token)
                 ->withNotification($notification);
-
             try {
                 $this->messaging->send($message);
             } catch (\Exception $e) {

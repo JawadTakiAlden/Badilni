@@ -10,6 +10,7 @@ use App\HttpResponse\HTTPResponse;
 use App\Models\Exchange;
 use App\Models\Message;
 use App\Models\User;
+use App\Notifications\FirebaseNotification;
 use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
@@ -32,12 +33,13 @@ class MessageController extends Controller
                 ? $exchange->exchange_user_id
                 : $exchange->owner_user_id;
             $user = User::where('id' , $recipientId)->first();
-
-            NotificationController::BasicSendNotification('new message' , [
+            $notificationBody = [
                 'body' => $message->body,
                 'type' => "message",
                 'exchange_id' => $request->exchange_id
-            ] , $user->userDevices->pluck('notification_token'));
+            ];
+            $firebaseNotification = new FirebaseNotification();
+            $firebaseNotification->BasicSendNotification('new message' , $notificationBody , $user->userDevices->pluck('notification_token'));
             event(new SendMessageEvent($request->exchange_id , $recipientId , $message));
             return $this->success(MessageResource::make($message));
         }catch (\Throwable $th){
