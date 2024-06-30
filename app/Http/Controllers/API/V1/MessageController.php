@@ -33,13 +33,10 @@ class MessageController extends Controller
                 ? $exchange->exchange_user_id
                 : $exchange->owner_user_id;
             $user = User::where('id' , $recipientId)->first();
-            $notificationBody = [
-                'body' => $message->body,
-                'type' => "message",
-                'exchange_id' => $request->exchange_id
-            ];
+
             $firebaseNotification = new FirebaseNotification();
-            $firebaseNotification->BasicSendNotification('new message' , $notificationBody , $user->userDevices->pluck('notification_token'));
+            $firebaseNotification->BasicSendNotification('new message' , $message->body , $user->userDevices->pluck('notification_token') , ['type' => "message",
+                'exchange_id' => $request->exchange_id]);
             event(new SendMessageEvent($request->exchange_id , $recipientId , $message));
             return $this->success(MessageResource::make($message));
         }catch (\Throwable $th){

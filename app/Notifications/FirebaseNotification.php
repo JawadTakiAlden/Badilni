@@ -19,12 +19,13 @@ class FirebaseNotification
 
         $this->messaging = $firebase->createMessaging();
     }
-    public function BasicSendNotification($title , array $notificationData, $FcmToken)
+    public function BasicSendNotification($title ,$body, $FcmToken , $data)
     {
-        $notification = Notification::create($title, json_encode($notificationData));
+        $notification = Notification::create($title, $body);
         foreach ($FcmToken as $token) {
             $message = CloudMessage::withTarget('token', $token)
-                ->withNotification($notification);
+                ->withNotification($notification)
+                ->withData($data);
             try {
                 $this->messaging->send($message);
             } catch (\Exception $e) {

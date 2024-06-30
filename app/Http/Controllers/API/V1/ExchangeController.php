@@ -91,13 +91,11 @@ class ExchangeController extends Controller
                 "body" => $owner_user->name . " ask to exchange ".$exhanged_item->title . ' ,see more details about the request',
                 'notified_user_id' => $owner_user->id
             ]);
-            $notificationBody = [
-                'body' => $notification->body,
+            $firebaseNotification = new FirebaseNotification();
+            $firebaseNotification->BasicSendNotification($notification->title , $notification->body , $notification->user->userDevices->pluck('notification_token') , [
                 'type' => 'exchange',
                 'exchange_id' => $exchange->id
-            ];
-            $firebaseNotification = new FirebaseNotification();
-            $firebaseNotification->BasicSendNotification($notification->title , $notificationBody , $notification->user->userDevices->pluck('notification_token'));
+            ]);
             DB::commit();
             return $this->success(null , __('messages.exchange_successfully_requested'));
         }catch (\Throwable $throwable){
