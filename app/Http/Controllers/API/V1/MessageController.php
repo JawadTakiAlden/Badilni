@@ -44,7 +44,7 @@ class MessageController extends Controller
             return $this->success(MessageResource::make($message));
         }catch (\Throwable $th){
 //            return $this->serverError();
-            return $this->error($th , 500);
+            return $this->error($th->getMessage() , 500);
         }
     }
     public function getMessages($exchangeID){
