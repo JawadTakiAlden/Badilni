@@ -19,7 +19,7 @@ class FirebaseNotification
 
         $this->messaging = $firebase->createMessaging();
     }
-    public function BasicSendNotification($title , array $notificationData, array $FcmToken)
+    public function BasicSendNotification($title , array $notificationData, $FcmToken)
     {
         $notification = Notification::create($title, json_encode($notificationData));
         foreach ($FcmToken as $token) {
