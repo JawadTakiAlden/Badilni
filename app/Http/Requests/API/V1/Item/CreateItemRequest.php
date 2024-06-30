@@ -24,10 +24,10 @@ class CreateItemRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'string',
             'price' => 'nullable|numeric',
             'is_active' => 'boolean',
-            'area_id' => 'required|exists:areas,id',
+            'area_id' => 'exists:areas,id',
             'status' => 'required|string|in:new,old',
             'category_id' => [
                 'required',
