@@ -3,6 +3,9 @@
 
 return [
     "v1" => [
+        "error" => [
+            'server_error' => 'Oops! Something went wrong on our endو Please try refreshing the page or come back later'
+        ],
         "auth" => [
             "create_account" => "account created successfully , please verify you're email",
             "already_verified" => "this email already verified",

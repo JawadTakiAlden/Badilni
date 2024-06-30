@@ -19,7 +19,7 @@ trait HTTPResponse
 
     public function serverError(){
         return response([
-            'message' => __('messages.error.server_error'),
+            'message' => __('messages.v1.error.server_error'),
         ] , 500);
     }
 }
